@@ -1,8 +1,7 @@
 # Project-Projects
 Project: Projects
 
-## Timeline
-### Week of...
+### Timeline
 3/20..........Set up server<br/>
 3/27..........Set up frontend and database (mine projects from SoftDes/POE)<br/>
 4/3...........Frontend, server, database integration<br/>
