@@ -1,5 +1,45 @@
+body {
+  background-color: black;
+}
+
+
+// Controls how ALL React inputs look - proceed with caution
+div { 
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+div.container {
+  border: 1px solid silver;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+h1 {
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+h2 {
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
 ul {
   list-style-type: none;
+}
+
+input[type="text"] {
+  background: none;
+  border: 1px solid silver;
+  padding: 1%;
+  font-size: 15px;
+  font-family: 'Source Code Pro', monospace;
+  -webkit-transition-duration: 0.4s;
+}
+
+input[type="text"]:hover {
+  padding: 2%;
 }
 
 .project-grid {
@@ -22,7 +62,6 @@ ul {
   text-align: left;
   width: 100%;
   font-weight: bold;
-
 }
 
 .project-authors {
