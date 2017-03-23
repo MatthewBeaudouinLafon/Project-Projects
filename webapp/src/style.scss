@@ -50,13 +50,17 @@ input[type="text"]:hover {
 }
 
 .project-item {
+  display: flex;
+  flex-direction: column;
   width: 16em;
   height: 12em;
-  padding: 3px;
+  padding: 1em;
   border-style: solid;
   border-width: 1px;
   border-radius: 3px;
-  margin: 1em;
+  margin: .4em;
+  overflow: auto;
+  overflow-x: hidden;
 }
 
 .project-name {
@@ -67,9 +71,12 @@ input[type="text"]:hover {
 
 .project-authors {
   padding-left: 2em;
+  font-size: 0.8em;
+  color: darkgrey;
   font-style: italic;
 }
 
 
 .project-description {
+  padding-top: 0.5em
 }
