@@ -28,6 +28,6 @@ var PROJECTS = [
 // );
 
 ReactDOM.render(
-  <App project={PROJECTS[0]}/>,
+  <App projectList={PROJECTS}/>,
   document.getElementById('root')
 );
