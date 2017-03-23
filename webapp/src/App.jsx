@@ -10,10 +10,8 @@ export default class App extends React.Component {
             // <div className="app">Hello, nice people! Don't be wrong</div>
             <div className="project-item">
                 <ProjectName className="project-name" name={name} />
-                <div>
-                    <AuthorList className="project-authors" authorList={authorList} />
-                    <Description className="project-description" description={description} />
-                </div>
+                <AuthorList className="project-authors" authorList={authorList} />
+                <Description className="project-description" description={description} />
             </div>
 
         );
@@ -36,24 +34,10 @@ class Description extends React.Component {
     }
 }
 
-class Author extends React.Component {
-    render() {
-        return (
-            <li>{this.props.author}</li>
-        );
-    }
-}
-
 class AuthorList extends React.Component {
     render() {
-        var authors = [];
-        this.props.authorList.forEach(function(author) {
-            authors.push(<Author author={author} key={author} />)    
-        });
         return (
-            <ul>
-                {authors}
-            </ul>
+            <div className="project-authors">{this.props.authorList.join(', ')}</div>
         );
     }
 }
