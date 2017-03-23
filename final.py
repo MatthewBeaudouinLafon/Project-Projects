@@ -71,7 +71,9 @@ def retrieve_all_information():
 		count += 1
 	return final
 
-dictionary = retrieve_all_information()
-posts = db.posts
-post_id = posts.insert_one(dictionary).inserted_id 
-print(post_id)
+print (retrieve_all_information())
+
+# dictionary = retrieve_all_information()
+# posts = db.posts
+# post_id = posts.insert_one(dictionary).inserted_id 
+# print(post_id)
