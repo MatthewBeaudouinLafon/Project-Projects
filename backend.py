@@ -6,6 +6,7 @@ from datetime import datetime
 import csv
 import urllib.request
 import pprint
+import re
 
 app = Flask(__name__)
 
@@ -79,6 +80,10 @@ def retrieve_all_information():
         count += 1
     return final
 
+# {"title": "Team Orpheus",
+    # "Description": "blah",
+    # "Members": "Justin", "Leon", "etc"},
+
 client = MongoClient('localhost', 27017)
 db = client.test
 posts = db.posts
@@ -86,7 +91,6 @@ posts = db.posts
 def fill_database():
     dictionary = retrieve_all_information()
     for key, value in dictionary.items():
-        pprint.pprint(dictionary[key])
         posts.insert_one(dictionary[key])
 
 fill_database()
@@ -94,12 +98,12 @@ fill_database()
 # Given project name, retrieve the rest of the project's information
 @app.route('/project', methods=["GET"])
 def retrieve_project(project_name):
-    for post in posts.find():
-        pprint.pprint(post)
-    project_information = db.posts.find({"title": project_name})
+    REGEX = ".*"
+    search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
+    project_information = list(db.posts.find({"title" : search_item}))
     return project_information
 
-# retrieve_project("")
+# pprint.pprint(retrieve_project("Natural Genetics"))
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))
