@@ -101,7 +101,7 @@ def fill_database():
     for key, value in dictionary.items():
         posts.insert_one(dictionary[key])
 
-fill_database()
+# fill_database()
 
 # Given project name, retrieve the rest of the project's information
 @app.route('/api/<project_name>', methods=["GET"])
@@ -113,7 +113,7 @@ def retrieve_project(project_name):
     output = JSONEncoder().encode(project_information)
     return output
 
-# pprint.pprint(retrieve_project("Natural Genetics"))
+pprint.pprint(retrieve_project("genetics"))
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))
