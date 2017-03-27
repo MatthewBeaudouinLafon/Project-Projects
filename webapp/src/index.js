@@ -42,6 +42,15 @@ var PROJECTS = [
 //   document.getElementById('root')
 // );
 
+// var DB_PROJECTS = []
+// fetch('localhost:7070/project')
+// .then(function(response) {
+//     console.log("Sample project:")
+//     console.log(response[0]);
+//     DB_PROJECTS = response[];
+// })
+
+
 ReactDOM.render(
   <App projectList={PROJECTS}/>,
   document.getElementById('root')
