@@ -35,31 +35,73 @@ var PROJECTS = [
 export default class App extends React.Component {
     constructor(props) {
         super(props);
-        //Get all 
+
         this.state = {
-            projects: PROJECTS,
-            query: ''
+            projects: []
         }
 
+
+
+        // var uh_projects = []
+
+        // fetch('/api/genetics')
+        // .then(function(response) {
+        //     console.log("Sample project:")
+        //     // console.log(response.json());
+        //     response.json().then(function(json) {
+        //         console.log(json)
+        //         uh_projects = json;
+        //     })
+        // })
+
+        // //Get all 
+        // this.setState({
+        //             projects: uh_projects,
+        //             query: ''
+        //         })
+
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidMount() {
+        var newProjects = []
+
+        fetch('/api/genetics')
+        .then(function(response) {
+            console.log("Sample project:")
+            // console.log(response.json());
+            response.json().then(function(json) {
+                // console.log(json);
+                newProjects = json;
+                console.log("DOES THIS EXIST")
+                console.log(newProjects);
+            })
+        })
+
+        console.log("HOW BOUT NOW")
+        console.log(newProjects);
+
+        //Get all 
+        this.setState({
+                    projects: newProjects
+                });
     }
 
     handleChange(event) {
         var current_projects = this.state.projects;
         var new_query = event.target.value;
 
-        if (new_query == '') {
-            current_projects = PROJECTS;
-        } else {
-            current_projects = PROJECTS.filter(function(project) {
-                return project.name.includes(new_query);
-            })
-        }
-        // else if (!isNaN(new_query) && PROJECTS[new_query]) {
-        //     console.log('Should be doing something here');
-        //     current_projects = [PROJECTS[new_query]];
+        // if (new_query == '') {
+        //     current_projects = this.state.projects;
+        // } else {
+        //     current_projects = PROJECTS.filter(function(project) {
+        //         return project.name.includes(new_query);
+        //     })
         // }
-
+        // // else if (!isNaN(new_query) && PROJECTS[new_query]) {
+        // //     console.log('Should be doing something here');
+        // //     current_projects = [PROJECTS[new_query]];
+        // // }
         this.setState({
             projects: current_projects,
             query: new_query
@@ -77,27 +119,31 @@ export default class App extends React.Component {
 
 
     render() {
+        // console.log("In App render():")
+        // console.log(this.state.projects)
         return (
             <div>
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="text" value={this.state.query} onChange={this.handleChange} />
-                    </form>
                 </div>
                 <ProjectGrid projectList={this.state.projects} />
             </div>
         );
     }
 }
+                    // <form onSubmit={this.handleSubmit}>
+                    //     <input type="text" value={this.state.query} onChange={this.handleChange} />
+                    // </form>
 
 class ProjectGrid extends React.Component {
     render() {
         var projects = [];
         this.props.projectList.forEach(function(project) {
-            projects.push(<ProjectItem className="project-item" project={project} key={project.id}/>)
-        })
+            projects.push(<ProjectItem className="project-item" project={project} key={project._id}/>)
+        });
+        // console.log("In ProjectGrid:");
+        // console.log(this.props.projectList)
         return (
             <div className="project-grid">
                 {projects}
@@ -108,8 +154,8 @@ class ProjectGrid extends React.Component {
 
 class ProjectItem extends React.Component {
     render() {
-        var name = this.props.project.name;
-        var authorList = this.props.project.students;
+        var name = this.props.project.title;
+        var authorList = this.props.project.members;
         var description = this.props.project.description;
         return (
             // <div className="app">Hello, nice people! Don't be wrong</div>
