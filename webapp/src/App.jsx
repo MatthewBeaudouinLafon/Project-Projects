@@ -1,37 +1,5 @@
 import React from 'react';
 
-var PROJECTS = [
-  {
-    name: "Project Projects", 
-    id: "1", 
-    students: ["Emily Yeh", "Matthew Beaudouin-Lafon"], 
-    thumbnail: "http://i.imgur.com/RtC6c01.jpg", 
-    description: "This is a project about helping projects getting the spotlight they deserve"
-  },
-  {
-    name: "Breaking the Enigma Machine", 
-    id: "2", 
-    students: ["Alan Turing", "Bletchley Park"], 
-    thumbnail: "http://static.bbc.co.uk/history/img/ic/640/images/resources/topics/enigma.jpg", 
-    description: "Math to win WWII.  Turing played a pivotal role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war."
-  },
-  {
-    name: "National Tour",
-    id: "3",
-    students: ["Itzhak Perlman", "Emanuel Ax"],
-    thumbnail: "https://www.noozhawk.com/images/uploads/nh_7_perlman_ax.jpg  (673KB) ",
-    description: "Two of the world's most accomplished classical musicians and longtime friends Itzhak Perlman and Emanuel Ax did a national tour in 2016."
-  },
-
-  {
-    name: "Puppy Celebration",
-    id: "4",
-    students: ["Barack Obama", "Michelle Obama", "Malia Obama", "Sasha Obama"],
-    thumbnail: "",
-    description: "Even though the Obamas are out of the White House, we can't help reminiscing about our favorite former first pooches, Bo and Sunny. Michelle Obama recently gave the world a glimpse of what Bo and Sunny are up to since leaving the White House -- and not surprisingly, they're as happy as ever."
-  }
-];
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
@@ -40,68 +8,31 @@ export default class App extends React.Component {
             projects: []
         }
 
-
-
-        // var uh_projects = []
-
-        // fetch('/api/genetics')
-        // .then(function(response) {
-        //     console.log("Sample project:")
-        //     // console.log(response.json());
-        //     response.json().then(function(json) {
-        //         console.log(json)
-        //         uh_projects = json;
-        //     })
-        // })
-
-        // //Get all 
-        // this.setState({
-        //             projects: uh_projects,
-        //             query: ''
-        //         })
-
         this.handleChange = this.handleChange.bind(this);
+        this.updateFromDB = this.updateFromDB.bind(this);
+    }
+
+    updateFromDB(json) {
+        this.setState({
+            projects: json
+        });
     }
 
     componentDidMount() {
-        var newProjects = []
+        const updateFromDB = this.updateFromDB; 
 
         fetch('/api/genetics')
         .then(function(response) {
-            console.log("Sample project:")
-            // console.log(response.json());
             response.json().then(function(json) {
-                // console.log(json);
-                newProjects = json;
-                console.log("DOES THIS EXIST")
-                console.log(newProjects);
+                updateFromDB(json)
             })
         })
-
-        console.log("HOW BOUT NOW")
-        console.log(newProjects);
-
-        //Get all 
-        this.setState({
-                    projects: newProjects
-                });
     }
 
     handleChange(event) {
         var current_projects = this.state.projects;
         var new_query = event.target.value;
 
-        // if (new_query == '') {
-        //     current_projects = this.state.projects;
-        // } else {
-        //     current_projects = PROJECTS.filter(function(project) {
-        //         return project.name.includes(new_query);
-        //     })
-        // }
-        // // else if (!isNaN(new_query) && PROJECTS[new_query]) {
-        // //     console.log('Should be doing something here');
-        // //     current_projects = [PROJECTS[new_query]];
-        // // }
         this.setState({
             projects: current_projects,
             query: new_query
@@ -114,13 +45,11 @@ export default class App extends React.Component {
             console.log('Should be doing something here')
             this.setState({projects: PROJECTS[this.state.query]})
         }
-        //event.preventDefault();
     }
 
 
     render() {
         // console.log("In App render():")
-        // console.log(this.state.projects)
         return (
             <div>
                 <div>
@@ -132,9 +61,6 @@ export default class App extends React.Component {
         );
     }
 }
-                    // <form onSubmit={this.handleSubmit}>
-                    //     <input type="text" value={this.state.query} onChange={this.handleChange} />
-                    // </form>
 
 class ProjectGrid extends React.Component {
     render() {
@@ -142,8 +68,6 @@ class ProjectGrid extends React.Component {
         this.props.projectList.forEach(function(project) {
             projects.push(<ProjectItem className="project-item" project={project} key={project._id}/>)
         });
-        // console.log("In ProjectGrid:");
-        // console.log(this.props.projectList)
         return (
             <div className="project-grid">
                 {projects}
@@ -158,7 +82,6 @@ class ProjectItem extends React.Component {
         var authorList = this.props.project.members;
         var description = this.props.project.description;
         return (
-            // <div className="app">Hello, nice people! Don't be wrong</div>
             <div className="project-item">
                 <ProjectName className="project-name" name={name} />
                 <AuthorList className="project-authors" authorList={authorList} />
