@@ -43,10 +43,10 @@ var PROJECTS = [
 // );
 
 var DB_PROJECTS = []
-fetch('/api/project')
+fetch('/api/genetics')
 .then(function(response) {
     console.log("Sample project:")
-    console.log(response);
+    console.log(response.json());
     DB_PROJECTS = response;
 })
 
