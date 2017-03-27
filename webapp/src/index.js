@@ -42,16 +42,19 @@ var PROJECTS = [
 //   document.getElementById('root')
 // );
 
-var DB_PROJECTS = []
-fetch('/api/genetics')
-.then(function(response) {
-    console.log("Sample project:")
-    console.log(response.json());
-    DB_PROJECTS = response;
-})
+// var DB_PROJECTS = []
+// fetch('/api/genetics')
+// .then(function(response) {
+//     console.log("Sample project:")
+//     // console.log(response.json());
+//     response.json().then(function(json) {
+//         console.log(json)
+//         DB_PROJECTS = json;
+//     })
+// })
 
 
 ReactDOM.render(
-  <App projectList={PROJECTS}/>,
+  <App  />,
   document.getElementById('root')
 );

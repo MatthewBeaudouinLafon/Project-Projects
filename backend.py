@@ -7,6 +7,14 @@ import csv
 import urllib.request
 import pprint
 import re
+import json
+from bson import ObjectId
+
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 app = Flask(__name__)
 
@@ -96,12 +104,14 @@ def fill_database():
 # fill_database()
 
 # Given project name, retrieve the rest of the project's information
-@app.route('/project', methods=["GET"])
+@app.route('/api/<project_name>', methods=["GET"])
 def retrieve_project(project_name):
     REGEX = ".*"
+    print(project_name)
     search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
     project_information = list(db.posts.find({"title" : search_item}))
-    return project_information
+    output = JSONEncoder().encode(project_information)
+    return output
 
 pprint.pprint(retrieve_project("genetics"))
 
