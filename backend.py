@@ -86,16 +86,20 @@ posts = db.posts
 def fill_database():
     dictionary = retrieve_all_information()
     for key, value in dictionary.items():
+        pprint.pprint(dictionary[key])
         posts.insert_one(dictionary[key])
 
-# post_id = fill_database()
+fill_database()
 
 # Given project name, retrieve the rest of the project's information
-# @app.route('/project', methods=["GET","POST"])
+@app.route('/project', methods=["GET"])
 def retrieve_project(project_name):
+    for post in posts.find():
+        pprint.pprint(post)
     project_information = db.posts.find({"title": project_name})
     return project_information
 
+# retrieve_project("")
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))
