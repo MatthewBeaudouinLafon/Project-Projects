@@ -5,7 +5,8 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            projects: []
+            projects: [],
+            query: "*"
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -14,14 +15,15 @@ export default class App extends React.Component {
 
     updateFromDB(json) {
         this.setState({
-            projects: json
+            projects: json,
+            query: this.state.query
         });
     }
 
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
 
-        fetch('/api/*')
+        fetch('/api/.*')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)
@@ -61,6 +63,7 @@ export default class App extends React.Component {
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
+                    <input type="text" value={this.state.searchValue} onChange={this.handleChange} />
                 </div>
                 {grid}
             </div>
