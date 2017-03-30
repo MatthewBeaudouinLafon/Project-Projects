@@ -21,7 +21,7 @@ export default class App extends React.Component {
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
 
-        fetch('/api/genetics')
+        fetch('/api/*')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)
@@ -47,17 +47,64 @@ export default class App extends React.Component {
         }
     }
 
-
     render() {
-        // console.log("In App render():")
+        let grid = null;
+        console.log("Rendering projects:")
+        console.log(this.state.projects)
+        if (this.state.projects !== []) {
+            grid = <ProjectGrid projectList={this.state.projects} />
+        } else {
+            grid = <div>No projects here!</div> 
+        }
         return (
             <div>
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
                 </div>
-                <ProjectGrid projectList={this.state.projects} />
+                {grid}
             </div>
+        );
+    }
+}
+
+class FilterSide extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            <form>
+                <input 
+                    type="text"
+                    placeholder={this.props.placeholder}
+                    value={this.props.projectFilterValue}
+                    onChange={this.handleProjectFilterText}
+            />
+            </form>
+        );  
+    }
+}
+
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.handleFilterText = this.handleFilterText.bind(this);
+    }
+
+    handleFilterText(e) {
+        this.props.handleFilterInputTextChange(e);
+    }
+
+    render() {
+        return (
+            <input 
+                    type="text"
+                    placeholder={this.props.placeholder}
+                    value={this.props.filterValue}
+                    onChange={this.handleFilterText}
+            />
         );
     }
 }
