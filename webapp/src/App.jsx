@@ -5,8 +5,7 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            projects: [],
-            query: "*"
+            projects: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -15,15 +14,14 @@ export default class App extends React.Component {
 
     updateFromDB(json) {
         this.setState({
-            projects: json,
-            query: this.state.query
+            projects: json
         });
     }
 
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
 
-        fetch('/api/.*')
+        fetch('/api/genetics')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)
@@ -49,65 +47,17 @@ export default class App extends React.Component {
         }
     }
 
+
     render() {
-        let grid = null;
-        console.log("Rendering projects:")
-        console.log(this.state.projects)
-        if (this.state.projects !== []) {
-            grid = <ProjectGrid projectList={this.state.projects} />
-        } else {
-            grid = <div>No projects here!</div> 
-        }
+        // console.log("In App render():")
         return (
             <div>
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
-                    <input type="text" value={this.state.searchValue} onChange={this.handleChange} />
                 </div>
-                {grid}
+                <ProjectGrid projectList={this.state.projects} />
             </div>
-        );
-    }
-}
-
-class FilterSide extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-
-    render() {
-        return (
-            <form>
-                <input 
-                    type="text"
-                    placeholder={this.props.placeholder}
-                    value={this.props.projectFilterValue}
-                    onChange={this.handleProjectFilterText}
-            />
-            </form>
-        );  
-    }
-}
-
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.handleFilterText = this.handleFilterText.bind(this);
-    }
-
-    handleFilterText(e) {
-        this.props.handleFilterInputTextChange(e);
-    }
-
-    render() {
-        return (
-            <input 
-                    type="text"
-                    placeholder={this.props.placeholder}
-                    value={this.props.filterValue}
-                    onChange={this.handleFilterText}
-            />
         );
     }
 }
