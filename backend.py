@@ -10,6 +10,12 @@ import re
 import json
 from bson import ObjectId
 
+print("Connecting to Database...")
+client = MongoClient()#'localhost', 27017)
+db = client.test
+posts = db.posts
+print("Done")
+
 class JSONEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, ObjectId):
@@ -92,9 +98,6 @@ def retrieve_all_information():
     # "Description": "blah",
     # "Members": "Justin", "Leon", "etc"},
 
-client = MongoClient('localhost', 27017)
-db = client.test
-posts = db.posts
 
 def fill_database():
     dictionary = retrieve_all_information()
@@ -106,14 +109,12 @@ def fill_database():
 # Given project name, retrieve the rest of the project's information
 @app.route('/api/<project_name>', methods=["GET"])
 def retrieve_project(project_name):
+    print("Requesting project_name={}".format(project_name))
     REGEX = ".*"
-    print(project_name)
     search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
     project_information = list(db.posts.find({"title" : search_item}))
     output = JSONEncoder().encode(project_information)
     return output
-
-pprint.pprint(retrieve_project("genetics"))
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))
