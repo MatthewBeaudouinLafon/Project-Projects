@@ -111,6 +111,7 @@ def fill_database():
 def retrieve_project(project_name):
     print("Requesting project_name={}".format(project_name))
     REGEX = ".*"
+    print("Regex: {}".format(REGEX + project_name + REGEX))
     search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
     project_information = list(db.posts.find({"title" : search_item}))
     output = JSONEncoder().encode(project_information)
