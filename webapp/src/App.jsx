@@ -5,7 +5,9 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            projects: []
+            allProjects: [],
+            displayProjects: [],
+            query: ""
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -14,7 +16,9 @@ export default class App extends React.Component {
 
     updateFromDB(json) {
         this.setState({
-            projects: json
+            allProjects: json,
+            displayProjects: json,
+            query: this.state.query
         });
     }
 
@@ -30,11 +34,15 @@ export default class App extends React.Component {
     }
 
     handleChange(event) {
-        var current_projects = this.state.projects;
-        var new_query = event.target.value;
+        const new_query = event.target.value;
+        const regex = new RegExp(".*" + new_query + ".*")
+        const current_projects = this.state.allProjects.filter(function(proj) {
+            return (regex.test(proj.title))
+        });
 
         this.setState({
-            projects: current_projects,
+            allProjects: this.state.allProjects,
+            displayProjects: current_projects,
             query: new_query
         })
     }
@@ -49,12 +57,20 @@ export default class App extends React.Component {
 
 
     render() {
-        // console.log("In App render():")
+        let grid = null;
+        console.log("Rendering projects:")
+        console.log(this.state.displayProjects)
+        if (this.state.displayProjects !== []) {
+            grid = <ProjectGrid projectList={this.state.displayProjects} />
+        } else {
+            grid = <div>No projects here!</div> 
+        }
         return (
             <div>
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
+                    <input type="text" placeholder="Search..." value={this.state.query} onChange={this.handleChange} />
                 </div>
                 <ProjectGrid projectList={this.state.projects} />
             </div>
