@@ -1,4 +1,7 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+
+// import slideshowScript from './slideshow.js'
 
 export default class Homepage extends React.Component {
 
@@ -31,11 +34,20 @@ export default class Homepage extends React.Component {
         })
     }
 
+    // componentWillMount() {
+    //     const script = document.createElement( 'script' );
+    //         script.type = 'text/javascript';
+    //         script.src = slideshowScript;
+    //         script.async = true;
+    //         document.body.appendChild(script);
+    //         // $('.script-placeholder').append(embedCode);
+    // }
+
     render() {
         let slides = null;
         if (this.state.projects.length !== 0) {
-            // console.log("****Rendering projects:")
-            // console.log(this.state.projects)
+            console.log("****Rendering projects:")
+            console.log(this.state.projects)
 
             slides = <ProjectDisplay projectList={this.state.projects} />
         } else {
@@ -60,8 +72,6 @@ class ProjectDisplay extends React.Component {
             <div className = "projectDisplay">
                 <div className="slideshow-container">
                     <Slide className="slide" projectList={this.props.projectList} />
-                    {var slideIndex = 0}
-                    {showProjects();}
                 </div>
             </div>
         );
@@ -77,7 +87,7 @@ class Slide extends React.Component {
         });
         console.log(slides);
         return (
-            <div className="slideshow">
+            <div>
                 {slides}
             </div>
         );
@@ -91,12 +101,10 @@ class ProjectItem extends React.Component {
         var authorList = this.props.project.members;
         var description = this.props.project.description;
         return (
-            <div class="mySlides fade">
-                <div className="project-item">
+            <div className="mySlides fade">
                     <ProjectName className="project-name" name={name} />
                     <AuthorList className="project-authors" authorList={authorList} />
                     <Description className="project-description" description={description} />
-                </div>
             </div>
         );
     }
@@ -124,18 +132,4 @@ class AuthorList extends React.Component {
             <div className="project-authors">{this.props.authorList.join(', ')}</div>
         );
     }
-}
-
-function showProjects() {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none"; 
-    }
-    slideIndex++;
-    if (slideIndex > slides.length) {
-        slideIndex = 1
-    } 
-    slides[slideIndex-1].style.display = "block"; 
-    setTimeout(showProjects, 5000); // Change image every 5 seconds
 }
