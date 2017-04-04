@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// import slideshowScript from './slideshow.js'
+import slideshowScript from './slideshow.js'
 
 export default class Homepage extends React.Component {
 
@@ -34,14 +34,14 @@ export default class Homepage extends React.Component {
         })
     }
 
-    // componentWillMount() {
-    //     const script = document.createElement( 'script' );
-    //         script.type = 'text/javascript';
-    //         script.src = slideshowScript;
-    //         script.async = true;
-    //         document.body.appendChild(script);
-    //         // $('.script-placeholder').append(embedCode);
-    // }
+    componentWillMount() {
+        const script = document.createElement( 'script' );
+            script.type = 'text/javascript';
+            script.src = slideshowScript;
+            script.async = true;
+            document.body.appendChild(script);
+            // $('.script-placeholder').append(embedCode);
+    }
 
     render() {
         let slides = null;
