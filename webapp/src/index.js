@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './App.jsx';
 import './style.scss';
-import Homepage from './Homepage';
+import Homepage from './Homepage.jsx';
 
 
 var PROJECTS = [
