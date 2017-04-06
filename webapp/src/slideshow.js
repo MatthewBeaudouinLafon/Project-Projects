@@ -1,9 +1,10 @@
-var slideIndex = 30;
+var slideIndex = 1;
+var slides = document.getElementsByClassName("mySlides");
+var counter = document.getElementsByClassName('slide-counter');
 showSlides(slideIndex);
 
 function showSlides(n) {
     var i;
-    var slides = document.getElementsByClassName("mySlides");
     // var dots = document.getElementsByClassName("dot");
     if (n > slides.length) {slideIndex = 1}    
     if (n < 1) {slideIndex = slides.length}
@@ -19,9 +20,19 @@ function showSlides(n) {
         slides[slideIndex-1].visibility = "visible";
         slides[slideIndex-1].style.display = "block";
     }
+
+    var slideCounter = document.getElementById("slide-counter");
+
+    if (slideCounter) { 
+        var t = slideIndex + " / " + slides.length;      // Create a text node
+        slideCounter.innerHTML = t;           // Append <p> to <div> with id="myDIV"
+    }
+    
 }
 
-
+function updateSlides () {
+    counter = "<p>" + slideIndex + "/" + slides.length + "</p>";
+}
     // var i;
     // var slides = document.getElementsByClassName("mySlides");
     // var counter = document.getElementsByClassName("slide-counter");
@@ -43,4 +54,16 @@ export const plusSlides = (n)=>{
 
 export const minusSlides = (n) => {
     showSlides(slideIndex -= n);
+}
+
+export const getIndex = () => {
+    return slideIndex;
+}
+
+export const getTotalSlides = () => {
+    return slides.length;
+}
+
+export const countSlides = () => {
+    updateSlides();
 }

@@ -49,13 +49,13 @@ export default class Homepage extends React.Component {
     render() {
         let slides = null;
         if (this.state.projects.length !== 0) {
-            console.log("****Rendering projects:")
-            console.log(this.state.projects)
-
+            // console.log("****Rendering projects:")
+            // console.log(this.state.projects)
             slides = <ProjectDisplay projectList={this.state.projects} />
         } else {
             slides = <div>No projects here!</div> 
         }
+
         return (
             <div>
                 <NavBar />
@@ -77,8 +77,8 @@ class ProjectDisplay extends React.Component {
                     <Slideshow className="slide" projectList={this.props.projectList} />
                     <PrevButton />
                     <NextButton />
-                </div>
-                <div className = "slide-counter"></div>
+                </div><br/><br/><br/>
+                <center><div id="slide-counter"></div></center>
             </div>
         );
     }
