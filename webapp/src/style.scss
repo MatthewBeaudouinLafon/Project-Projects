@@ -232,12 +232,34 @@ button:hover {
   
 }
 
-.text-chunk {
+.chunk-container {
   display: flex;
   justify-content: center;
   padding: 1em;
   border: 1px solid silver;
   border-bottom: 0px;
+}
+
+
+
+.image-chunk {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-chunk .image {
+  display:block;
+  height: 315px;
+  width: 420px;
+  flex-basis: auto;
+}
+
+.image-chunk .description {
+  display:block;
+  font-style: italic;
+  color: grey;
+  font-size: 0.8em;
+  justify-content: center;
 }
 
 .text-chunk-input {
