@@ -8,23 +8,28 @@ var CHUNKS = [
     {
         type: "Text",
         content: "My god, another one? I can't believe it."        
+    },
+    {
+        type:"Image",
+        content: {
+            link:"https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
+            alt:"This is a cat in burriot form",
+            description:"The famed \"Burrito Cat\""
+        }
+    },
+    {
+        type:"Text",
+        content:"Yo did you see that cat? Some say it's \"cute af\""
     }
-]
+
+// TODO: Look into react-youtube: https://github.com/troybetz/react-youtube
 // ,
-//     {
-//         type:"Image",
-//         content:"https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg"
-//     },
-//     {
-//         type:"Text",
-//         content:"Yo did you see that cat? Some say it's \"cute af\""
-//     },
 //     {
 //         type:"Video",
 //         content:"https://youtu.be/_O-WEiOlxr4"
 //     }
 
-// ]
+]
 
 export default class ProjectForm extends React.Component {
     constructor(props) {
@@ -174,7 +179,7 @@ class TextChunk extends React.Component {
     render() {
         //TODO: Make text box scale with size
         return (
-            <div className="text-chunk">
+            <div className="chunk-container">
                 <textarea className="text-chunk-input" value={this.props.content} onChange={this.handleChange}/>
             </div>
         );
@@ -184,8 +189,13 @@ class TextChunk extends React.Component {
 class ImageChunk extends React.Component {
     render() {
         return (
-            <div>
-                <img src={this.props.content} alt="Need to add this"/>
+            <div className="chunk-container">
+                <div className="image-chunk">
+                    <img className="image" src={this.props.content.link} alt={this.props.content.alt}/>
+                    <div className="description">
+                        {this.props.content.description}
+                    </div>
+                </div>
             </div>
         );
     }
@@ -194,7 +204,7 @@ class ImageChunk extends React.Component {
 class VideoChunk extends React.Component {
     render() {
         return (
-            <div>
+            <div className="chunk-container">
                 <iframe src={this.props.content} frameBorder="0" allowFullScreen></iframe>
             </div>
         );
