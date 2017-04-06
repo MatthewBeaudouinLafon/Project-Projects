@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import './style.scss';
 import Homepage from './Homepage';
+import ProjectForm from './ProjectForm';
 
 
 var PROJECTS = [
@@ -59,6 +60,6 @@ var PROJECTS = [
 //   document.getElementById('root')
 // );
 ReactDOM.render(
-  <Homepage />,
+  <ProjectForm />,
   document.getElementById('root')
 );
