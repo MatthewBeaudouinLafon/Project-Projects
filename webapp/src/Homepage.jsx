@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 
 import slideshowScript from './slideshow.js'
 
+import {plusSlides} from './slideshow.js'
+import {minusSlides} from './slideshow.js'
+
 export default class Homepage extends React.Component {
 
     constructor(props) {
@@ -46,21 +49,21 @@ export default class Homepage extends React.Component {
     render() {
         let slides = null;
         if (this.state.projects.length !== 0) {
-            console.log("****Rendering projects:")
-            console.log(this.state.projects)
-
+            // console.log("****Rendering projects:")
+            // console.log(this.state.projects)
             slides = <ProjectDisplay projectList={this.state.projects} />
         } else {
             slides = <div>No projects here!</div> 
         }
+
         return (
             <div>
-                <div>
+                <NavBar />
+                <div><br/><br/><br/>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Public Side</h2></center>
                 </div>
                 {slides}
-                <ProjectDisplay projectList = {this.state.projects} />
             </div>
         );
     }
@@ -71,15 +74,18 @@ class ProjectDisplay extends React.Component {
         return (
             <div className = "projectDisplay">
                 <div className="slideshow-container">
-                    <Slide className="slide" projectList={this.props.projectList} />
-                </div>
+                    <Slideshow className="slide" projectList={this.props.projectList} />
+                    <PrevButton />
+                    <NextButton />
+                </div><br/><br/><br/>
+                <center><div id="slide-counter"></div></center>
             </div>
         );
     }
 }
 
 
-class Slide extends React.Component {
+class Slideshow extends React.Component {
     render() {
         var slides = [];
         this.props.projectList.forEach(function(project) {
@@ -130,6 +136,57 @@ class AuthorList extends React.Component {
     render() {
         return (
             <div className="project-authors">{this.props.authorList.join(', ')}</div>
+        );
+    }
+}
+
+class NavBar extends React.Component {
+    render() {
+        return (
+            <div className="fixed-nav-bar">
+                <nav class="fixed-nav-bar">
+                &emsp;
+                <button class="navbar" href="">Log In</button>
+                </nav>
+            </div>
+        );
+    }
+}
+
+class PrevButton extends React.Component {
+    constructor() {
+        super();
+        this.onClick = this.handleClick.bind(this);
+    }
+
+    handleClick (event) {
+        minusSlides(1);
+    }
+
+    render() {
+        return (
+            <a className="prev" onClick={this.onClick}>
+                &#10094;
+            </a>
+        );
+    }
+}
+
+class NextButton extends React.Component {
+    constructor() {
+        super();
+        this.onClick = this.handleClick.bind(this);
+    }
+
+    handleClick (event) {
+        plusSlides(1);
+    }
+
+    render() {
+        return (
+            <a className="next" onClick={this.onClick}>
+                &#10095;
+            </a>
         );
     }
 }
