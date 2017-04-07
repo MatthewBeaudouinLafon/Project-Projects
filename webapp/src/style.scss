@@ -1,9 +1,6 @@
 body {
   background-color: black;
   // background: url("bg.png") center center fixed;
-  // -webkit-background-size: cover;
-  // -moz-background-size: cover;
-  // -o-background-size: cover;
   // background-size: cover;
 }
 
@@ -31,23 +28,23 @@ ul {
 a {
   color: white;
   text-decoration: none;
-  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
   z-index: 1;
 }
 
 a:hover {
   color: silver;
+  text-decoration: underline;
 }
 
-input[type="text"] {
+input[type="text"], textarea {
   color: white;
-  background: none;
+  background: lighten(black, 5);
   border: 1px solid silver;
   padding: 1%;
   font-size: 15px;
-  margin-bottom: 1em;
   font-family: 'Source Code Pro', monospace;
-  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
   z-index: 1;
 }
 
@@ -121,20 +118,22 @@ input[type="text"]:hover {
 
 /* Fading animation */
 .fade {
-  -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
   animation-name: fade;
   animation-duration: 1.5s;
-}
-
-@-webkit-keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
 }
 
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
+}
+
+@keyframes pulse {
+  0% {
+    background-color: black;
+  }
+  100% {
+    background-color: lighten(black, 20)
+  }
 }
 
 nav {
@@ -162,7 +161,7 @@ nav {
 }
 
 button {
-  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.1s;
   z-index: 1;
   color: white;
   background-color: black;
@@ -174,14 +173,22 @@ button {
 }
 
 button:hover {
-  color: silver;
   cursor: pointer;
+  color: white;
+  background-color: lighten(black, 10);
+}
+
+button .pulse {
+  animation: pulse 5s infinite;
+  /*animation-timing-function: ease;*/
+  /*animation-direction: alternate;*/
 }
 
 /* Project Form */
 .form-header {
   display: flex;
   justify-content: space-between;
+  text-align:center;
   padding: 1em;
   border: 1px solid silver;
   border-bottom: 0px;
@@ -191,7 +198,7 @@ button:hover {
 
 .form-project-name {
   font-size: 1.4em;
-  
+  display: inline-block;
 }
 
 .chunk-container {
@@ -201,8 +208,6 @@ button:hover {
   border: 1px solid silver;
   border-bottom: 0px;
 }
-
-
 
 .image-chunk {
   display: flex;
@@ -226,10 +231,15 @@ button:hover {
 
 .text-chunk-input {
   flex-grow: 1;
-  height: 5em;
+  min-height: 1em;
+  white-space: pre-wrap;
 }
 
-.new-chunk-container {
+textarea.text-chunk-input {
+  min-height: 5em;
+}
+
+.chunk-button-container {
   display: flex;
   justify-content: space-around;
   padding: 2%;
@@ -242,4 +252,11 @@ button:hover {
   border: 1px solid silver;
   border-radius: 4px;
   padding: 0.4em;
+}
+
+.chunk-end {
+  padding-bottom: 4px;
+  border-bottom: 1px solid silver;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
 }

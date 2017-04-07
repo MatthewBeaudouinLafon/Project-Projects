@@ -36,7 +36,7 @@ export default class ProjectForm extends React.Component {
         super(props);
 
         this.state = {
-            editing: true,
+            editing: false,
             isSaved: false,
             chunkList: CHUNKS,
             projectName: "Test Name"
@@ -45,7 +45,7 @@ export default class ProjectForm extends React.Component {
         this.getProjectName = this.getProjectName.bind(this)
         this.addChunk = this.addChunk.bind(this)
         this.convertChunk = this.convertChunk.bind(this)
-        this.save = this.save.bind(this)
+        this.changeEditState = this.changeEditState.bind(this)
         this.handleChunkChange = this.handleChunkChange.bind(this)
     }
 
@@ -105,15 +105,15 @@ export default class ProjectForm extends React.Component {
     convertChunk(chunk, key) {
         switch (chunk.type) {
             case "Text":
-                return <TextChunk content={chunk.content} edit={this.state.editing} 
+                return <TextChunk content={chunk.content} editing={this.state.editing} 
                                     handleTextChange={(newValue) => {this.handleChunkChange(newValue, key)}} 
                                     key={key}/>
                 break;
             case "Image":
-                return <ImageChunk content={chunk.content} edit={this.state.editing} key={key}/>
+                return <ImageChunk content={chunk.content} editing={this.state.editing} key={key}/>
                 break;
             case "Video":
-                return <VideoChunk content={chunk.content} edit={this.state.editing} key={key}/>
+                return <VideoChunk content={chunk.content} editing={this.state.editing} key={key}/>
                 break;
             default:
                 console.log("Can't parse chunk with type : " + chunk.type);
@@ -121,14 +121,25 @@ export default class ProjectForm extends React.Component {
         }
     }
 
-    save() {
-        console.log("Saving...")
-        this.setState({
-            editing: false,
-            isSaved: this.state.isSaved,
-            chunkList: this.state.chunkList,
-            projectName: this.state.projectName
-        })
+    changeEditState() {
+        if (this.state.editing) {
+            //TODO: Actually Save the thing
+            console.log("Saving...")
+            this.setState({
+                editing: false,
+                isSaved: this.state.isSaved,
+                chunkList: this.state.chunkList,
+                projectName: this.state.projectName
+            })
+        } else {
+            this.setState({
+                editing: true,
+                isSaved: this.state.isSaved,
+                chunkList: this.state.chunkList,
+                projectName: this.state.projectName
+            })
+        }
+
     }
 
     render() {
@@ -142,9 +153,11 @@ export default class ProjectForm extends React.Component {
 
         return (
             <div>
-                <FormHeader name={this.state.projectName} save={this.save}/>
+                <FormHeader name={this.state.projectName} 
+                            save={this.changeEditState} 
+                            editing={this.state.editing}/>
                 {displayChunks}
-                <NewChunk addChunk={this.addChunk}/>
+                <NewChunk addChunk={this.addChunk} editing={this.state.editing}/>
             </div>
         );
     }
@@ -152,13 +165,14 @@ export default class ProjectForm extends React.Component {
 
 class FormHeader extends React.Component {
     render() {
+
         return (
             <div className="form-header">
                 <div className="form-project-name">
                     Project Name: <b>{this.props.name}</b>
                 </div>
                 <div className="form-save-button">
-                    <Button name="Save" func={this.props.save} />
+                    <Button name={this.props.editing ? "Save" : "Edit"} func={this.props.save} />
                 </div>
             </div>
         );
@@ -167,20 +181,30 @@ class FormHeader extends React.Component {
 
 class TextChunk extends React.Component {
     constructor(props) {
-        super(props)
+        super(props);
 
-        this.handleChange = this.handleChange.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.getTextBox = this.getTextBox.bind(this);
     }
 
     handleChange(event) {
         this.props.handleTextChange(event.target.value);
     }
 
+    getTextBox(props) {
+        if (props.editing) {
+            return <textarea className="text-chunk-input" value={props.content} onChange={this.handleChange}/>;
+        } else {
+            return <div className="text-chunk-input">{props.content}</div>;
+        }
+    }
+
     render() {
         //TODO: Make text box scale with size
+        const textBox = this.getTextBox(this.props);
         return (
             <div className="chunk-container">
-                <textarea className="text-chunk-input" value={this.props.content} onChange={this.handleChange}/>
+                {textBox}    
             </div>
         );
     }
@@ -223,17 +247,28 @@ class EmptyChunk extends React.Component {
 
 class NewChunk extends React.Component {
     render() {
-        const buttons = ["Text", "Video", "Image"];
+        console.log(this.props)
+        let finalBlock = <div />;
+        if (this.props.editing) {
+            const buttons = ["Text", "Video", "Image"];
 
-        let dispButtons = [];
-        buttons.forEach((button) => {
-            dispButtons.push(<Button name={button} func={this.props.addChunk} key={button}/>)
-        })
-        return (
-            <div className="new-chunk-container">
-                {dispButtons}
-            </div>
-        );
+            let dispButtons = [];
+            buttons.forEach((button) => {
+                dispButtons.push(
+                    <Button name={button} func={this.props.addChunk} key={button}/>
+                )
+            })
+            finalBlock = (
+                <div className="chunk-button-container">
+                    {dispButtons}
+                </div>
+            );
+        } else {
+            finalBlock = (
+                <div className="chunk-end" />
+            );
+        }
+        return finalBlock;
     }
 }
 
@@ -252,21 +287,10 @@ class Button extends React.Component {
 
     render() {
         return (
-            <div className="new-chunk-button" onClick={this.handleClick}>{this.props.name}</div>
+            <button className="new-chunk-button" onClick={this.handleClick}>{this.props.name}</button>
         );
     }
 }
-
-
-// class SaveButton extends React.Component {
-//     render() {
-//         return (
-            
-//         );
-//     }
-// }
-
-
 
 // class ____ extends React.Component {
 //     render() {
