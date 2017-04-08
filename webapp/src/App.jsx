@@ -70,7 +70,7 @@ export default class App extends React.Component {
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
-                    <input type="text" placeholder="Search..." value={this.state.query} onChange={this.handleChange} />
+                    <input class="search-bar" type="text" placeholder="Search..." value={this.state.query} onChange={this.handleChange} />
                 </div>
                 <ProjectGrid projectList={this.state.projects} />
             </div>
