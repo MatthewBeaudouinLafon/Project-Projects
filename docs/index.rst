@@ -17,7 +17,9 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
+.. include:: index.md
 
+.. automodule:: backend
 
 Indices and tables
 ==================
