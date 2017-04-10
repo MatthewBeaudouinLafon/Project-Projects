@@ -1,6 +1,3 @@
-language: python
-python:
-  - 3.5
-
-# command to run tests
-script: python test.py
+language: node_js
+node_js:
+  - 7.8
