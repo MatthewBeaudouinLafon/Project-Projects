@@ -34,21 +34,41 @@ a {
 
 a:hover {
   color: silver;
-  text-decoration: underline;
+  // text-decoration: underline;
 }
 
-input[type="text"], textarea {
+input {
   color: white;
   background: lighten(black, 5);
-  border: 1px solid silver;
-  padding: 1%;
-  font-size: 15px;
-  font-family: 'Source Code Pro', monospace;
+  border: none;
+  font-family: 'Source Code Pro', monospace; 
   transition-duration: 0.4s;
   z-index: 1;
 }
 
+input[type="submit"] {
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  color: gray;
+}
+
+input[type="text"], textarea {
+  border: 1px solid silver;
+  font-size: 15px;
+  padding: 0.5em;
+}
+
 input[type="text"]:hover {
+  background-color: #333333;
+}
+
+input[type="text"].search-bar {
+  padding: 1%;
+}
+
+input[type="text"]:hover.search-bar {
   padding-right: 10%;
 }
 
@@ -182,7 +202,9 @@ nav {
   border-bottom: 1px solid white;
   text-decoration: none;
   color: white;
-  padding-top: 15px;
+  // padding-top: 15px;
+  margin: 1% auto;
+  height: 2.5em;
 }
 
 #nav {

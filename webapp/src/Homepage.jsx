@@ -145,8 +145,13 @@ class NavBar extends React.Component {
         return (
             <div className="fixed-nav-bar">
                 <nav class="fixed-nav-bar">
-                &emsp;
-                <button class="navbar" href="">Log In</button>
+                <form method="POST">
+                <input type="text" name="username" placeholder="Username"/> &emsp;
+                <input type="text" name="password" placeholder="Password" /> &emsp;
+                <input type="submit" value="&#10095;" />
+                </form>
+                 &emsp;
+                <a href="">Forgot your password?</a> &emsp;
                 </nav>
             </div>
         );
