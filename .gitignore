@@ -1,4 +1,4 @@
 webapp/node_modules/
 tests.py
 *.csv
-node_modules
+node_modules/

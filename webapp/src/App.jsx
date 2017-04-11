@@ -15,6 +15,7 @@ export default class App extends React.Component {
     }
 
     updateFromDB(json) {
+        console.log("Getting projects from Database")
         this.setState({
             allProjects: json,
             displayProjects: json,

@@ -55,15 +55,7 @@ var PROJECTS = [
 // })
 
 
-// ReactDOM.render(
-//   <App  />,
-//   document.getElementById('root')
-// );
-// ReactDOM.render(
-//   <ProjectForm />,
-//   document.getElementById('root')
-// );
 ReactDOM.render(
-  <Homepage />,
+  <ProjectForm  />,
   document.getElementById('root')
 );
