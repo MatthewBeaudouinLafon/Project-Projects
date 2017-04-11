@@ -60,6 +60,6 @@ var PROJECTS = [
 //   document.getElementById('root')
 // );
 ReactDOM.render(
-  <ProjectForm />,
+  <Homepage />,
   document.getElementById('root')
 );

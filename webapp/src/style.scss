@@ -227,6 +227,9 @@ button .pulse {
   display: flex;
   justify-content: space-between;
   text-align:center;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 2em;
   padding: 1em;
   border: 1px solid silver;
   border-bottom: 0px;
@@ -242,6 +245,8 @@ button .pulse {
 .chunk-container {
   display: flex;
   justify-content: center;
+  margin-left: 1em;
+  margin-right: 1em;
   padding: 1em;
   border: 1px solid silver;
   border-bottom: 0px;
@@ -264,7 +269,7 @@ button .pulse {
   font-style: italic;
   color: grey;
   font-size: 0.8em;
-  justify-content: center;
+  text-align: center;
 }
 
 .text-chunk-input {
@@ -293,6 +298,9 @@ textarea.text-chunk-input {
 }
 
 .chunk-end {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 2em;
   padding-bottom: 4px;
   border-bottom: 1px solid silver;
   border-bottom-right-radius: 4px;

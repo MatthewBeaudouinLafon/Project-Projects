@@ -287,7 +287,7 @@ class Button extends React.Component {
 
     render() {
         return (
-            <button className="new-chunk-button" onClick={this.handleClick}>{this.props.name}</button>
+            <button className="new-chunk-button pulse" onClick={this.handleClick}>{this.props.name}</button>
         );
     }
 }
