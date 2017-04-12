@@ -1,3 +1,8 @@
+import {parse} from 'react-docgen';
+import Component from '!raw!./Component';
+
+const componentDocs = parse(Component);
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -6,6 +11,10 @@ import slideshowScript from './slideshow.js'
 import {plusSlides} from './slideshow.js'
 import {minusSlides} from './slideshow.js'
 
+
+/**
+ * Homepage: creates the website's home page. It contains a slideshow and a fixed navigation bar, which contains authentication fields.
+ */
 export default class Homepage extends React.Component {
 
     constructor(props) {
@@ -19,6 +28,9 @@ export default class Homepage extends React.Component {
         this.updateFromDB = this.updateFromDB.bind(this);
     }
 
+    /**
+     * If the database is populated, this function populates the component's state with the projects in the database.
+     */
     updateFromDB(json) {
         this.setState({
             projects: json,
@@ -69,6 +81,9 @@ export default class Homepage extends React.Component {
     }
 }
 
+/**
+ * ProjectDisplay: Contains the main components of this class (slideshow and slide counter), wrapped in a div tag.
+ */
 class ProjectDisplay extends React.Component {
     render() {
         return (
@@ -84,7 +99,9 @@ class ProjectDisplay extends React.Component {
     }
 }
 
-
+/**
+ * Slideshow: A slideshow of ProjectItems.
+ */
 class Slideshow extends React.Component {
     render() {
         var slides = [];
@@ -101,6 +118,9 @@ class Slideshow extends React.Component {
 
 }
 
+/**
+ * ProjectItem: Component that contains all of a given project's information: name, authorList, and description.
+ */
 class ProjectItem extends React.Component {
     render() {
         var name = this.props.project.title;
@@ -116,6 +136,9 @@ class ProjectItem extends React.Component {
     }
 }
 
+/**
+ * ProjectName: A given project's name.
+ */
 class ProjectName extends React.Component {
     render() {
         return (
@@ -124,6 +147,9 @@ class ProjectName extends React.Component {
     }
 }
 
+/**
+ * Description: A given project's description component.
+ */
 class Description extends React.Component {
     render() {
         return (
@@ -132,6 +158,9 @@ class Description extends React.Component {
     }
 }
 
+/**
+ * AuthorList: List of a given project's authors' names component, in which names are joined by commas.
+ */
 class AuthorList extends React.Component {
     render() {
         return (
@@ -140,6 +169,9 @@ class AuthorList extends React.Component {
     }
 }
 
+/**
+ * NavBar: Navigation bar component, which contains authentication fields (for usernames and passwords).
+ */
 class NavBar extends React.Component {
     render() {
         return (
@@ -158,12 +190,19 @@ class NavBar extends React.Component {
     }
 }
 
+
+/**
+ * PrevButton: Backwards-facing arrow button component, which controls the slide that is displayed.
+ */
 class PrevButton extends React.Component {
     constructor() {
         super();
         this.onClick = this.handleClick.bind(this);
     }
 
+    /**
+     * If the button is clicked, the current slide index will be reduced by 1.
+     */
     handleClick (event) {
         minusSlides(1);
     }
@@ -177,12 +216,18 @@ class PrevButton extends React.Component {
     }
 }
 
+/**
+ * NextButton: Forwards-facing arrow button component, which controls the slide that is displayed.
+ */
 class NextButton extends React.Component {
     constructor() {
         super();
         this.onClick = this.handleClick.bind(this);
     }
 
+    /**
+     * If the button is clicked, the current slide index will be increased by 1.
+     */
     handleClick (event) {
         plusSlides(1);
     }
@@ -195,3 +240,7 @@ class NextButton extends React.Component {
         );
     }
 }
+
+/**
+ * 
+ */
