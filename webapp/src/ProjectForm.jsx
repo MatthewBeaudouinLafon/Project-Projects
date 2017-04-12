@@ -1,4 +1,5 @@
 import React from 'react';
+import YouTube from 'react-youtube'
 
 var CHUNKS = [
     {
@@ -20,14 +21,13 @@ var CHUNKS = [
     {
         type:"Text",
         content:"Yo did you see that cat?"
+    },
+    {
+        type:"Video",
+        content: {
+            link:"https://youtu.be/_O-WEiOlxr4"
+        }
     }
-
-// TODO: Look into react-youtube: https://github.com/troybetz/react-youtube
-// ,
-//     {
-//         type:"Video",
-//         content:"https://youtu.be/_O-WEiOlxr4"
-//     }
 
 ]
 
@@ -76,7 +76,9 @@ export default class ProjectForm extends React.Component {
             case "Video":
                 chunk = {
                     type: "Video",
-                    content: ""
+                    content: {
+                        link: ""
+                    }
                 }
                 break;
             default:
@@ -124,7 +126,11 @@ export default class ProjectForm extends React.Component {
                             key={key}/>
                 break;
             case "Video":
-                return <VideoChunk content={chunk.content} editing={this.state.editing} key={key}/>
+                return <VideoChunk 
+                            content={chunk.content}
+                            editing={this.state.editing}
+                            handleLinkChange={(newContent) => {this.handleChunkChange(newContent, key)}}
+                            key={key}/>
                 break;
             default:
                 console.log("Can't parse chunk with type : " + chunk.type);
@@ -161,7 +167,6 @@ export default class ProjectForm extends React.Component {
             displayChunks.push(this.convertChunk(chunk, key));
             key++; 
         });
-        console.log(displayChunks)
         return (
             <div>
                 <FormHeader name={this.state.projectName} 
@@ -290,12 +295,57 @@ class ImageChunk extends React.Component {
 }
 
 class VideoChunk extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleLinkChange = this.handleLinkChange.bind(this);
+        this.youtube_parser = this.youtube_parser.bind(this);
+    }
+
+    handleLinkChange(event) {
+        const newContent = {
+            link: event.target.value
+        }
+        this.props.handleLinkChange(newContent);
+    }
+
+    youtube_parser(url){
+        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        var match = url.match(regExp);
+        return (match && match[7].length == 11) ? match[7] : false;
+    }
+
     render() {
+        const opts = {
+            height: "315",
+            width: "420"
+        }
+
+        let urlBox = null;
+        if (this.props.editing) {
+            urlBox = <input  
+                        className="small-input"
+                        value={this.props.content.link}
+                        onChange={this.handleLinkChange}
+                     />
+        }
+
         return (
             <div className="chunk-container">
-                <iframe src={this.props.content} frameBorder="0" allowFullScreen></iframe>
+                <div className="video-container">
+                    {urlBox}
+                    <YouTube
+                      videoId={this.youtube_parser(this.props.content.link)}
+                      className="youtube-video"
+                      opts={opts}
+                    />
+                </div>
             </div>
         );
+    }
+    _onReady(event) {
+        // access to player in all event handlers via event.target
+        event.target.pauseVideo();
     }
 }
 
