@@ -281,8 +281,8 @@ button .pulse {
 
 .image-chunk .image {
   display:block;
-  height: 315px;
-  width: 420px;
+  max-height: 315px;
+  max-width: 420px;
   flex-basis: auto;
 }
 
@@ -294,6 +294,18 @@ button .pulse {
   text-align: center;
 }
 
+.image-chunk .small-input {
+  display:block;
+  font-style: italic;
+  color: grey;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 0.2em;
+  border: 1px solid silver;
+  border-radius: 4px;
+  margin: 0.4em;
+}
+
 .text-chunk-input {
   flex-grow: 1;
   min-height: 1em;
@@ -302,9 +314,14 @@ button .pulse {
 
 textarea.text-chunk-input {
   min-height: 5em;
+  color: white;
+  background: lighten(black, 5);
 }
 
 .chunk-button-container {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 2em;
   display: flex;
   justify-content: space-around;
   padding: 2%;

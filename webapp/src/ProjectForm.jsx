@@ -19,7 +19,7 @@ var CHUNKS = [
     },
     {
         type:"Text",
-        content:"Yo did you see that cat? Some say it's \"cute af\""
+        content:"Yo did you see that cat?"
     }
 
 // TODO: Look into react-youtube: https://github.com/troybetz/react-youtube
@@ -66,7 +66,11 @@ export default class ProjectForm extends React.Component {
             case "Image":
                 chunk = {
                     type: "Image",
-                    content: ""
+                    content: {
+                        link: "",
+                        alt: "",
+                        description: ""
+                    }
                 }
                 break;
             case "Video":
@@ -105,12 +109,19 @@ export default class ProjectForm extends React.Component {
     convertChunk(chunk, key) {
         switch (chunk.type) {
             case "Text":
-                return <TextChunk content={chunk.content} editing={this.state.editing} 
-                                    handleTextChange={(newValue) => {this.handleChunkChange(newValue, key)}} 
-                                    key={key}/>
+                return <TextChunk 
+                            content={chunk.content} 
+                            editing={this.state.editing} 
+                            handleTextChange={(newContent) => {this.handleChunkChange(newContent, key)}} 
+                            key={key}/>
                 break;
             case "Image":
-                return <ImageChunk content={chunk.content} editing={this.state.editing} key={key}/>
+                return <ImageChunk 
+                            content={chunk.content}
+                            editing={this.state.editing}
+                            handleDescChange={(newContent) => {this.handleChunkChange(newContent, key)}}
+                            handleLinkChange={(newContent) => {this.handleChunkChange(newContent, key)}}
+                            key={key}/>
                 break;
             case "Video":
                 return <VideoChunk content={chunk.content} editing={this.state.editing} key={key}/>
@@ -150,7 +161,7 @@ export default class ProjectForm extends React.Component {
             displayChunks.push(this.convertChunk(chunk, key));
             key++; 
         });
-
+        console.log(displayChunks)
         return (
             <div>
                 <FormHeader name={this.state.projectName} 
@@ -211,15 +222,68 @@ class TextChunk extends React.Component {
 }
 
 class ImageChunk extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.handleLinkChange = this.handleLinkChange.bind(this);
+        this.handleDescChange = this.handleDescChange.bind(this);
+        this.getImageChunk = this.getImageChunk.bind(this);
+    }
+
+    handleLinkChange(event) {
+        const newContent = {
+            link: event.target.value,
+            description: this.props.content.description,
+            alt: this.props.content.alt
+        }
+        this.props.handleLinkChange(newContent);
+    }
+
+    handleDescChange(event) {
+        const newContent = {
+            link: this.props.content.link,
+            description: event.target.value,
+            alt: this.props.content.alt
+        }
+        this.props.handleDescChange(newContent);
+    }
+
+    getImageChunk() {
+        let image;
+        // TODO: Manage links in a more secure way
+        if (this.props.content.link === "") {
+            image = <div className="image" />
+        } else {
+            image = <img className="image" src={this.props.content.link} alt={this.props.content.alt}/>
+        }
+
+        if (this.props.editing) {
+            return <div className="image-chunk">
+                        <input  
+                            className="small-input"
+                            value={this.props.content.link}
+                            onChange={this.handleLinkChange}
+                        />
+                        {image}
+                        <input  
+                            className="small-input"
+                            value={this.props.content.description}
+                            onChange={this.handleDescChange}
+                        />
+                    </div>
+        } else {
+            return <div className="image-chunk">
+                        {image}
+                        <div className="description">
+                            {this.props.content.description}
+                        </div>
+                    </div>
+        }
+    }
     render() {
         return (
             <div className="chunk-container">
-                <div className="image-chunk">
-                    <img className="image" src={this.props.content.link} alt={this.props.content.alt}/>
-                    <div className="description">
-                        {this.props.content.description}
-                    </div>
-                </div>
+                {this.getImageChunk()}
             </div>
         );
     }
@@ -247,7 +311,6 @@ class EmptyChunk extends React.Component {
 
 class NewChunk extends React.Component {
     render() {
-        console.log(this.props)
         let finalBlock = <div />;
         if (this.props.editing) {
             const buttons = ["Text", "Video", "Image"];
