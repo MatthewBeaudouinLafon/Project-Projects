@@ -1,8 +1,3 @@
-// import {parse} from 'react-docgen';
-// import Component from '!raw!./Component';
-
-// const componentDocs = parse(Component);
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 

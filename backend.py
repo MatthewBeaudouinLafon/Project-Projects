@@ -2,7 +2,6 @@ import os
 from flask import Flask, redirect, render_template, request, url_for, Response
 from pymongo import MongoClient
 import pymongo
-from datetime import datetime
 import csv
 import urllib.request
 import pprint
@@ -74,6 +73,7 @@ def retrieve_descriptions():
                 pass # essentially, do nothing
     return descriptions
 
+
 def retrieve_all_information():
     names = retrieve_project_names()
     members = retrieve_project_members()
@@ -83,10 +83,8 @@ def retrieve_all_information():
     for name in names:
         temp = {}
         key = str(count) # Official dictionary key
-        # key_temp = name # Temporary dictionary key
         val1 = members[count]
         val2 = descriptions[count][0:100] + "..."
-        # value = [val1, val2]
         temp["title"] = name
         temp["members"] = val1
         temp["description"] = val2
@@ -94,20 +92,27 @@ def retrieve_all_information():
         count += 1
     return final
 
-# {"title": "Team Orpheus",
-    # "Description": "blah",
-    # "Members": "Justin", "Leon", "etc"},
 
-
-def fill_database():
+def fill_database(JSON_Object, object_id=0):
     dictionary = retrieve_all_information()
-    for key, value in dictionary.items():
-        posts.insert_one(dictionary[key])
+    if object_id == 0:
+        for key, value in JSON_Object:
+            result = posts.insert_one(dictionary[key]).inserted_id
+            print(result)
+    else:
+        db.posts.update({'_id':object_id},
+            {"$set": post},
+            upsert=False)
 
-# fill_database()
+
+def retrieve_JSON_Object(object_id):
+    project_information = db.posts.find_one({'_id': ObjectId(object_id)})
+    output = JSONEncoder().encode(project_information)
+    return output
+
 
 # Given project name, retrieve the rest of the project's information
-@app.route('/api/<project_name>', methods=["GET"])
+@app.route('/api/<project_name>')
 def retrieve_project(project_name):
     print("Requesting project_name={}".format(project_name))
     REGEX = ".*"
@@ -116,6 +121,16 @@ def retrieve_project(project_name):
     project_information = list(db.posts.find({"title" : search_item}))
     output = JSONEncoder().encode(project_information)
     return output
+
+
+@app.route('/api/project/<project_id>', methods=["POST"]) 
+def save_project(project_info):
+    fill_database(project_info, project_id)
+    # Could be dangerous to use Mongo ID here
+
+
+# retrieve_JSON_Object()
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))
