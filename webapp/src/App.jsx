@@ -26,7 +26,7 @@ export default class App extends React.Component {
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
 
-        fetch('/api/genetics')
+        fetch('/api/.*')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)
