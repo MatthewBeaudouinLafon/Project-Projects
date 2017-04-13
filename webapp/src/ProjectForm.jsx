@@ -48,7 +48,6 @@ export default class ProjectForm extends React.Component {
         this.convertChunk = this.convertChunk.bind(this)
         this.changeEditState = this.changeEditState.bind(this)
         this.handleChunkChange = this.handleChunkChange.bind(this)
-        this.updateFromDB = this.updateFromDB.bind(this)
     }
 
     // updateFromDB(json) {
@@ -159,12 +158,14 @@ export default class ProjectForm extends React.Component {
             //TODO: Actually Save the thing
             console.log("Saving...")
 
-            const data = new FormData();
-            data.append( "json", JSON.stringify(this.state.chunkList));
+            const projectId = 1234567
 
-            fetch('/api/project/' + projectId, {
+            const data = JSON.stringify(this.state.chunkList);
+            console.log(data)
+            fetch('/api/project/project_id=' + projectId, {
                 method: "POST",
-                body: data
+                contentType: 'application/json',
+                body: JSON.stringify(this.state.chunkList)
             })
             .then(function(res){ return res.json(); })
             .then(function(data){ alert(JSON.stringify(data))})

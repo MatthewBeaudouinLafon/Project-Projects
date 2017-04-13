@@ -94,15 +94,20 @@ def retrieve_all_information():
 
 
 def fill_database(JSON_Object, object_id=0):
+    print("Filling Database")
     dictionary = retrieve_all_information()
     if object_id == 0:
         for key, value in JSON_Object:
             result = posts.insert_one(dictionary[key]).inserted_id
             print(result)
     else:
-        db.posts.update({'_id':object_id},
-            {"$set": post},
-            upsert=False)
+        post = db.posts.find_one({'_id':object_id})
+        if post is not None:
+            post['updated_field'] = JSON_Object
+            db.posts.save(post)
+        # db.posts.update({'_id':object_id},
+        #     {"$set": JSON_Object},
+        #     upsert=False)
 
 
 def retrieve_JSON_Object(object_id):
@@ -124,8 +129,13 @@ def retrieve_project(project_name):
 
 
 @app.route('/api/project/<project_id>', methods=["POST"]) 
-def save_project(project_info):
-    fill_database(project_info, project_id)
+def save_project(project_id):
+    if request.method == "POST":
+        print("TESTING")
+        data = request.get_json(force=True)
+        print(data)
+        print(request.form)
+        fill_database(data, project_id)
     # Could be dangerous to use Mongo ID here
 
 
