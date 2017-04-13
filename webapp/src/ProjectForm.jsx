@@ -31,6 +31,7 @@ var CHUNKS = [
 
 ]
 
+//TODO: Smooth transition between editing and saving
 export default class ProjectForm extends React.Component {
     constructor(props) {
         super(props);
@@ -48,6 +49,26 @@ export default class ProjectForm extends React.Component {
         this.changeEditState = this.changeEditState.bind(this)
         this.handleChunkChange = this.handleChunkChange.bind(this)
     }
+
+    // updateFromDB(json) {
+    //     console.log("Getting project from Database")
+    //     this.setState({
+    //         allProjects: json,
+    //         displayProjects: json,
+    //         query: this.state.query
+    //     });
+    // }
+
+    // componentDidMount() {
+    //     const updateFromDB = this.updateFromDB; 
+
+    //     fetch('/api/project/' + projectId)
+    //     .then(function(response) {
+    //         response.json().then((json) => {
+    //             updateFromDB(json)
+    //         })
+    //     })
+    // }
 
     getProjectName() {
         // TODO: URL query with react-router
@@ -88,24 +109,18 @@ export default class ProjectForm extends React.Component {
         let newChunkList = this.state.chunkList;
         newChunkList.push(chunk);
 
-        this.setState({
-            editing: this.state.editing,
-            isSaved: this.state.isSaved,
-            chunkList: newChunkList,
-            projectName: this.state.projectName
-        })
+        this.setState(Object.assign({}, this.state, {
+            chunkList:newChunkList
+        }));
     }
 
     handleChunkChange(newContent, key) {
         let newChunkList = this.state.chunkList;
         newChunkList[key].content = newContent;
 
-        this.setState({
-            editing: this.state.editing,
-            isSaved: this.state.isSaved,
-            chunkList: newChunkList,
-            projectName: this.state.projectName
-        })
+        this.setState(Object.assign({}, this.state, {
+            chunkList:newChunkList
+        }));
     }
 
     convertChunk(chunk, key) {
@@ -142,19 +157,26 @@ export default class ProjectForm extends React.Component {
         if (this.state.editing) {
             //TODO: Actually Save the thing
             console.log("Saving...")
-            this.setState({
+
+            const projectId = 1234567
+
+            const data = JSON.stringify(this.state.chunkList);
+            console.log(data)
+            fetch('/api/project/project_id=' + projectId, {
+                method: "POST",
+                contentType: 'application/json',
+                body: JSON.stringify(this.state.chunkList)
+            })
+            .then(function(res){ return res.json(); })
+            .then(function(data){ alert(JSON.stringify(data))})
+
+            this.setState(Object.assign({}, this.state, {
                 editing: false,
-                isSaved: this.state.isSaved,
-                chunkList: this.state.chunkList,
-                projectName: this.state.projectName
-            })
+            }));
         } else {
-            this.setState({
+            this.setState(Object.assign({}, this.state, {
                 editing: true,
-                isSaved: this.state.isSaved,
-                chunkList: this.state.chunkList,
-                projectName: this.state.projectName
-            })
+            }));
         }
 
     }
