@@ -37,6 +37,22 @@ a:hover {
   // text-decoration: underline;
 }
 
+.text-chunk-input {
+  max-height: 0;
+  transition: max-height 0.15s ease-out;
+  overflow: hidden;
+
+  animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+}
+
+@keyframes fadein {
+    from { max-height: 0;
+    transition: max-height 0.15s ease-out;
+    overflow: hidden; }
+    to   { max-height: auto; }
+}
+
+
 input {
   color: white;
   background: lighten(black, 5);

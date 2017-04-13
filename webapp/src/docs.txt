@@ -1,0 +1,81 @@
+[
+  {
+    "description": "Homepage: creates the website's home page. It contains a slideshow and a fixed navigation bar, which contains authentication fields.",
+    "methods": [
+      {
+        "name": "updateFromDB",
+        "docblock": "If the database is populated, this function populates the component's state with the projects in the database.",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "json"
+          }
+        ],
+        "returns": null,
+        "description": "If the database is populated, this function populates the component's state with the projects in the database."
+      }
+    ]
+  },
+  {
+    "description": "ProjectDisplay: Contains the main components of this class (slideshow and slide counter), wrapped in a div tag.",
+    "methods": []
+  },
+  {
+    "description": "Slideshow: A slideshow of ProjectItems.",
+    "methods": []
+  },
+  {
+    "description": "ProjectItem: Component that contains all of a given project's information: name, authorList, and description.",
+    "methods": []
+  },
+  {
+    "description": "ProjectName: A given project's name.",
+    "methods": []
+  },
+  {
+    "description": "Description: A given project's description component.",
+    "methods": []
+  },
+  {
+    "description": "AuthorList: List of a given project's authors' names component, in which names are joined by commas.",
+    "methods": []
+  },
+  {
+    "description": "NavBar: Navigation bar component, which contains authentication fields (for usernames and passwords).",
+    "methods": []
+  },
+  {
+    "description": "PrevButton: Backwards-facing arrow button component, which controls the slide that is displayed.",
+    "methods": [
+      {
+        "name": "handleClick",
+        "docblock": "If the button is clicked, the current slide index will be reduced by 1.",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "event"
+          }
+        ],
+        "returns": null,
+        "description": "If the button is clicked, the current slide index will be reduced by 1."
+      }
+    ]
+  },
+  {
+    "description": "NextButton: Forwards-facing arrow button component, which controls the slide that is displayed.",
+    "methods": [
+      {
+        "name": "handleClick",
+        "docblock": "If the button is clicked, the current slide index will be increased by 1.",
+        "modifiers": [],
+        "params": [
+          {
+            "name": "event"
+          }
+        ],
+        "returns": null,
+        "description": "If the button is clicked, the current slide index will be increased by 1."
+      }
+    ]
+  }
+]
