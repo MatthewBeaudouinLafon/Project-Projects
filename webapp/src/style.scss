@@ -306,7 +306,7 @@ button .pulse {
   flex-basis: auto;
 }
 
-.image-chunk .description {
+.description {
   display:block;
   font-style: italic;
   color: grey;
@@ -328,8 +328,8 @@ button .pulse {
 }
 
 .text-chunk-input {
-  flex-grow: 1;
-  // min-height: 1em;
+  flex: 1;
+  min-height: 1em;
   white-space: pre-wrap;
 }
 

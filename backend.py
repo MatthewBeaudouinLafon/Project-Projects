@@ -154,7 +154,6 @@ def save_project(project_id):
         print("TESTING")
         data = request.get_json(force=True)
         print(data)
-        print(request.form)
         fill_database(data, project_id)
     return "whatever"
     # Could be dangerous to use Mongo ID here

@@ -4,11 +4,15 @@ import YouTube from 'react-youtube'
 var CHUNKS = [
     {
         type: "Text",
-        content: "My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."        
+        content: {
+            text:"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."        
+        }
     },
     {
         type: "Text",
-        content: "My god, another one? I can't believe it."        
+        content: {
+            text:"My god, another one? I can't believe it."        
+        }
     },
     {
         type:"Image",
@@ -20,12 +24,15 @@ var CHUNKS = [
     },
     {
         type:"Text",
-        content:"Yo did you see that cat?"
+        content:{
+            text:"Yo did you see that cat?"
+        }
     },
     {
         type:"Video",
         content: {
-            link:"https://youtu.be/_O-WEiOlxr4"
+            link:"https://youtu.be/_O-WEiOlxr4",
+            description:"Scientific investigation in \"Wow Wow\" technologies"
         }
     }
 
@@ -39,8 +46,12 @@ export default class ProjectForm extends React.Component {
         this.state = {
             editing: false,
             isSaved: false,
+            editHistory: [],
             chunkList: CHUNKS,
-            projectName: "Test Name"
+            projectName: "Test Name",
+            projectDesc: "This is a test project aimed at testing the capabilities of the " +
+                        "project form in the context of Project: Projects.",
+            authors: ["Emily Yeh", "Matthew Beaudouin-Lafon"]
         }
 
         this.getProjectName = this.getProjectName.bind(this)
@@ -123,41 +134,29 @@ export default class ProjectForm extends React.Component {
         }));
     }
 
+    // TODO: Refactor to have Chunk component, and Text/Image/Video subcomponents
     convertChunk(chunk, key) {
-        switch (chunk.type) {
-            case "Text":
-                return <TextChunk 
-                            content={chunk.content} 
-                            editing={this.state.editing} 
-                            handleTextChange={(newContent) => {this.handleChunkChange(newContent, key)}} 
-                            key={key}/>
-                break;
-            case "Image":
-                return <ImageChunk 
-                            content={chunk.content}
-                            editing={this.state.editing}
-                            handleDescChange={(newContent) => {this.handleChunkChange(newContent, key)}}
-                            handleLinkChange={(newContent) => {this.handleChunkChange(newContent, key)}}
-                            key={key}/>
-                break;
-            case "Video":
-                return <VideoChunk 
-                            content={chunk.content}
-                            editing={this.state.editing}
-                            handleLinkChange={(newContent) => {this.handleChunkChange(newContent, key)}}
-                            key={key}/>
-                break;
-            default:
-                console.log("Can't parse chunk with type : " + chunk.type);
-                return <EmptyChunk />
-        }
+        return <Chunk 
+                    chunkType={chunk.type}
+                    content={chunk.content}
+                    editing={this.state.editing}
+                    handleChunkChange={(newContent) => {this.handleChunkChange(newContent, key)}}
+                    deleteChunk={() => {
+                        let newChunkList = this.state.chunkList;
+                        newChunkList.splice(key)
+
+                        this.setState(Object.assign({}, this.state, {
+                            chunkList:newChunkList
+                        }));
+                    }}
+                    key={key}/>
     }
 
     changeEditState() {
         if (this.state.editing) {
-            //TODO: Actually Save the thing
             console.log("Saving...")
 
+            // TODO: Also deal with changing project name, description and author list.
             const projectId = 1234567
 
             const data = JSON.stringify(this.state.chunkList);
@@ -192,8 +191,14 @@ export default class ProjectForm extends React.Component {
         return (
             <div>
                 <FormHeader name={this.state.projectName} 
+                            authors={this.state.authors}
+                            description={this.state.projectDesc}
                             save={this.changeEditState} 
-                            editing={this.state.editing}/>
+                            editing={this.state.editing}
+                            handleDescChange={
+                                (newDescription) => this.setState(Object.assign(
+                                                        {}, this.state, {projectDesc: newDescription}))
+                                               }/>
                 {displayChunks}
                 <NewChunk addChunk={this.addChunk} editing={this.state.editing}/>
             </div>
@@ -203,76 +208,65 @@ export default class ProjectForm extends React.Component {
 
 class FormHeader extends React.Component {
     render() {
+        const authorList = this.props.authors.join(", ");
 
+        //TODO: Make author list editable
+        //TODO: Reconsider using a Text Chunk for the description (makes sense to the user?)
         return (
-            <div className="form-header">
-                <div className="form-project-name">
-                    Project Name: <b>{this.props.name}</b>
+            <div>
+                <div className="form-header">
+                    <div>
+                        <div className="form-project-name">
+                            Project Name: <b>{this.props.name}</b>                    
+                        </div>
+                        <div className="project-authors">
+                            {authorList}
+                        </div>
+                    </div>
+                    <div className="form-save-button">
+                        <Button name={this.props.editing ? "Save" : "Edit"} func={this.props.save} />
+                    </div>
                 </div>
-                <div className="form-save-button">
-                    <Button name={this.props.editing ? "Save" : "Edit"} func={this.props.save} />
-                </div>
+                <Chunk 
+                    chunkType={"Text"}
+                    content={{text:this.props.description}}
+                    editing={this.props.editing} 
+                    handleTextChange={(newContent) => {this.props.handleDescChange(newContent)}} 
+                />
             </div>
         );
     }
 }
 
-class TextChunk extends React.Component {
+class Chunk extends React.Component {
     constructor(props) {
         super(props);
 
-        this.handleChange = this.handleChange.bind(this);
-        this.getTextBox = this.getTextBox.bind(this);
-    }
+        this.handleFieldChange = this.handleFieldChange.bind(this);
 
-    handleChange(event) {
-        this.props.handleTextChange(event.target.value);
-    }
-
-    getTextBox(props) {
-        if (props.editing) {
-            return <textarea className="text-chunk-input" value={props.content} onChange={this.handleChange}/>;
-        } else {
-            return <div className="text-chunk-input">{props.content}</div>;
-        }
-    }
-
-    render() {
-        //TODO: Make text box scale with size
-        const textBox = this.getTextBox(this.props);
-        return (
-            <div className="chunk-container">
-                {textBox}    
-            </div>
-        );
-    }
-}
-
-class ImageChunk extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleLinkChange = this.handleLinkChange.bind(this);
-        this.handleDescChange = this.handleDescChange.bind(this);
+        this.getTextChunk = this.getTextChunk.bind(this);
         this.getImageChunk = this.getImageChunk.bind(this);
+        this.getVideoChunk = this.getVideoChunk.bind(this);
     }
 
-    handleLinkChange(event) {
-        const newContent = {
-            link: event.target.value,
-            description: this.props.content.description,
-            alt: this.props.content.alt
-        }
-        this.props.handleLinkChange(newContent);
+    handleFieldChange(changedContentField, fieldName) {
+        const newContent = Object.assign(
+                {}, 
+                this.props.content, 
+                {[fieldName]:changedContentField}
+        );
+        this.props.handleChunkChange(newContent);
     }
 
-    handleDescChange(event) {
-        const newContent = {
-            link: this.props.content.link,
-            description: event.target.value,
-            alt: this.props.content.alt
+    getTextChunk() {
+        if (this.props.editing) {
+            return <textarea className="text-chunk-input" 
+                             value={this.props.content.text} 
+                             onChange={(event) => this.handleFieldChange(event.target.value, "text")}
+                    />
+        } else {
+            return <div className="text-chunk-input">{this.props.content.text}</div>;
         }
-        this.props.handleDescChange(newContent);
     }
 
     getImageChunk() {
@@ -281,22 +275,24 @@ class ImageChunk extends React.Component {
         if (this.props.content.link === "") {
             image = <div className="image" />
         } else {
-            image = <img className="image" src={this.props.content.link} alt={this.props.content.alt}/>
+            image = <img className="image" 
+                         src={this.props.content.link} 
+                         alt={this.props.content.alt}/>
         }
 
         if (this.props.editing) {
             return <div className="image-chunk">
-                        <input  
-                            className="small-input"
-                            value={this.props.content.link}
-                            onChange={this.handleLinkChange}
+                        <SmallInput value={this.props.content.link} 
+                                    handleFieldChange={
+                                       (newValue) => this.handleFieldChange(newValue, "link")
+                                    }
                         />
                         {image}
-                        <input  
-                            className="small-input"
-                            value={this.props.content.description}
-                            onChange={this.handleDescChange}
-                        />
+                        <SmallInput value={this.props.content.description} 
+                                    handleFieldChange={
+                                       (newValue) => this.handleFieldChange(newValue, "description")
+                                    }
+                     />
                     </div>
         } else {
             return <div className="image-chunk">
@@ -307,67 +303,68 @@ class ImageChunk extends React.Component {
                     </div>
         }
     }
-    render() {
-        return (
-            <div className="chunk-container">
-                {this.getImageChunk()}
-            </div>
-        );
-    }
-}
 
-class VideoChunk extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.handleLinkChange = this.handleLinkChange.bind(this);
-        this.youtube_parser = this.youtube_parser.bind(this);
-    }
-
-    handleLinkChange(event) {
-        const newContent = {
-            link: event.target.value
-        }
-        this.props.handleLinkChange(newContent);
-    }
-
-    youtube_parser(url){
-        var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
-        var match = url.match(regExp);
-        return (match && match[7].length == 11) ? match[7] : false;
-    }
-
-    render() {
+    getVideoChunk() {
         const opts = {
             height: "315",
             width: "420"
         }
 
-        let urlBox = null;
+        // Parse youtube link for videoId
+        const url = this.props.content.link
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        const videoId = (match && match[7].length == 11) ? match[7] : false;
+
+        let urlBox;
+        let description;
         if (this.props.editing) {
-            urlBox = <input  
-                        className="small-input"
-                        value={this.props.content.link}
-                        onChange={this.handleLinkChange}
+            urlBox = <SmallInput value={this.props.content.link} 
+                                 handleFieldChange={
+                                    (newValue) => this.handleFieldChange(newValue, "link")
+                                 }
                      />
+            description = <SmallInput value={this.props.content.description} 
+                                      handleFieldChange={
+                                         (newValue) => this.handleFieldChange(newValue, "description")
+                                      }
+                          />
+        } else {
+            description = <div className="description">
+                            {this.props.content.description}
+                          </div>
+        }
+
+        return  <div className="video-container">
+                    {urlBox}
+                    <YouTube
+                      videoId={videoId}
+                      className="youtube-video"
+                      opts={opts}
+                    />
+                    {description}
+                </div>        
+    }
+
+    render() {
+        let chunkContent = null
+        switch (this.props.chunkType) {
+            case "Text":
+                chunkContent = this.getTextChunk();
+                break;
+            case "Video":
+                chunkContent = this.getVideoChunk();
+                break;
+            case "Image":
+                chunkContent = this.getImageChunk();
+                break;
         }
 
         return (
             <div className="chunk-container">
-                <div className="video-container">
-                    {urlBox}
-                    <YouTube
-                      videoId={this.youtube_parser(this.props.content.link)}
-                      className="youtube-video"
-                      opts={opts}
-                    />
-                </div>
+                {chunkContent}
             </div>
         );
-    }
-    _onReady(event) {
-        // access to player in all event handlers via event.target
-        event.target.pauseVideo();
     }
 }
 
@@ -423,6 +420,18 @@ class Button extends React.Component {
     render() {
         return (
             <button className="new-chunk-button pulse" onClick={this.handleClick}>{this.props.name}</button>
+        );
+    }
+}
+
+class SmallInput extends React.Component {
+    render() {
+        return (
+            <input  
+                className="small-input"
+                value={this.props.value}
+                onChange={(event) => {this.props.handleFieldChange(event.target.value)}}
+            />
         );
     }
 }
