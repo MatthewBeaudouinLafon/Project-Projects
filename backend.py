@@ -101,10 +101,30 @@ def fill_database(JSON_Object, object_id=0):
             result = posts.insert_one(dictionary[key]).inserted_id
             print(result)
     else:
-        post = db.posts.find_one({'_id':object_id})
-        if post is not None:
-            post['updated_field'] = JSON_Object
-            db.posts.save(post)
+        print("Here we are")
+        db.posts.update({ "_id": object_id },
+            {"$set": { "updated_info": JSON_Object}},
+            upsert=True)
+
+    # for i in range(0, len(JSON_Object)):
+    #     result = posts.insert_one(JSON_Object[i]).inserted_id
+    #     # print(result)
+    #     print(JSON_Object[i])
+
+        # db.posts.update(
+        #    { "_id": object_id },
+        #    {
+        #      "$set": { "updated_info": str(JSON_Object)}
+        #    }
+        # )
+
+        # print(db.posts.find());
+        # post = list(db.posts.find({'_id': object_id}))
+        
+        # if post is not None:
+        #     print(post)
+        #     post[0] = JSON_Object
+        #     db.posts.save(post)
         # db.posts.update({'_id':object_id},
         #     {"$set": JSON_Object},
         #     upsert=False)
@@ -136,10 +156,13 @@ def save_project(project_id):
         print(data)
         print(request.form)
         fill_database(data, project_id)
+    return "whatever"
     # Could be dangerous to use Mongo ID here
 
 
 # retrieve_JSON_Object()
+
+print (retrieve_all_information())
 
 
 if __name__ == '__main__':
