@@ -28,14 +28,14 @@ def home():
     return "We're good"
 
 # running retrieve_all_information() will give you a dictionary
-# key: project ID (numbered 1 through however many projects)
+# key: project ID (numbered 1 through however many projects) DEPRECATED
 # value: array of project name, project members, description
 
 # all data gets uploaded to mongo
 
-def retrieve_project_names():
+def retrieve_project_names(file_name):
     project_names = []
-    with open("SDFinal.csv", 'rt') as f:
+    with open(file_name, 'rt') as f:
         reader = csv.reader(f)
         for row in reader:
             name = row[0].replace(".","-")
@@ -43,12 +43,12 @@ def retrieve_project_names():
     project_names = project_names[1:] # get rid of first line
     return project_names
 
-def retrieve_project_members():
+def retrieve_project_members(file_name, members_range):
     project_members = []
-    with open("SDFinal.csv", 'rt') as f:
+    with open(file_name, 'rt') as f:
         reader = csv.reader(f)
         for row in reader:
-            temp = row[1:5]
+            temp = row[1:members_range] # 5 for SoftDes, 7 for POE
             new_temp = []
             for students in temp:
                 if (students != ''):
@@ -57,7 +57,7 @@ def retrieve_project_members():
     project_members = project_members[1:] # get rid of first line
     return project_members
 
-def retrieve_descriptions():
+def retrieve_SD_descriptions():
     descriptions = []
     start = '<article class="markdown-body entry-content" itemprop="text">'
     end = '</article>'
@@ -68,66 +68,81 @@ def retrieve_descriptions():
             page = "https://raw.githubusercontent.com/" + temp + "/master/README.md"
             try:
                 web = urllib.request.urlopen(page).read().decode('utf-8')
-                descriptions.append(web)
+                descriptions.append(web[:100] + "...")
             except:
                 pass # essentially, do nothing
     return descriptions
 
+def retrieve_POE_descriptions():
+    descriptions = []
+    with open("POEProjects.csv", "rt") as f:
+        reader = csv.reader(f)
+        for row in reader:
+            descriptions.append(row[7][:100] + "...")
+    return descriptions
 
 def retrieve_all_information():
-    names = retrieve_project_names()
-    members = retrieve_project_members()
-    descriptions = retrieve_descriptions()
+    SD_names = retrieve_project_names("SDFinal.csv")
+    SD_members = retrieve_project_members("SDFinal.csv", 5)
+    SD_descriptions = retrieve_SD_descriptions()
+
+    POE_names = retrieve_project_names("POEProjects.csv")
+    POE_members = retrieve_project_members("POEProjects.csv", 7)
+    POE_descriptions = retrieve_POE_descriptions()
+
     final = {}
     count = 0
-    for name in names:
+
+    for name in SD_names:
         temp = {}
         key = str(count) # Official dictionary key
-        val1 = members[count]
-        val2 = descriptions[count][0:100] + "..."
+        val1 = SD_members[count]
+        val2 = SD_descriptions[count]
         temp["title"] = name
+        temp["class"] = "Software Design"
+        temp["semester"] = "SP2016"
         temp["members"] = val1
         temp["description"] = val2
+        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        final[key] = temp
+        count += 1
+    
+    for name in POE_names:
+        temp = {}
+        key = str(count) # Official dictionary key
+        val1 = POE_members[count-len(SD_names)]
+        val2 = POE_descriptions[count-len(SD_names)]
+        temp["title"] = name
+        temp["class"] = "Principles of Engineering"
+        temp["semester"] = "FA2014"
+        temp["members"] = val1
+        temp["description"] = val2
+        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
     return final
 
 
-def fill_database(JSON_Object, object_id=0):
+# Initial filling-in of database, USE SPARINGLY @EMILY
+def fill_database():
     print("Filling Database")
     dictionary = retrieve_all_information()
-    if object_id == 0:
-        for key, value in JSON_Object:
-            result = posts.insert_one(dictionary[key]).inserted_id
-            print(result)
-    else:
-        print("Here we are")
-        db.posts.update({ "_id": object_id },
-            {"$set": { "updated_info": JSON_Object}},
-            upsert=True)
+    for key in dictionary:
+        result = db.posts.insert_one(dictionary[key]).inserted_id
+    print (db.posts.count())
 
-    # for i in range(0, len(JSON_Object)):
-    #     result = posts.insert_one(JSON_Object[i]).inserted_id
-    #     # print(result)
-    #     print(JSON_Object[i])
 
-        # db.posts.update(
-        #    { "_id": object_id },
-        #    {
-        #      "$set": { "updated_info": str(JSON_Object)}
-        #    }
-        # )
+# Deletes ALL the documents in the database. Use with caution!!!!!
+def empty_database():
+    db.posts.delete_many({})
+    print(db.posts.count())
 
-        # print(db.posts.find());
-        # post = list(db.posts.find({'_id': object_id}))
-        
-        # if post is not None:
-        #     print(post)
-        #     post[0] = JSON_Object
-        #     db.posts.save(post)
-        # db.posts.update({'_id':object_id},
-        #     {"$set": JSON_Object},
-        #     upsert=False)
+
+# Updates document in database with new information
+def update_database(JSON_Object, object_id=0):
+    db.posts.update({ "_id": object_id },
+        {"$set": { "updated_info": JSON_Object}},
+        upsert=True)
 
 
 def retrieve_JSON_Object(object_id):
@@ -154,14 +169,17 @@ def save_project(project_id):
         print("TESTING")
         data = request.get_json(force=True)
         print(data)
-        fill_database(data, project_id)
+        update_database(data, project_id)
     return "whatever"
-    # Could be dangerous to use Mongo ID here
-
+    # Could be dangerous to use Mongo ID here??????
 
 # retrieve_JSON_Object()
 
-print (retrieve_all_information())
+# pprint.pprint(retrieve_all_information())
+
+empty_database()    # Try to use these
+fill_database()     # two functions together :^)
+
 
 
 if __name__ == '__main__':
