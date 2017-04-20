@@ -184,19 +184,37 @@ def get_site_from_github(url):
         web = urllib.request.urlopen(url).read().decode('utf-8')
         index1 = web.find(start) + len(start)
         index2 = web.find(end)
-        site_url = web[index1:index2]
+        if (index2 > index1):
+            site_url = web[index1:index2]
         return site_url
     except:
         print("ERROR! Invalid URL: " + url)
         pass
 
-# @param: Site URL, intended name of screenshot
+# @param: Site URL, name of screenshot (including file type)
 def get_screenshot(url, screenshot_name):
     depot = DepotManager.get()
     driver = webdriver.PhantomJS('/home/emily/Downloads/phantomjs-2.1.1-linux-x86_64/bin/phantomjs')
     driver.set_window_size(1024, 768)
     driver.get(url)
     driver.save_screenshot(screenshot_name)
+
+# Generates images for all valid SoftDes projects
+# Use with caution (WE'RE LOOKING AT YOU EMILY)
+def get_SD_sites():
+    githubs = []
+    with open("SDFinal.csv", 'rt') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            githubs.append(row[5])
+    githubs = githubs[1:] # All site URLs stored here
+
+    count = 0
+    for github in githubs:
+        site_url = get_site_from_github(github)
+        if (site_url != None):
+            get_screenshot(site_url, (str(count) + ".png"))
+            count = count + 1
 
 
 
