@@ -8,6 +8,8 @@ import pprint
 import re
 import json
 from bson import ObjectId
+from selenium import webdriver
+from depot.manager import DepotManager
 
 print("Connecting to Database...")
 client = MongoClient()#'localhost', 27017)
@@ -51,8 +53,8 @@ def retrieve_project_members(file_name, members_range):
             temp = row[1:members_range] # 5 for SoftDes, 7 for POE
             new_temp = []
             for students in temp:
-                if (students != ''):
-                    new_temp.append(students)
+                if (students != '')
+:                    new_temp.append(students)
             project_members.append(new_temp)
     project_members = project_members[1:] # get rid of first line
     return project_members
@@ -172,6 +174,33 @@ def save_project(project_id):
         update_database(data, project_id)
     return "whatever"
     # Could be dangerous to use Mongo ID here??????
+
+
+# @param: Github URL
+def get_site_from_github(url):
+    start = '<span itemprop="url"><a href="'
+    end = '" rel="nofollow">h'
+    try:
+        web = urllib.request.urlopen(url).read().decode('utf-8')
+        index1 = web.find(start) + len(start)
+        index2 = web.find(end)
+        site_url = web[index1:index2]
+        return site_url
+    except:
+        print("ERROR! Invalid URL: " + url)
+        pass
+
+# @param: Site URL, intended name of screenshot
+def get_screenshot(url, screenshot_name):
+    depot = DepotManager.get()
+    driver = webdriver.PhantomJS('/home/emily/Downloads/phantomjs-2.1.1-linux-x86_64/bin/phantomjs')
+    driver.set_window_size(1024, 768)
+    driver.get(url)
+    driver.save_screenshot(screenshot_name)
+
+
+
+
 
 # retrieve_JSON_Object()
 
