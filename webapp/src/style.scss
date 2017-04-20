@@ -81,12 +81,21 @@ input[type="text"]:hover {
 }
 
 input[type="text"].search-bar {
-  padding: 1%;
+  display:block;
+  width: 90%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
 }
 
-input[type="text"]:hover.search-bar {
-  padding-right: 10%;
+input[type="text"]:hover {
+  background-color: #333333;
 }
+
+
+/*input[type="text"]:hover.search-bar {
+  padding-right: 10%;
+}*/
 
 .project-grid {
   display: flex;

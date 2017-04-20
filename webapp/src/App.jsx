@@ -7,20 +7,24 @@ export default class App extends React.Component {
         this.state = {
             allProjects: [],
             displayProjects: [],
-            query: ""
+            query: "",
+            timeout: {
+                id: undefined,
+                isRunning: false
+            }
         }
 
-        this.handleChange = this.handleChange.bind(this);
         this.updateFromDB = this.updateFromDB.bind(this);
+        this.performSearch = this.performSearch.bind(this);
     }
 
     updateFromDB(json) {
         console.log("Getting projects from Database")
-        this.setState({
+        this.setState(Object.assign({}, this.state, {
             allProjects: json,
             displayProjects: json,
             query: this.state.query
-        });
+        }));
     }
 
     componentDidMount() {
@@ -34,47 +38,122 @@ export default class App extends React.Component {
         })
     }
 
-    handleChange(event) {
-        const new_query = event.target.value;
-        const regex = new RegExp(".*" + new_query + ".*")
-        const current_projects = this.state.allProjects.filter(function(proj) {
-            return (regex.test(proj.title))
-        });
-
-        this.setState({
-            allProjects: this.state.allProjects,
-            displayProjects: current_projects,
-            query: new_query
+    performSearch(parsedQuery, keys) {
+        //TODO: Loading icon?
+        let filteredProjects = this.state.allProjects;
+        console.log(parsedQuery)
+        keys.forEach((key) => {
+            switch (key) {
+                case "prefix":
+                    filteredProjects = filteredProjects.filter((project) => {
+                        return project.title.includes(parsedQuery["prefix"]);
+                    });
+                break;
+                case "with":
+                    filteredProjects = filteredProjects.filter((project) => {
+                        let hasEveryone = true;
+                        //TODO: Protect Regex (if user inputs | for example)
+                        const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+")
+                        return regex.test(project.members.join("|"))
+                    });
+                break;
+            }
+            this.setState(Object.assign({}, this.state, {
+                displayProjects: filteredProjects,
+                timeout: {
+                    id: undefined,
+                    isRunning: false
+                }
+            }));
         })
     }
 
-    handleSubmit(event) {
-        // Make actual request here
-        if (isNaN(this.state.query) && PROJECTS[this.state.query]) {
-            console.log('Should be doing something here')
-            this.setState({projects: PROJECTS[this.state.query]})
-        }
-    }
-
-
     render() {
         let grid = null;
-        console.log("Rendering projects:")
-        console.log(this.state.displayProjects)
+
         if (this.state.displayProjects !== []) {
             grid = <ProjectGrid projectList={this.state.displayProjects} />
         } else {
             grid = <div>No projects here!</div> 
         }
+
+        const keys = ["prefix", "with"];
+
         return (
             <div>
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
-                    <input class="search-bar" type="text" placeholder="Search..." value={this.state.query} onChange={this.handleChange} />
+                    <SearchBar 
+                        query={this.state.query}
+                        keys={keys}
+                        handleSearch={(parsedQuery) => {
+                            const timerLength = 1000; //ms
+                            
+                            if (this.state.timeout.isRunning) {
+                                window.clearTimeout(this.state.timeout.id)
+                            }
+
+                            this.setState(Object.assign({}, this.state, {
+                                query: parsedQuery["query"],
+                                timeout: {
+                                    id: window.setTimeout(
+                                            this.performSearch, 
+                                            timerLength, 
+                                            parsedQuery, 
+                                            keys),
+                                    isRunning: true
+                                }
+                            }));
+                        }} />
                 </div>
-                <ProjectGrid projectList={this.state.projects} />
+                <ProjectGrid projectList={this.state.displayProjects} />
             </div>
+        );
+    }
+}
+
+class SearchBar extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.parseStr = this.parseStr.bind(this)
+    }
+
+    parseStr(str) {
+        // Returns object of parsed string
+        let parsed = {
+            query: str
+        };
+
+        this.props.keys.forEach((key) => {
+            parsed = Object.assign({}, parsed, {
+                [key]: ""
+            })
+        })
+
+        let currentWord = "prefix";
+        const words = str.split(" ");
+
+        words.forEach((word) => {
+            if (this.props.keys.includes(word)) {
+                currentWord = word;
+            } else {
+                parsed[currentWord] += (parsed[currentWord]) ? (" " + word) : (word);
+            }
+        });
+        return parsed
+    }
+
+    render() {
+        return (
+            <input className="search-bar" 
+                   type="text" 
+                   placeholder="Search..." 
+                   value={this.props.query} 
+                   onChange={(event => {
+                       this.props.handleSearch(this.parseStr(event.target.value))
+                   })} />
         );
     }
 }
@@ -132,7 +211,6 @@ class AuthorList extends React.Component {
         );
     }
 }
-
 
 // class ____ extends React.Component {
 //     render() {

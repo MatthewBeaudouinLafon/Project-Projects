@@ -56,7 +56,7 @@ var PROJECTS = [
 
 
 ReactDOM.render(
-  <ProjectForm  />,
+  <App  />,
   document.getElementById('root')
 );
 
