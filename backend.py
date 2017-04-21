@@ -53,8 +53,8 @@ def retrieve_project_members(file_name, members_range):
             temp = row[1:members_range] # 5 for SoftDes, 7 for POE
             new_temp = []
             for students in temp:
-                if (students != '')
-:                    new_temp.append(students)
+                if (students != ''):
+                    new_temp.append(students)
             project_members.append(new_temp)
     project_members = project_members[1:] # get rid of first line
     return project_members
@@ -88,9 +88,10 @@ def retrieve_all_information():
     SD_members = retrieve_project_members("SDFinal.csv", 5)
     SD_descriptions = retrieve_SD_descriptions()
 
-    POE_names = retrieve_project_names("POEProjects.csv")
-    POE_members = retrieve_project_members("POEProjects.csv", 7)
-    POE_descriptions = retrieve_POE_descriptions()
+    # POE_names = retrieve_project_names("POEProjects.csv")
+    # POE_members = retrieve_project_members("POEProjects.csv", 7)
+    # POE_descriptions = retrieve_POE_descriptions()
+    POE_names = []
 
     final = {}
     count = 0
