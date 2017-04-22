@@ -249,12 +249,13 @@ class ProjectGrid extends React.Component {
 
 class ProjectItem extends React.Component {
     render() {
+        var project_id = this.props.project._id;
         var name = this.props.project.title;
         var authorList = this.props.project.members;
         var description = this.props.project.description;
         return (
             <div className="project-item">
-                <Link to="/main/project_id">
+                <Link to={"/main/" + project_id}>
                 <ProjectName className="project-name" name={name} />
                 <AuthorList className="project-authors" authorList={authorList} />
                 <Description className="project-description" description={description} />

@@ -60,7 +60,7 @@ ReactDOM.render((
   <Router>
     <Route path="/" component={Homepage} />
     <Route path="/main" component={App} />
-    <Route path="/main/project_id" component={ProjectForm} />
+    <Route path="/main/*" component={ProjectForm} />
   </Router>
 ), document.getElementById('root'));
 
