@@ -53,8 +53,8 @@ def retrieve_project_members(file_name, members_range):
             temp = row[1:members_range] # 5 for SoftDes, 7 for POE
             new_temp = []
             for students in temp:
-                if (students != '')
-:                    new_temp.append(students)
+                if (students != ''):
+                    new_temp.append(students)
             project_members.append(new_temp)
     project_members = project_members[1:] # get rid of first line
     return project_members
@@ -105,6 +105,7 @@ def retrieve_all_information():
         temp["semester"] = "SP2016"
         temp["members"] = val1
         temp["description"] = val2
+        temp["image_chunk"] = ""
         temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
@@ -119,6 +120,7 @@ def retrieve_all_information():
         temp["semester"] = "FA2014"
         temp["members"] = val1
         temp["description"] = val2
+        temp["image_chunk"] = ""
         temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
@@ -210,15 +212,62 @@ def get_SD_sites():
     githubs = githubs[1:] # All site URLs stored here
 
     count = 0
+    url_img_dict = {}
     for github in githubs:
         site_url = get_site_from_github(github)
         if (site_url != None):
             get_screenshot(site_url, (str(count) + ".png"))
+            url_img_dict[github] = str(count) + ".png"
             count = count + 1
+        else:
+            url_img_dict[github] = ""
+    return url_img_dict
 
 
+# MUST set client_id and client_secret in environment first
+def upload_screenshots(url_img_dict):
+    client_id = os.environ.get("CLIENT_ID", "")
+    client_secret = os.environ.get("CLIENT_SECRET", "")
+    client = ImgurClient(client_id, client_secret)
+    for key in url_img_dict:
+        if (url_img_dict[key] != ""):
+            url_img_dict[key] = client.upload_from_path(url_img_dict[key])['link']
+    return url_img_dict
 
 
+def create_image_chunks(url_img_dict):
+    result = {}
+    for key in url_img_dict:
+        chunk_type = "Image"
+        content = {}
+        content['link'] = url_img_dict[key]
+        content['alt'] = "Screenshot"
+        content['description'] = "A screenshot of the website."
+        final_chunk = {}
+        final_chunk['type'] = chunk_type
+        final_chunk['content'] = content
+        result[key] = final_chunk
+    return result
+
+# @param Dictionary of format Github URL: Imgur URL
+def fill_database_from_github(url_img_dict):
+    final = {}
+    count = 0
+    for url in url_img_dict:
+        temp = {}
+        temp["title"] = name
+        temp["class"] = ""
+        temp["semester"] = ""
+        temp["members"] = ""
+        temp["description"] = ""
+        temp["image_chunk"] = url_img_dict[url]
+        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        final[count] = temp
+        count++
+    for key in final:
+        result = db.posts.insert_one(final[key]).inserted_id
+
+# When someone uploads a project via Github, how much do we know about that project?
 
 # retrieve_JSON_Object()
 

@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/MatthewBeaudouinLafon/Project-Projects/issues"
   },
-  "homepage": "https://github.com/MatthewBeaudouinLafon/Project-Projects#readme"
+  "homepage": "https://github.com/MatthewBeaudouinLafon/Project-Projects#readme",
+  "devDependencies": {
+    "gulp-react-docs": "^0.1.2"
+  }
 }
