@@ -1,0 +1,17 @@
+{
+  "description": "Homepage: creates the website's home page. It contains a slideshow and a fixed navigation bar, which contains authentication fields.",
+  "methods": [
+    {
+      "name": "updateFromDB",
+      "docblock": "If the database is populated, this function populates the component's state with the projects in the database.",
+      "modifiers": [],
+      "params": [
+        {
+          "name": "json"
+        }
+      ],
+      "returns": null,
+      "description": "If the database is populated, this function populates the component's state with the projects in the database."
+    }
+  ]
+}

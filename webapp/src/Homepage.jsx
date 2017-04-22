@@ -12,6 +12,13 @@ import {minusSlides} from './slideshow.js'
  */
 export default class Homepage extends React.Component {
 
+    // static styleguide = {
+    //     index: '1.1',
+    //     category: 'Elements',
+    //     title: 'Button',
+    //     description: 'You can use **Markdown** within this `description` field.'
+    // }
+
     constructor(props) {
         super(props);
 
@@ -235,7 +242,3 @@ class NextButton extends React.Component {
         );
     }
 }
-
-/**
- * 
- */
