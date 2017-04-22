@@ -288,6 +288,7 @@ def fill_database_from_github(url_img_dict):
         result = db.posts.insert_one(final[key]).inserted_id
 
 # When someone uploads a project via Github, how much do we know about that project?
+# Will start in edit mode
 
 # retrieve_JSON_Object()
 

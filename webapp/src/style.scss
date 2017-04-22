@@ -71,13 +71,13 @@ input[type="submit"]:hover {
   color: gray;
 }
 
-input[type="text"] {
+input[type="text"], input[type="password"] {
   border: 1px solid silver;
   font-size: 15px;
   padding: 0.5em;
 }
 
-input[type="text"]:hover {
+input[type="text"]:hover, input[type="password"]:hover {
   background-color: #333333;
 }
 
@@ -98,10 +98,6 @@ div .search-bar {
   margin: auto;
   margin-top: 1em;
   margin-bottom: 1em;
-}
-
-input[type="text"]:hover {
-  background-color: #333333;
 }
 
 
