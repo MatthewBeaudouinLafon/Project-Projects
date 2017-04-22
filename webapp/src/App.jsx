@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+
 
 export default class App extends React.Component {
     constructor(props) {
@@ -252,9 +254,11 @@ class ProjectItem extends React.Component {
         var description = this.props.project.description;
         return (
             <div className="project-item">
+                <Link to="/main/project_id">
                 <ProjectName className="project-name" name={name} />
                 <AuthorList className="project-authors" authorList={authorList} />
                 <Description className="project-description" description={description} />
+                </Link>
             </div>
 
         );
