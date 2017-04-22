@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import {CompositeDecorator, Editor, EditorState} from 'draft-js';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -6,12 +8,7 @@ export default class App extends React.Component {
 
         this.state = {
             allProjects: [],
-            displayProjects: [],
-            query: "",
-            timeout: {
-                id: undefined,
-                isRunning: false
-            }
+            displayProjects: []
         }
 
         this.updateFromDB = this.updateFromDB.bind(this);
@@ -40,30 +37,53 @@ export default class App extends React.Component {
 
     performSearch(parsedQuery, keys) {
         //TODO: Loading icon?
+
+        const stopwords = ['a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any',
+            'are', "aren't", 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both',
+            'but', 'by', "can't", 'cannot', 'could', "couldn't", 'did', "didn't", 'do', 'does', "doesn't",
+            'doing', "don't", 'down', 'during', 'each', 'few', 'for', 'from', 'further', 'had', "hadn't", 
+            'has', "hasn't", 'have', "haven't", 'having', 'he', "he'd", "he'll", "he's", 'her', 'here', "here's",
+            'hers', 'herself', 'him', 'himself', 'his', 'how', "how's", 'i', "i'd", "i'll", "i'm", "i've", 'if',
+            'in', 'into', 'is', "isn't", 'it', "it's", 'its', 'itself', "let's", 'me', 'more', 'most', "mustn't",
+            'my', 'myself', 'no', 'nor', 'not', 'of', 'off', 'on', 'once', 'only', 'or', 'other', 'ought', 'our',
+            'ours', 'ourselves', 'out', 'over', 'own', 'same', "shan't", 'she', "she'd", "she'll", "she's",
+            'should', "shouldn't", 'so', 'some', 'such', 'than', 'that', "that's", 'the', 'their', 'theirs',
+            'them', 'themselves', 'then', 'there', "there's", 'these', 'they', "they'd", "they'll", "they're",
+            "they've", 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up', 'very', 'was', "wasn't",
+            'we', "we'd", "we'll", "we're", "we've", 'were', "weren't", 'what', "what's", 'when', "when's", 'where',
+            "where's", 'which', 'while', 'who', "who's", 'whom', 'why', "why's", 'with', "won't", 'would', "wouldn't",
+            'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 'yourself', 'yourselves'];
+
         let filteredProjects = this.state.allProjects;
-        console.log(parsedQuery)
+        // console.log(parsedQuery)
         keys.forEach((key) => {
             switch (key) {
                 case "prefix":
+                    const usefulQuery = parsedQuery["prefix"];
+
+                    stopwords.forEach((word) => {
+                        usefulQuery.replace(word, "");
+                    })
+
                     filteredProjects = filteredProjects.filter((project) => {
-                        return project.title.includes(parsedQuery["prefix"]);
+                        const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
+                        return regex.test(project.title.toLowerCase());
+                        // return project.title.toLowerCase().includes(usefulQuery);
                     });
                 break;
                 case "with":
                     filteredProjects = filteredProjects.filter((project) => {
                         let hasEveryone = true;
                         //TODO: Protect Regex (if user inputs | for example)
-                        const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+")
-                        return regex.test(project.members.join("|"))
+                        const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
+                        let lMembers = [];
+                        project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
+                        return regex.test(lMembers.join("|"));
                     });
                 break;
             }
             this.setState(Object.assign({}, this.state, {
-                displayProjects: filteredProjects,
-                timeout: {
-                    id: undefined,
-                    isRunning: false
-                }
+                displayProjects: filteredProjects
             }));
         })
     }
@@ -87,25 +107,7 @@ export default class App extends React.Component {
                     <SearchBar 
                         query={this.state.query}
                         keys={keys}
-                        handleSearch={(parsedQuery) => {
-                            const timerLength = 1000; //ms
-                            
-                            if (this.state.timeout.isRunning) {
-                                window.clearTimeout(this.state.timeout.id)
-                            }
-
-                            this.setState(Object.assign({}, this.state, {
-                                query: parsedQuery["query"],
-                                timeout: {
-                                    id: window.setTimeout(
-                                            this.performSearch, 
-                                            timerLength, 
-                                            parsedQuery, 
-                                            keys),
-                                    isRunning: true
-                                }
-                            }));
-                        }} />
+                        performSearch={this.performSearch} />
                 </div>
                 <ProjectGrid projectList={this.state.displayProjects} />
             </div>
@@ -114,22 +116,98 @@ export default class App extends React.Component {
 }
 
 class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.parseStr = this.parseStr.bind(this)
+    const keywordRegex = new RegExp("(" + this.props.keys.join("|") + ")")
+
+    function findWithRegex(regex, contentBlock, callback) {
+        const text = contentBlock.getText();
+        let matchArr, start;
+        matchArr = regex.exec(text)
+        if (matchArr) {
+            start = matchArr.index;
+            callback(start, start + matchArr[0].length);
+        }
     }
 
-    parseStr(str) {
+    const styles = {
+        keywords: {
+            color: "rgba(98, 177, 254, 1.0)",
+            fontWeight: "bold"
+        }
+    }
+
+    const compositeDecorator = new CompositeDecorator([{
+        strategy: (contentBlock, callback, contentState) => {
+            findWithRegex(keywordRegex, contentBlock, callback);
+        },
+        component: (props) => {
+            return <span style={styles.keywords}>{props.children}</span>;
+        }
+    }])
+    
+    this.state = {
+        editorState: EditorState.createEmpty(compositeDecorator),
+        query: "",
+        timeout: {
+            id: null,
+            isRunning: false
+        }
+    };
+
+    this.parseStr = this.parseStr.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(editorState) {
+    if (editorState.getCurrentContent().getPlainText() !== this.state.editorState.getCurrentContent().getPlainText()){
+        const parsedQuery = this.parseStr(editorState.getCurrentContent().getPlainText());
+        const timerLength = 1000; //ms
+
+        if (this.state.timeout.isRunning) {
+            clearTimeout(this.state.timeout.id);
+        }
+
+        this.setState(Object.assign({}, this.state, {
+            editorState: editorState,
+            timeout: {
+                id: setTimeout(
+                    (parsedQuery, keys) => {
+                        this.props.performSearch(parsedQuery, keys);
+                        this.setState(Object.assign({}, this.state, {
+                            timeout: {
+                                id: null,
+                                isRunning: false
+                            }
+                        }))
+                    },
+                    timerLength, 
+                    parsedQuery, 
+                    this.props.keys
+                ),
+                isRunning: true
+            }
+        }));
+    } else {
+        this.setState(Object.assign({}, this.state, {
+            editorState: editorState
+        }));
+    };
+        
+}
+
+  parseStr(str) {
         // Returns object of parsed string
         let parsed = {
             query: str
         };
+        str = str.toLowerCase();
 
         this.props.keys.forEach((key) => {
             parsed = Object.assign({}, parsed, {
                 [key]: ""
-            })
+            });
         })
 
         let currentWord = "prefix";
@@ -142,20 +220,15 @@ class SearchBar extends React.Component {
                 parsed[currentWord] += (parsed[currentWord]) ? (" " + word) : (word);
             }
         });
-        return parsed
+
+        return parsed;
     }
 
-    render() {
-        return (
-            <input className="search-bar" 
-                   type="text" 
-                   placeholder="Search..." 
-                   value={this.props.query} 
-                   onChange={(event => {
-                       this.props.handleSearch(this.parseStr(event.target.value))
-                   })} />
-        );
-    }
+  render() {
+    return <div className="search-bar">
+                <Editor editorState={this.state.editorState} onChange={this.handleSearch} />
+           </div>
+  }
 }
 
 class ProjectGrid extends React.Component {
