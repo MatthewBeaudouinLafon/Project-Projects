@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Editor, EditorState} from 'draft-js';
+import {CompositeDecorator, Editor, EditorState} from 'draft-js';
 
 export default class App extends React.Component {
     constructor(props) {
@@ -8,12 +8,7 @@ export default class App extends React.Component {
 
         this.state = {
             allProjects: [],
-            displayProjects: [],
-            query: "",
-            timeout: {
-                id: undefined,
-                isRunning: false
-            }
+            displayProjects: []
         }
 
         this.updateFromDB = this.updateFromDB.bind(this);
@@ -60,7 +55,7 @@ export default class App extends React.Component {
             'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 'yourself', 'yourselves'];
 
         let filteredProjects = this.state.allProjects;
-        console.log(parsedQuery)
+        // console.log(parsedQuery)
         keys.forEach((key) => {
             switch (key) {
                 case "prefix":
@@ -88,11 +83,7 @@ export default class App extends React.Component {
                 break;
             }
             this.setState(Object.assign({}, this.state, {
-                displayProjects: filteredProjects,
-                timeout: {
-                    id: undefined,
-                    isRunning: false
-                }
+                displayProjects: filteredProjects
             }));
         })
     }
@@ -116,25 +107,7 @@ export default class App extends React.Component {
                     <SearchBar 
                         query={this.state.query}
                         keys={keys}
-                        handleSearch={(parsedQuery) => {
-                            const timerLength = 1000; //ms
-                            
-                            if (this.state.timeout.isRunning) {
-                                window.clearTimeout(this.state.timeout.id)
-                            }
-
-                            this.setState(Object.assign({}, this.state, {
-                                query: parsedQuery["query"],
-                                timeout: {
-                                    id: window.setTimeout(
-                                            this.performSearch, 
-                                            timerLength, 
-                                            parsedQuery, 
-                                            keys),
-                                    isRunning: true
-                                }
-                            }));
-                        }} />
+                        performSearch={this.performSearch} />
                 </div>
                 <ProjectGrid projectList={this.state.displayProjects} />
             </div>
@@ -142,25 +115,99 @@ export default class App extends React.Component {
     }
 }
 
-class SearchBarOld extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {editorState: EditorState.createEmpty()};
-        this.parseStr = this.parseStr.bind(this)
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    const keywordRegex = new RegExp("(" + this.props.keys.join("|") + ")")
+
+    function findWithRegex(regex, contentBlock, callback) {
+        const text = contentBlock.getText();
+        let matchArr, start;
+        matchArr = regex.exec(text)
+        if (matchArr) {
+            start = matchArr.index;
+            callback(start, start + matchArr[0].length);
+        }
     }
 
-    parseStr(str) {
+    const styles = {
+        keywords: {
+            color: "rgba(98, 177, 254, 1.0)",
+            fontWeight: "bold"
+        }
+    }
+
+    const compositeDecorator = new CompositeDecorator([{
+        strategy: (contentBlock, callback, contentState) => {
+            findWithRegex(keywordRegex, contentBlock, callback);
+        },
+        component: (props) => {
+            return <span style={styles.keywords}>{props.children}</span>;
+        }
+    }])
+    
+    this.state = {
+        editorState: EditorState.createEmpty(compositeDecorator),
+        query: "",
+        timeout: {
+            id: null,
+            isRunning: false
+        }
+    };
+
+    this.parseStr = this.parseStr.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+  }
+
+  handleSearch(editorState) {
+    if (editorState.getCurrentContent().getPlainText() !== this.state.editorState.getCurrentContent().getPlainText()){
+        const parsedQuery = this.parseStr(editorState.getCurrentContent().getPlainText());
+        const timerLength = 1000; //ms
+
+        if (this.state.timeout.isRunning) {
+            clearTimeout(this.state.timeout.id);
+        }
+
+        this.setState(Object.assign({}, this.state, {
+            editorState: editorState,
+            timeout: {
+                id: setTimeout(
+                    (parsedQuery, keys) => {
+                        this.props.performSearch(parsedQuery, keys);
+                        this.setState(Object.assign({}, this.state, {
+                            timeout: {
+                                id: null,
+                                isRunning: false
+                            }
+                        }))
+                    },
+                    timerLength, 
+                    parsedQuery, 
+                    this.props.keys
+                ),
+                isRunning: true
+            }
+        }));
+    } else {
+        this.setState(Object.assign({}, this.state, {
+            editorState: editorState
+        }));
+    };
+        
+}
+
+  parseStr(str) {
         // Returns object of parsed string
         let parsed = {
             query: str
         };
-
         str = str.toLowerCase();
 
         this.props.keys.forEach((key) => {
             parsed = Object.assign({}, parsed, {
                 [key]: ""
-            })
+            });
         })
 
         let currentWord = "prefix";
@@ -173,20 +220,15 @@ class SearchBarOld extends React.Component {
                 parsed[currentWord] += (parsed[currentWord]) ? (" " + word) : (word);
             }
         });
-        return parsed
+
+        return parsed;
     }
 
-    render() {
-        return (
-            <input className="search-bar" 
-                   type="text" 
-                   placeholder="Search..." 
-                   value={this.props.query} 
-                   onChange={(event => {
-                       this.props.handleSearch(this.parseStr(event.target.value))
-                   })} />
-        );
-    }
+  render() {
+    return <div className="search-bar">
+                <Editor editorState={this.state.editorState} onChange={this.handleSearch} />
+           </div>
+  }
 }
 
 class ProjectGrid extends React.Component {

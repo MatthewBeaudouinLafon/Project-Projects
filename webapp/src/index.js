@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.jsx';
 import './style.scss';
+import './Draft.scss';
 import Homepage from './Homepage';
 import ProjectForm from './ProjectForm';
 
