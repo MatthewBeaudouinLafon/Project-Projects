@@ -120,6 +120,20 @@ input[type="text"]:hover {
   border-radius: 5px;
 }
 
+.project-empty-grid {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-end;
+  flex-flow: row wrap;
+
+  border: 1px solid silver;
+  padding: 2%;
+  border-radius: 5px;
+
+  justify-content: center;
+  
+}
+
 .project-item {
   display: flex;
   flex-direction: column;

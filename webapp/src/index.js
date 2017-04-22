@@ -6,7 +6,6 @@ import './Draft.scss';
 import Homepage from './Homepage';
 import ProjectForm from './ProjectForm';
 
-
 var PROJECTS = [
   {
     name: "Project Projects", 
@@ -54,7 +53,6 @@ var PROJECTS = [
 //         DB_PROJECTS = json;
 //     })
 // })
-
 
 ReactDOM.render(
   <App  />,

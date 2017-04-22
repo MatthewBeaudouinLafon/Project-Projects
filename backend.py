@@ -23,6 +23,25 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
+def toOlinEpoch(human_readable):
+    """
+    OlinEpoch is the number of years since Fall 2002 (ie.: the first Olin semester)
+    Semesters split the year equally. The beginning of the semester counts date wise (looking at you winter)
+    Examples:
+        SP2017 -> 14.5
+        FALL2012 -> 10
+        Winter 2014 -> 12.25
+    """
+    if "fa" in human_readable[:-4].lower():
+        semesterAdjustment = 0
+    if "w" in human_readable[:-4].lower():
+        semesterAdjustment = 0.25
+    if "sp" in human_readable[:-4].lower():
+        semesterAdjustment = -0.5
+    if "su" in human_readable[:-4].lower():
+        semesterAdjustment = -0.25
+    return int(human_readable[-4:]) - 2002 + semesterAdjustment
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -103,7 +122,7 @@ def retrieve_all_information():
         val2 = SD_descriptions[count]
         temp["title"] = name
         temp["class"] = "Software Design"
-        temp["semester"] = "SP2016"
+        temp["semester"] = toOlinEpoch("SP2016")
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
@@ -118,7 +137,7 @@ def retrieve_all_information():
         val2 = POE_descriptions[count-len(SD_names)]
         temp["title"] = name
         temp["class"] = "Principles of Engineering"
-        temp["semester"] = "FA2014"
+        temp["semester"] = toOlinEpoch("FA2014")
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
@@ -264,7 +283,7 @@ def fill_database_from_github(url_img_dict):
         temp["image_chunk"] = url_img_dict[url]
         temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[count] = temp
-        count++
+        count += 1
     for key in final:
         result = db.posts.insert_one(final[key]).inserted_id
 

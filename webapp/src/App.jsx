@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
+import {toOlinEpoch, fromOlinEpoch} from './helper.js' 
 
 export default class App extends React.Component {
     constructor(props) {
@@ -55,32 +56,47 @@ export default class App extends React.Component {
             'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 'yourself', 'yourselves'];
 
         let filteredProjects = this.state.allProjects;
-        // console.log(parsedQuery)
+        console.log(parsedQuery)
         keys.forEach((key) => {
-            switch (key) {
-                case "prefix":
-                    const usefulQuery = parsedQuery["prefix"];
+            if (parsedQuery[key] !== ""){
+                switch (key) {
+                    case "prefix":
+                        const usefulQuery = parsedQuery["prefix"];
 
-                    stopwords.forEach((word) => {
-                        usefulQuery.replace(word, "");
-                    })
+                        stopwords.forEach((word) => {
+                            usefulQuery.replace(word, "");
+                        })
 
-                    filteredProjects = filteredProjects.filter((project) => {
-                        const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
-                        return regex.test(project.title.toLowerCase());
-                        // return project.title.toLowerCase().includes(usefulQuery);
-                    });
-                break;
-                case "with":
-                    filteredProjects = filteredProjects.filter((project) => {
-                        let hasEveryone = true;
-                        //TODO: Protect Regex (if user inputs | for example)
-                        const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
-                        let lMembers = [];
-                        project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
-                        return regex.test(lMembers.join("|"));
-                    });
-                break;
+                        filteredProjects = filteredProjects.filter((project) => {
+                            const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
+                            return regex.test(project.title.toLowerCase());
+                            // return project.title.toLowerCase().includes(usefulQuery);
+                        });
+                    break;
+                    case "with":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            //TODO: Protect Regex (if user inputs | for example)
+                            const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
+                            let lMembers = [];
+                            project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
+                            return regex.test(lMembers.join("|"));
+                        });
+                    case "during":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester === toOlinEpoch(parsedQuery["during"]));
+                        });
+                    break;
+                    case "before":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester < toOlinEpoch(parsedQuery["before"]));
+                        });
+                    break;
+                    case "after":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester > toOlinEpoch(parsedQuery["after"]));
+                        });
+                    break;
+                }
             }
             this.setState(Object.assign({}, this.state, {
                 displayProjects: filteredProjects
@@ -89,15 +105,15 @@ export default class App extends React.Component {
     }
 
     render() {
-        let grid = null;
+        let grid;
 
-        if (this.state.displayProjects !== []) {
-            grid = <ProjectGrid projectList={this.state.displayProjects} />
+        if (this.state.displayProjects.length === 0) {
+            grid = <div className="project-empty-grid">No projects here!</div>
         } else {
-            grid = <div>No projects here!</div> 
+            grid = <ProjectGrid projectList={this.state.displayProjects} /> 
         }
 
-        const keys = ["prefix", "with"];
+        const keys = ["prefix", "with", "during", "before", "after"];
 
         return (
             <div>
@@ -109,7 +125,7 @@ export default class App extends React.Component {
                         keys={keys}
                         performSearch={this.performSearch} />
                 </div>
-                <ProjectGrid projectList={this.state.displayProjects} />
+                {grid}
             </div>
         );
     }
