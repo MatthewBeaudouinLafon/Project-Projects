@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
-
+import {toOlinEpoch, fromOlinEpoch} from './helper.js' 
+import { Link } from 'react-router-dom'
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -57,32 +58,47 @@ export default class App extends React.Component {
             'you', "you'd", "you'll", "you're", "you've", 'your', 'yours', 'yourself', 'yourselves'];
 
         let filteredProjects = this.state.allProjects;
-        // console.log(parsedQuery)
+        console.log(parsedQuery)
         keys.forEach((key) => {
-            switch (key) {
-                case "prefix":
-                    const usefulQuery = parsedQuery["prefix"];
+            if (parsedQuery[key] !== ""){
+                switch (key) {
+                    case "prefix":
+                        const usefulQuery = parsedQuery["prefix"];
 
-                    stopwords.forEach((word) => {
-                        usefulQuery.replace(word, "");
-                    })
+                        stopwords.forEach((word) => {
+                            usefulQuery.replace(word, "");
+                        })
 
-                    filteredProjects = filteredProjects.filter((project) => {
-                        const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
-                        return regex.test(project.title.toLowerCase());
-                        // return project.title.toLowerCase().includes(usefulQuery);
-                    });
-                break;
-                case "with":
-                    filteredProjects = filteredProjects.filter((project) => {
-                        let hasEveryone = true;
-                        //TODO: Protect Regex (if user inputs | for example)
-                        const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
-                        let lMembers = [];
-                        project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
-                        return regex.test(lMembers.join("|"));
-                    });
-                break;
+                        filteredProjects = filteredProjects.filter((project) => {
+                            const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
+                            return regex.test(project.title.toLowerCase());
+                            // return project.title.toLowerCase().includes(usefulQuery);
+                        });
+                    break;
+                    case "with":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            //TODO: Protect Regex (if user inputs | for example)
+                            const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
+                            let lMembers = [];
+                            project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
+                            return regex.test(lMembers.join("|"));
+                        });
+                    case "during":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester === toOlinEpoch(parsedQuery["during"]));
+                        });
+                    break;
+                    case "before":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester < toOlinEpoch(parsedQuery["before"]));
+                        });
+                    break;
+                    case "after":
+                        filteredProjects = filteredProjects.filter((project) => {
+                            return (project.semester > toOlinEpoch(parsedQuery["after"]));
+                        });
+                    break;
+                }
             }
             this.setState(Object.assign({}, this.state, {
                 displayProjects: filteredProjects
@@ -91,15 +107,15 @@ export default class App extends React.Component {
     }
 
     render() {
-        let grid = null;
+        let grid;
 
-        if (this.state.displayProjects !== []) {
-            grid = <ProjectGrid projectList={this.state.displayProjects} />
+        if (this.state.displayProjects.length === 0) {
+            grid = <div className="project-empty-grid">No projects here!</div>
         } else {
-            grid = <div>No projects here!</div> 
+            grid = <ProjectGrid projectList={this.state.displayProjects} /> 
         }
 
-        const keys = ["prefix", "with"];
+        const keys = ["prefix", "with", "during", "before", "after"];
 
         return (
             <div>
@@ -111,7 +127,7 @@ export default class App extends React.Component {
                         keys={keys}
                         performSearch={this.performSearch} />
                 </div>
-                <ProjectGrid projectList={this.state.displayProjects} />
+                {grid}
             </div>
         );
     }
@@ -256,9 +272,9 @@ class ProjectItem extends React.Component {
         return (
             <div className="project-item">
                 <Link to={"/main/" + project_id}>
-                <ProjectName className="project-name" name={name} />
-                <AuthorList className="project-authors" authorList={authorList} />
-                <Description className="project-description" description={description} />
+                    <ProjectName className="project-name" name={name} />
+                    <AuthorList className="project-authors" authorList={authorList} />
+                    <Description className="project-description" description={description} />
                 </Link>
             </div>
 
@@ -297,21 +313,3 @@ class AuthorList extends React.Component {
 //         );
 //     }
 // }
-
-var SlideShow = React.createClass({
-    displayName: 'slideshow',
-    render: function() {
-        var s = document.createElement('script');
-        s.innerHTML = "var slideIndex = 0;" +
-        "showSlides();" +
-        "function showSlides() {" +
-        "var i; var slides = document.getElementsByClassName('mySlides'); var dots = document.getElementsByClassName('dot'); for (i = 0; i < slides.length; i++)" +
-        "{ slides[i].style.display = 'none';}" + 
-        "slideIndex++; if (slideIndex> slides.length) {slideIndex = 1}" +  
-        "for (i = 0; i < dots.length; i++) {" +
-        "dots[i].className = dots[i].className.replace('active', '');"+
-    "} slides[slideIndex-1].style.display = 'block'; dots[slideIndex-1].className += 'active'; setTimeout(showSlides, 2000);}"
-    document.head.appendChild(s);
-    return (<div dangerouslySetInnerHTML={{__html: x}}></div>);
-    }
-});

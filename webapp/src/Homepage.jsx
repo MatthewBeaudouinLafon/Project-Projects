@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+import { Link } from 'react-router-dom';
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 import slideshowScript from './slideshow.js'
 
@@ -179,7 +180,7 @@ class NavBar extends React.Component {
     render() {
         return (
             <div className="fixed-nav-bar">
-                <nav class="fixed-nav-bar">
+                <nav className="fixed-nav-bar">
                 <form method="POST">
                 <input type="text" name="username" placeholder="Username"/> &emsp;
                 <input type="password" name="password" placeholder="Password" /> &emsp;

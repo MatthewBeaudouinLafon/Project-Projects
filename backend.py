@@ -23,6 +23,25 @@ class JSONEncoder(json.JSONEncoder):
             return str(o)
         return json.JSONEncoder.default(self, o)
 
+def toOlinEpoch(human_readable):
+    """
+    OlinEpoch is the number of years since Fall 2002 (ie.: the first Olin semester)
+    Semesters split the year equally. The beginning of the semester counts date wise (looking at you winter)
+    Examples:
+        SP2017 -> 14.5
+        FALL2012 -> 10
+        Winter 2014 -> 12.25
+    """
+    if "fa" in human_readable[:-4].lower():
+        semesterAdjustment = 0
+    if "w" in human_readable[:-4].lower():
+        semesterAdjustment = 0.25
+    if "sp" in human_readable[:-4].lower():
+        semesterAdjustment = -0.5
+    if "su" in human_readable[:-4].lower():
+        semesterAdjustment = -0.25
+    return int(human_readable[-4:]) - 2002 + semesterAdjustment
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -103,11 +122,11 @@ def retrieve_all_information():
         val2 = SD_descriptions[count]
         temp["title"] = name
         temp["class"] = "Software Design"
-        temp["semester"] = "SP2016"
+        temp["semester"] = toOlinEpoch("SP2016")
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
     
@@ -118,11 +137,11 @@ def retrieve_all_information():
         val2 = POE_descriptions[count-len(SD_names)]
         temp["title"] = name
         temp["class"] = "Principles of Engineering"
-        temp["semester"] = "FA2014"
+        temp["semester"] = toOlinEpoch("FA2014")
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
     return final
@@ -153,6 +172,7 @@ def update_database(JSON_Object, object_id=0):
 def retrieve_JSON_Object(object_id):
     project_information = db.posts.find_one({'_id': ObjectId(object_id)})
     output = JSONEncoder().encode(project_information)
+    print(project_information)
     return output
 
 
@@ -171,10 +191,19 @@ def retrieve_project(project_name):
 @app.route('/api/project/<project_id>', methods=["POST"]) 
 def save_project(project_id):
     if request.method == "POST":
-        print("TESTING")
+        print("Setting project #{}".format(project_id))
         data = request.get_json(force=True)
         print(data)
         update_database(data, project_id)
+    return "whatever"
+    # Could be dangerous to use Mongo ID here??????
+
+@app.route('/api/project/<project_id>', methods=["GET"]) 
+def send_project(project_id):
+    print("All good?")
+    if request.method == "GET":
+        print("Getting project #{}".format(project_id))
+        return retrieve_JSON_Object(project_id)
     return "whatever"
     # Could be dangerous to use Mongo ID here??????
 
@@ -262,7 +291,7 @@ def fill_database_from_github(url_img_dict):
         temp["members"] = ""
         temp["description"] = ""
         temp["image_chunk"] = url_img_dict[url]
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[count] = temp
         count += 1
     for key in final:

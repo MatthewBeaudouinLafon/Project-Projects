@@ -5,8 +5,12 @@ import './style.scss';
 import './Draft.scss';
 import Homepage from './Homepage';
 import ProjectForm from './ProjectForm';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
-
+import { HashRouter as Router } from 'react-router-dom';
+import {  Route,
+          Link,
+          IndexRoute,
+          hashHistory,
+          browserHistory } from 'react-router';
 
 // var PROJECTS = [
 //   {
@@ -58,12 +62,13 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 
 ReactDOM.render((
   <Router>
-    <Route path="/" component={Homepage} />
-    <Route path="/main" component={App} />
-    <Route path="/main/*" component={ProjectForm} />
+    <div>
+      <Route exact path="/" component={Homepage} />
+      <Route exact path="/main" component={App} />
+      <Route path="/main/*" component={ProjectForm} />
+    </div>
   </Router>
 ), document.getElementById('root'));
-
 
 // ReactDOM.render(
 //   <Homepage  />,
