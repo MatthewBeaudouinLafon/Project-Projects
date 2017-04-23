@@ -126,7 +126,7 @@ def retrieve_all_information():
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
     
@@ -141,7 +141,7 @@ def retrieve_all_information():
         temp["members"] = val1
         temp["description"] = val2
         temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[key] = temp
         count += 1
     return final
@@ -172,6 +172,7 @@ def update_database(JSON_Object, object_id=0):
 def retrieve_JSON_Object(object_id):
     project_information = db.posts.find_one({'_id': ObjectId(object_id)})
     output = JSONEncoder().encode(project_information)
+    print(project_information)
     return output
 
 
@@ -190,10 +191,19 @@ def retrieve_project(project_name):
 @app.route('/api/project/<project_id>', methods=["POST"]) 
 def save_project(project_id):
     if request.method == "POST":
-        print("TESTING")
+        print("Setting project #{}".format(project_id))
         data = request.get_json(force=True)
         print(data)
         update_database(data, project_id)
+    return "whatever"
+    # Could be dangerous to use Mongo ID here??????
+
+@app.route('/api/project/<project_id>', methods=["GET"]) 
+def send_project(project_id):
+    print("All good?")
+    if request.method == "GET":
+        print("Getting project #{}".format(project_id))
+        return retrieve_JSON_Object(project_id)
     return "whatever"
     # Could be dangerous to use Mongo ID here??????
 
@@ -281,7 +291,7 @@ def fill_database_from_github(url_img_dict):
         temp["members"] = ""
         temp["description"] = ""
         temp["image_chunk"] = url_img_dict[url]
-        temp["chunk"] = {"type": "text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
         final[count] = temp
         count += 1
     for key in final:

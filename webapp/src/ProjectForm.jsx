@@ -47,42 +47,49 @@ export default class ProjectForm extends React.Component {
             editing: false,
             isSaved: false,
             editHistory: [],
-            chunkList: CHUNKS,
-            projectName: "Test Name",
-            projectDesc: "This is a test project aimed at testing the capabilities of the " +
-                        "project form in the context of Project: Projects.",
-            authors: ["Emily Yeh", "Matthew Beaudouin-Lafon"]
+            chunkList: [],
+            projectName: "",
+            projectDesc: "",
+            projectSemester: "",
+            authors: []
         }
 
-        this.getProjectName = this.getProjectName.bind(this)
         this.addChunk = this.addChunk.bind(this)
         this.convertChunk = this.convertChunk.bind(this)
         this.changeEditState = this.changeEditState.bind(this)
         this.handleChunkChange = this.handleChunkChange.bind(this)
+        this.updateFromDB = this.updateFromDB.bind(this)
+        this.componentDidMount = this.componentDidMount.bind(this)
     }
 
-    // updateFromDB(json) {
-    //     console.log("Getting project from Database")
-    //     this.setState({
-    //         allProjects: json,
-    //         displayProjects: json,
-    //         query: this.state.query
-    //     });
-    // }
+    updateFromDB(json) {
+        console.log(json)
+        // CAUTION: Change when we change the backend to have one list of chunks
+        let chunkList;
+        if (json.image_chunk !== "") {
+            chunkList = [json.chunk, json.image_chunk];
+        } else {
+            chunkList = [json.chunk];
+        }
+        this.setState(Object.assign({}, this.state, {
+            projectName: json.title,
+            projectDesc: json.description,
+            projectSemester: json.semester,
+            authors: json.members,
+            chunkList: chunkList, 
+            query: this.state.query
+        }));
+    }
 
-    // componentDidMount() {
-    //     const updateFromDB = this.updateFromDB; 
-
-    //     fetch('/api/project/' + projectId)
-    //     .then(function(response) {
-    //         response.json().then((json) => {
-    //             updateFromDB(json)
-    //         })
-    //     })
-    // }
-
-    getProjectName() {
-        // TODO: URL query with react-router
+    componentDidMount() {
+        const updateFromDB = this.updateFromDB; 
+        const projectId = /(\w+)$/.exec(this.props.location.pathname)[0] // Matches and retrieves project id from the end of the url
+        fetch('/api/project/' + projectId)
+        .then(function(response) {
+            response.json().then((json) => {
+                updateFromDB(json)
+            })
+        })
     }
 
     addChunk(context) {
