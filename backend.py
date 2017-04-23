@@ -275,9 +275,12 @@ def fill_database_from_github(url_img_dict):
 
 # pprint.pprint(retrieve_all_information())
 
-empty_database()    # Try to use these
-fill_database()     # two functions together :^)
+# empty_database()    # Try to use these
+# fill_database()     # two functions together :^)
 
+# cursor = db.posts.find({})
+# for document in cursor: 
+#     pprint.pprint(document)
 
 
 if __name__ == '__main__':
