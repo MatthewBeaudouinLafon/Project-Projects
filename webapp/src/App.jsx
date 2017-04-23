@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
 import {toOlinEpoch, fromOlinEpoch} from './helper.js' 
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router'
+import { Link } from 'react-router-dom'
+import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -271,9 +272,9 @@ class ProjectItem extends React.Component {
         return (
             <div className="project-item">
                 <Link to={"/main/" + project_id}>
-                <ProjectName className="project-name" name={name} />
-                <AuthorList className="project-authors" authorList={authorList} />
-                <Description className="project-description" description={description} />
+                    <ProjectName className="project-name" name={name} />
+                    <AuthorList className="project-authors" authorList={authorList} />
+                    <Description className="project-description" description={description} />
                 </Link>
             </div>
 
@@ -312,21 +313,3 @@ class AuthorList extends React.Component {
 //         );
 //     }
 // }
-
-var SlideShow = React.createClass({
-    displayName: 'slideshow',
-    render: function() {
-        var s = document.createElement('script');
-        s.innerHTML = "var slideIndex = 0;" +
-        "showSlides();" +
-        "function showSlides() {" +
-        "var i; var slides = document.getElementsByClassName('mySlides'); var dots = document.getElementsByClassName('dot'); for (i = 0; i < slides.length; i++)" +
-        "{ slides[i].style.display = 'none';}" + 
-        "slideIndex++; if (slideIndex> slides.length) {slideIndex = 1}" +  
-        "for (i = 0; i < dots.length; i++) {" +
-        "dots[i].className = dots[i].className.replace('active', '');"+
-    "} slides[slideIndex-1].style.display = 'block'; dots[slideIndex-1].className += 'active'; setTimeout(showSlides, 2000);}"
-    document.head.appendChild(s);
-    return (<div dangerouslySetInnerHTML={{__html: x}}></div>);
-    }
-});
