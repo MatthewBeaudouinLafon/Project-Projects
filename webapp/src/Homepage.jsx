@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from 'react-router-dom';
-import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 import slideshowScript from './slideshow.js'
 
@@ -26,10 +25,12 @@ export default class Homepage extends React.Component {
 
         this.state = {
             projects: [],
-            query: "*"
+            query: "*",
+            currentSlide: 0
         }
 
         this.updateFromDB = this.updateFromDB.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     /**
@@ -57,19 +58,18 @@ export default class Homepage extends React.Component {
         const script = document.createElement( 'script' );
             script.type = 'text/javascript';
             script.src = slideshowScript;
-            script.async = true;
+            script.async = false;
             document.body.appendChild(script);
-            // $('.script-placeholder').append(embedCode);
     }
 
     render() {
         let slides = null;
         if (this.state.projects.length !== 0) {
-            // console.log("****Rendering projects:")
-            // console.log(this.state.projects)
+            console.log("****Rendering projects:")
+            console.log(this.state.projects)
             slides = <ProjectDisplay projectList={this.state.projects} />
         } else {
-            slides = <div>No projects here!</div> 
+            // slides = <div>No projects here!</div> 
         }
 
         return (
@@ -93,9 +93,11 @@ class ProjectDisplay extends React.Component {
         return (
             <div className = "projectDisplay">
                 <div className="slideshow-container">
-                    <Slideshow className="slide" projectList={this.props.projectList} />
-                    <PrevButton />
-                    <NextButton />
+                    <div className = "flex-slideshow-container">
+                        <div className="flex-slideshow-arrow"><PrevButton /></div>
+                        <div name="flex-slideshow"><Slideshow className="slide" projectList={this.props.projectList} /></div>
+                        <div className="flex-slideshow-arrow"><NextButton /></div>
+                    </div>
                 </div><br/><br/><br/>
                 <center><div id="slide-counter"></div></center>
             </div>
@@ -112,7 +114,6 @@ class Slideshow extends React.Component {
         this.props.projectList.forEach(function(project) {
             slides.push(<ProjectItem className="project-item" project={project} key={project._id} />)
         });
-        console.log(slides);
         return (
             <div>
                 {slides}
@@ -126,19 +127,45 @@ class Slideshow extends React.Component {
  * ProjectItem: Component that contains all of a given project's information: name, authorList, and description.
  */
 class ProjectItem extends React.Component {
+    convertChunk(chunk, key) {
+        return <Chunk 
+            chunkType={chunk.type}
+            content={chunk.content}
+            key={key}/>
+    }
+
     render() {
         var name = this.props.project.title;
         var authorList = this.props.project.members;
         var description = this.props.project.description;
+        var chunks = this.props.project.chunk_list;
+
+        let displayChunks = []
+        let key = 0  // Corresponds to position in the list
+        this.props.project.chunk_list.forEach((chunk) => {
+            displayChunks.push(this.convertChunk(chunk, key));
+            key++;
+        });
+
         return (
             <div className="mySlides fade">
-                    <ProjectName className="project-name" name={name} />
-                    <AuthorList className="project-authors" authorList={authorList} />
-                    <Description className="project-description" description={description} />
+                <FormHeader name={name} 
+                            authors={authorList}
+                            description={description}
+                />
+                {displayChunks}
+                <div className="chunk-end" />
             </div>
         );
     }
 }
+
+
+
+                    // <ProjectName className="project-name" name={name} />
+                    // <AuthorList className="project-authors" authorList={authorList} />
+                    // <Description className="project-description" description={description} />
+                    // {displayChunks}
 
 /**
  * ProjectName: A given project's name.
@@ -169,6 +196,118 @@ class AuthorList extends React.Component {
     render() {
         return (
             <div className="project-authors">{this.props.authorList.join(', ')}</div>
+        );
+    }
+}
+
+/**
+ * Chunks: Displays chunks that are visible
+ */
+class Chunk extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.getTextChunk = this.getTextChunk.bind(this);
+        this.getImageChunk = this.getImageChunk.bind(this);
+        this.getVideoChunk = this.getVideoChunk.bind(this);
+    }
+
+    getTextChunk() {
+        return <div className="text-chunk-input">{this.props.content.text}</div>;
+    }
+
+    getImageChunk() {
+        let image;
+        // TODO: Manage links in a more secure way
+        if (this.props.content.link === "") {
+            image = <div className="image" />
+        } else {
+            image = <img className="image" 
+                         src={this.props.content.link} 
+                         alt={this.props.content.alt}/>
+        }
+
+        return <div className="image-chunk">
+            {image}
+            <div className="description">
+                {this.props.content.description}
+            </div>
+        </div>
+    }
+
+    getVideoChunk() {
+        const opts = {
+            height: "315",
+            width: "420"
+        }
+
+        // Parse youtube link for videoId
+        const url = this.props.content.link
+        const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+        const match = url.match(regExp);
+        const videoId = (match && match[7].length == 11) ? match[7] : false;
+
+        let urlBox;
+        let description;
+        
+        description = <div className="description">
+            {this.props.content.description}
+        </div>
+
+        return  <div className="video-container">
+                    {urlBox}
+                    <YouTube
+                      videoId={videoId}
+                      className="youtube-video"
+                      opts={opts}
+                    />
+                    {description}
+                </div>
+    }        
+
+    render() {
+        let chunkContent = null
+        switch (this.props.chunkType) {
+            case "Text":
+                chunkContent = this.getTextChunk();
+                break;
+            case "Video":
+                chunkContent = this.getVideoChunk();
+                break;
+            case "Image":
+                chunkContent = this.getImageChunk();
+                break;
+        }
+
+        return (
+            <div className="chunk-container">
+                {chunkContent}
+            </div>
+        );
+    }
+}
+
+class FormHeader extends React.Component {
+    render() {
+        const authorList = this.props.authors.join(", ");
+
+        return (
+            <div>
+                <div className="form-header">
+                    <div>
+                        <div className="form-project-name">
+                            Project Name: <b>{this.props.name}</b>                    
+                        </div>
+                        <div className="project-authors">
+                            {authorList}
+                        </div>
+                    </div>
+                </div>
+                <Chunk 
+                    chunkType={"Text"}
+                    content={{text:this.props.description}}
+                />
+            </div>
         );
     }
 }
