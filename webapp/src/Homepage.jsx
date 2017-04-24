@@ -45,7 +45,7 @@ export default class Homepage extends React.Component {
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
         
-        fetch('/api/.*')
+        fetch('/api/all_projects')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)

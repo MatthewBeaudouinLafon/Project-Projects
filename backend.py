@@ -167,8 +167,15 @@ def empty_database():
 # Updates document in database with new information
 def update_database(JSON_Object, object_id=0):
     db.posts.update({ "_id": object_id },
-        {"$set": { "updated_info": JSON_Object}},
+        {"$set": { 
+            "title": JSON_Object["title"],
+            "semester": JSON_Object["semester"],
+            "members": JSON_Object["members"],
+            "description": JSON_Object["description"],
+            "chunk_list": JSON_Object["chunk_list"],
+            }},
         upsert=True)
+    return "Updated database"
 
 
 def retrieve_JSON_Object(object_id):
@@ -178,13 +185,22 @@ def retrieve_JSON_Object(object_id):
     return output
 
 
-# Given project name, retrieve the rest of the project's information
-@app.route('/api/<project_name>')
-def retrieve_project(project_name):
-    print("Requesting project_name={}".format(project_name))
+# # Given project name, retrieve the rest of the project's information
+# @app.route('/api/<project_name>')
+# def retrieve_project(project_name):
+#     print("Requesting project_name={}".format(project_name))
+#     REGEX = ".*"
+#     print("Regex: {}".format(REGEX + project_name + REGEX))
+#     search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
+#     project_information = list(db.posts.find({"title" : search_item}))
+#     output = JSONEncoder().encode(project_information)
+#     return output
+
+@app.route('/api/all_projects')
+def retrieve_all_project():
+    print("Getting all projects")
     REGEX = ".*"
-    print("Regex: {}".format(REGEX + project_name + REGEX))
-    search_item = re.compile(REGEX + project_name + REGEX, re.IGNORECASE)
+    search_item = re.compile(REGEX, re.IGNORECASE)
     project_information = list(db.posts.find({"title" : search_item}))
     output = JSONEncoder().encode(project_information)
     return output
@@ -196,7 +212,7 @@ def save_project(project_id):
         print("Setting project #{}".format(project_id))
         data = request.get_json(force=True)
         print(data)
-        update_database(data, project_id)
+        update_database(data, ObjectId(project_id))
     return "whatever"
     # Could be dangerous to use Mongo ID here??????
 
@@ -211,11 +227,11 @@ def send_project(project_id):
 def new_project():
     if request.method == "GET":
         project = {}
-        project["title"] = ""
+        project["title"] = "Project Name"
         project["class"] = ""
         project["semester"] = ""
         project["members"] = []
-        project["description"] = ""
+        project["description"] = "This might be a good place to describe your project."
         project["chunk_list"] = []
         result = db.posts.insert_one(project).inserted_id
         print("Creating new project with id: {}".format(str(result)))

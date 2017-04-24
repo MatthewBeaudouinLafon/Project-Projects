@@ -374,6 +374,19 @@ button .pulse {
   margin-bottom: 0.4em;
 }
 
+.medium-input {
+  width:100%;
+  font-style: italic;
+  color: grey;
+  font-size: 1em;
+  text-align: left;
+  padding: 0.2em;
+  border: 1px solid silver;
+  border-radius: 4px;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
 .text-chunk-input {
   flex: 1;
   min-height: 1em;

@@ -63,21 +63,12 @@ export default class ProjectForm extends React.Component {
     }
 
     updateFromDB(json) {
-        console.log(json)
-        // CAUTION: Change when we change the backend to have one list of chunks
-        let chunkList;
-        if (json.image_chunk !== "") {
-            chunkList = [json.chunk, json.image_chunk];
-        } else {
-            chunkList = [json.chunk];
-        }
         this.setState(Object.assign({}, this.state, {
             projectName: json.title,
             projectDesc: json.description,
             projectSemester: json.semester,
             authors: json.members,
-            chunkList: chunkList, 
-            query: this.state.query
+            chunkList: json.chunk_list
         }));
     }
 
@@ -164,17 +155,23 @@ export default class ProjectForm extends React.Component {
             console.log("Saving...")
 
             // TODO: Also deal with changing project name, description and author list.
-            const projectId = 1234567
+            const projectId = /(\w+)$/.exec(this.props.location.pathname)[0] // TODO: Probably put id in state
+            const data = JSON.stringify({
+                description: this.state.projectDesc,
+                title: this.state.projectName,
+                members: this.state.authors,
+                semester: this.state.projectSemester,
+                chunk_list: this.state.chunkList
+            });
 
-            const data = JSON.stringify(this.state.chunkList);
-            console.log(data)
-            fetch('/api/project/project_id=' + projectId, {
+            // console.log(data)
+            fetch('/api/project/' + projectId, {
                 method: "POST",
                 contentType: 'application/json',
-                body: JSON.stringify(this.state.chunkList)
+                body: data
             })
-            .then(function(res){ return res.json(); })
-            .then(function(data){ alert(JSON.stringify(data))})
+            // .then(function(res){ return res.json(); })
+            // .then(function(data){ alert(JSON.stringify(data))})
 
             this.setState(Object.assign({}, this.state, {
                 editing: false,
@@ -204,8 +201,16 @@ export default class ProjectForm extends React.Component {
                             editing={this.state.editing}
                             handleDescChange={
                                 (newDescription) => this.setState(Object.assign(
-                                                        {}, this.state, {projectDesc: newDescription}))
-                                               }/>
+                                                        {}, this.state, {projectDesc: newDescription.text}))
+                            }
+                            handleTitleChange={
+                                (newTitle) => this.setState(Object.assign(
+                                                        {}, this.state, {projectName: newTitle}))
+                            }
+                            handleAuthorsChange={
+                                (newAuthors) => this.setState(Object.assign(
+                                                        {}, this.state, {authors: newAuthors.split(', ')}))
+                            }/>
                 {displayChunks}
                 <NewChunk addChunk={this.addChunk} editing={this.state.editing}/>
             </div>
@@ -217,18 +222,38 @@ class FormHeader extends React.Component {
     render() {
         const authorList = this.props.authors.join(", ");
 
+        let projectName;
+        let authors;
+        if (this.props.editing) {
+            projectName = <MediumInput 
+                value={this.props.name}
+                handleFieldChange={
+                   (newValue) => this.props.handleTitleChange(newValue)
+                }
+            />
+            authors = <MediumInput
+                value={this.props.authors.join(', ')}
+                handleFieldChange={
+                    (newValue) => this.props.handleAuthorsChange(newValue)
+                }
+            />
+        } else {
+            projectName =   <div className="form-project-name">
+                                <b>{this.props.name}</b>                    
+                            </div>
+            authors =   <div className="project-authors">
+                            {authorList}
+                        </div>
+        }
+
         //TODO: Make author list editable
         //TODO: Reconsider using a Text Chunk for the description (makes sense to the user?)
         return (
             <div>
                 <div className="form-header">
                     <div>
-                        <div className="form-project-name">
-                            Project Name: <b>{this.props.name}</b>                    
-                        </div>
-                        <div className="project-authors">
-                            {authorList}
-                        </div>
+                        {projectName}
+                        {authors}
                     </div>
                     <div className="form-save-button">
                         <Button name={this.props.editing ? "Save" : "Edit"} func={this.props.save} />
@@ -238,7 +263,7 @@ class FormHeader extends React.Component {
                     chunkType={"Text"}
                     content={{text:this.props.description}}
                     editing={this.props.editing} 
-                    handleTextChange={(newContent) => {this.props.handleDescChange(newContent)}} 
+                    handleChunkChange={this.props.handleDescChange} 
                 />
             </div>
         );
@@ -436,6 +461,18 @@ class SmallInput extends React.Component {
         return (
             <input  
                 className="small-input"
+                value={this.props.value}
+                onChange={(event) => {this.props.handleFieldChange(event.target.value)}}
+            />
+        );
+    }
+}
+
+class MediumInput extends React.Component {
+    render() {
+        return (
+            <input  
+                className="medium-input"
                 value={this.props.value}
                 onChange={(event) => {this.props.handleFieldChange(event.target.value)}}
             />
