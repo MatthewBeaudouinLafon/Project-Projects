@@ -25,7 +25,8 @@ export default class Homepage extends React.Component {
 
         this.state = {
             projects: [],
-            query: "*"
+            query: "*",
+            currentSlide: 0
         }
 
         this.updateFromDB = this.updateFromDB.bind(this);
@@ -57,9 +58,8 @@ export default class Homepage extends React.Component {
         const script = document.createElement( 'script' );
             script.type = 'text/javascript';
             script.src = slideshowScript;
-            script.async = true;
+            script.async = false;
             document.body.appendChild(script);
-            // $('.script-placeholder').append(embedCode);
     }
 
     render() {
@@ -114,7 +114,6 @@ class Slideshow extends React.Component {
         this.props.projectList.forEach(function(project) {
             slides.push(<ProjectItem className="project-item" project={project} key={project._id} />)
         });
-        console.log(slides);
         return (
             <div>
                 {slides}

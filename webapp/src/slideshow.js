@@ -27,8 +27,9 @@ function showSlides(n) {
         var t = slideIndex + " / " + slides.length;      // Create a text node
         slideCounter.innerHTML = t;           // Append <p> to <div> with id="myDIV"
     }
-    
 }
+
+setTimeout(showSlides, 500); // TODO: SUCK LESS @EMILY
 
 function updateSlides () {
     counter = "<p>" + slideIndex + "/" + slides.length + "</p>";
