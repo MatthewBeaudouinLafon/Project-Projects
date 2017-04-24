@@ -328,6 +328,22 @@ def fill_database_from_github(url_img_dict):
     for key in final:
         result = db.posts.insert_one(final[key]).inserted_id
 
+@app.route('/api/new_project/<github_url>')
+def github_upload(github_url):
+    pieces = github_url.split("/")
+    title = pieces[4] + ".png"
+    site_url = get_site_from_github(github_url)
+    if site_url != "":
+        get_screenshot(site_url, title)
+        url_img_dict = {github_url: title}
+        # print(url_img_dict)
+        # upload_screenshots(url_img_dict)
+        fill_database_from_github(create_image_chunks(upload_screenshots(url_img_dict)))
+
+
+
+github_upload("https://github.com/audreywl/baclaudio")
+
 # When someone uploads a project via Github, how much do we know about that project?
 # Will start in edit mode
 
@@ -340,9 +356,9 @@ def fill_database_from_github(url_img_dict):
 # fill_database_from_github(create_image_chunks(upload_screenshots(get_SD_sites())))
 print("Done filling database!")
 
-cursor = db.posts.find({})
-for document in cursor: 
-    pprint.pprint(document)
+# cursor = db.posts.find({})
+# for document in cursor: 
+#     pprint.pprint(document)
 
 
 if __name__ == '__main__':
