@@ -65,18 +65,12 @@ export default class ProjectForm extends React.Component {
     updateFromDB(json) {
         console.log(json)
         // CAUTION: Change when we change the backend to have one list of chunks
-        let chunkList;
-        if (json.image_chunk !== "") {
-            chunkList = [json.chunk, json.image_chunk];
-        } else {
-            chunkList = [json.chunk];
-        }
         this.setState(Object.assign({}, this.state, {
             projectName: json.title,
             projectDesc: json.description,
             projectSemester: json.semester,
             authors: json.members,
-            chunkList: chunkList, 
+            chunkList: json.chunk_list, 
             query: this.state.query
         }));
     }

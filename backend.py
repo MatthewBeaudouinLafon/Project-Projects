@@ -298,12 +298,13 @@ def fill_database_from_github(url_img_dict):
     final = {}
     count = 0
     for url in url_img_dict:
+        pieces = url.split("/")
         temp = {}
-        temp["title"] = ""
+        temp["title"] = pieces[4]
         temp["class"] = ""
         temp["semester"] = ""
-        temp["members"] = ""
-        temp["description"] = ""
+        temp["members"] = [pieces[3]]
+        temp["description"] = "GitHub URL: " + url
         image_chunk = url_img_dict[url]
         temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[count] = temp
@@ -318,14 +319,14 @@ def fill_database_from_github(url_img_dict):
 
 # pprint.pprint(retrieve_all_information())
 
-empty_database()    # Try to use these
-fill_database()     # two functions together :^)
+# empty_database()    # Try to use these
+# fill_database()     # two functions together :^)
 # fill_database_from_github(create_image_chunks(upload_screenshots(get_SD_sites())))
 print("Done filling database!")
 
-# cursor = db.posts.find({})
-# for document in cursor: 
-#     pprint.pprint(document)
+cursor = db.posts.find({})
+for document in cursor: 
+    pprint.pprint(document)
 
 
 if __name__ == '__main__':

@@ -289,7 +289,11 @@ class Chunk extends React.Component {
 
 class FormHeader extends React.Component {
     render() {
-        const authorList = this.props.authors.join(", ");
+        let authorList;
+        if(this.props.authors.constructor===Array)
+            authorList = this.props.authors.join(", ");
+        else
+            authorList = this.props.authors;
 
         return (
             <div>

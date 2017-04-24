@@ -292,6 +292,11 @@ class NewProject extends React.Component {
             }}>
                 <div className="new-project-title">
                     New Project
+                    <br/><br/>
+                    <form method="POST">
+                    + <input type="text" placeholder="GitHub URL (optional)"/><br/><br/>
+                    + <input type="text" placeholder="Enter new project" />
+                    </form>
                 </div>
             </div>
         );
@@ -306,11 +311,10 @@ class ProjectItem extends React.Component {
         var description = this.props.project.description;
         return (
             <div className="project-item">
-                <Link to={"/main/" + project_id}>
-                    <ProjectName className="project-name" name={name} />
+                    <Link to={"/main/" + project_id}><ProjectName className="project-name" name={name} /></Link>
                     <AuthorList className="project-authors" authorList={authorList} />
                     <Description className="project-description" description={description} />
-                </Link>
+                
             </div>
         );
     }
@@ -334,8 +338,13 @@ class Description extends React.Component {
 
 class AuthorList extends React.Component {
     render() {
+        let authorList;
+        if(this.props.authorList.constructor===Array)
+            authorList = this.props.authorList.join(", ");
+        else
+            authorList = this.props.authorList;
         return (
-            <div className="project-authors">{this.props.authorList.join(', ')}</div>
+            <div className="project-authors">{authorList}</div>
         );
     }
 }
