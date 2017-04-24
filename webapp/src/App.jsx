@@ -81,10 +81,8 @@ export default class App extends React.Component {
                             const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
                             let lMembers = [];
                             project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
-                            console.log(regex.test(lMembers.join("|")))
                             return regex.test(lMembers.join("|"));
                         });
-                    break;
                     case "during":
                         filteredProjects = filteredProjects.filter((project) => {
                             return (project.semester === toOlinEpoch(parsedQuery["during"]));
@@ -274,9 +272,9 @@ class ProjectItem extends React.Component {
         return (
             <div className="project-item">
                 <Link to={"/main/" + project_id}>
-                    <ProjectName className="project-name" name={name} />
-                    <AuthorList className="project-authors" authorList={authorList} />
-                    <Description className="project-description" description={description} />
+                    <ProjectName className="project-name" name={name} />
+                    <AuthorList className="project-authors" authorList={authorList} />
+                    <Description className="project-description" description={description} />
                 </Link>
             </div>
 

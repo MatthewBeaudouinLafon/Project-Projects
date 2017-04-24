@@ -313,7 +313,11 @@ button .pulse {
 
 .chunk-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 9em;
   margin-left: 1em;
   margin-right: 1em;
   padding: 1em;
