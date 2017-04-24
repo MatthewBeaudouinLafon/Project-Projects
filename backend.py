@@ -316,6 +316,7 @@ def fill_database_from_github(url_img_dict):
     for url in url_img_dict:
         pieces = url.split("/")
         temp = {}
+        temp["url"] = url
         temp["title"] = pieces[4]
         temp["class"] = ""
         temp["semester"] = ""
@@ -341,7 +342,14 @@ def github_upload(github_url):
 
 
 
+def retrieve_github_object_id(github_url):
+    project_information = list(db.posts.find({'url': github_url}))
+    print(project_information[0]['_id'])
+    return project_information[0]['_id']
+
 github_upload("https://github.com/audreywl/baclaudio")
+
+retrieve_github_object_id("https://github.com/audreywl/baclaudio")
 
 # When someone uploads a project via Github, how much do we know about that project?
 # Will start in edit mode
