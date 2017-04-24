@@ -268,7 +268,9 @@ class NewProject extends React.Component {
         super(props);
         this.state = {
             redirect: false,
-            projectId: null
+            projectId: null,
+            newProjectInput: "", 
+            githubInput: "",
         }
     }
 
@@ -278,24 +280,62 @@ class NewProject extends React.Component {
         }
 
         return (
-            <div className="project-item new-project" onClick={() => {
-                let projectId;
-                //TODO: suck less
-                let that = this;
-                fetch('/api/new_project')
-                .then(function(response) {
-                    response.json()
-                    .then((json) => {
-                        that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
-                    })
-                })
-            }}>
+            <div className="project-item new-project" >
                 <div className="new-project-title">
                     New Project
                     <br/><br/>
                     <form method="POST">
-                    + <input type="text" placeholder="GitHub URL (optional)"/><br/><br/>
-                    + <input type="text" placeholder="Enter new project" />
+                    <div style={{display: "inline-block", paddingRight: "0.4em"}} onClick={() => {
+                            let projectId;
+                            //TODO: suck less
+                            let that = this;
+                            fetch('/api/new_project/' + this.state.newProjectInput)
+                            .then(function(response) {
+                                response.json()
+                                .then((json) => {
+                                    that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
+                                })
+                            })
+                        }}>+</div><input 
+                        type="text" 
+                        placeholder="Enter new project" 
+                        value={this.state.newProjectInput}
+                        onChange={(event) => {
+                            this.setState(Object.assign({}, this.state, {newProjectInput: event.target.value}))
+                        }}
+                        /><br/><br/>
+                    <div 
+                        style={{display: "inline-block", paddingRight: "0.4em"}} onClick={() => {
+                            let projectId;
+                            //TODO: suck less
+                            let that = this;
+                            fetch('/api/new_project/github/' + this.state.githubInput)
+                            .then(function(response) {
+                                response.json()
+                                .then((json) => {
+                                    that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
+                                })
+                            })
+                        }}>+</div><input 
+                        type="text"    
+                        placeholder="GitHub URL (optional)" 
+                        value={this.state.githubInput}
+                        onChange={(event) => {
+                            this.setState(Object.assign({}, this.state, {githubInput: event.target.value}))
+                        }}
+                        onClick={() => {
+                            let projectId;
+                            //TODO: suck less
+                            let that = this;
+                            fetch('/api/new_project/' + this.state.githubInput)
+                            .then(function(response) {
+                                response.json()
+                                .then((json) => {
+                                    that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
+                                })
+                            })
+                        }}
+                        />
                     </form>
                 </div>
             </div>
