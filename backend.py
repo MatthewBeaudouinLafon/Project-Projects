@@ -10,6 +10,8 @@ import json
 from bson import ObjectId
 from selenium import webdriver
 from depot.manager import DepotManager
+from imgurpython import ImgurClient
+import os
 
 print("Connecting to Database...")
 client = MongoClient()#'localhost', 27017)
@@ -125,8 +127,8 @@ def retrieve_all_information():
         temp["semester"] = toOlinEpoch("SP2016")
         temp["members"] = val1
         temp["description"] = val2
-        temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        image_chunk = ""
+        temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[key] = temp
         count += 1
     
@@ -140,8 +142,8 @@ def retrieve_all_information():
         temp["semester"] = toOlinEpoch("FA2014")
         temp["members"] = val1
         temp["description"] = val2
-        temp["image_chunk"] = ""
-        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        image_chunk = ""
+        temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[key] = temp
         count += 1
     return final
@@ -290,19 +292,20 @@ def create_image_chunks(url_img_dict):
         result[key] = final_chunk
     return result
 
+
 # @param Dictionary of format Github URL: Imgur URL
 def fill_database_from_github(url_img_dict):
     final = {}
     count = 0
     for url in url_img_dict:
         temp = {}
-        temp["title"] = name
+        temp["title"] = ""
         temp["class"] = ""
         temp["semester"] = ""
         temp["members"] = ""
         temp["description"] = ""
-        temp["image_chunk"] = url_img_dict[url]
-        temp["chunk"] = {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}
+        image_chunk = url_img_dict[url]
+        temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[count] = temp
         count += 1
     for key in final:
@@ -315,8 +318,10 @@ def fill_database_from_github(url_img_dict):
 
 # pprint.pprint(retrieve_all_information())
 
-# empty_database()    # Try to use these
-# fill_database()     # two functions together :^)
+empty_database()    # Try to use these
+fill_database()     # two functions together :^)
+# fill_database_from_github(create_image_chunks(upload_screenshots(get_SD_sites())))
+print("Done filling database!")
 
 # cursor = db.posts.find({})
 # for document in cursor: 
