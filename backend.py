@@ -237,6 +237,21 @@ def new_project():
         print("Creating new project with id: {}".format(str(result)))
         return JSONEncoder().encode(str(result))
 
+@app.route('/api/new_project/<project_title>', methods=["GET"])
+def new_project_name(project_title):
+    if request.method == "GET":
+        print("New project called {}".format(project_title))
+        project = {}
+        project["title"] = project_title
+        project["class"] = ""
+        project["semester"] = ""
+        project["members"] = []
+        project["description"] = "This might be a good place to describe your project."
+        project["chunk_list"] = []
+        result = db.posts.insert_one(project).inserted_id
+        print("Creating new project with id: {}".format(str(result)))
+        return JSONEncoder().encode(str(result))
+
 # @param: Github URL
 def get_site_from_github(url):
     start = '<span itemprop="url"><a href="'
@@ -314,13 +329,12 @@ def fill_database_from_github(url_img_dict):
     final = {}
     count = 0
     for url in url_img_dict:
-        pieces = url.split("/")
         temp = {}
-        temp["title"] = pieces[4]
+        temp["title"] = ""
         temp["class"] = ""
         temp["semester"] = ""
-        temp["members"] = [pieces[3]]
-        temp["description"] = "GitHub URL: " + url
+        temp["members"] = ""
+        temp["description"] = ""
         image_chunk = url_img_dict[url]
         temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[count] = temp
@@ -335,14 +349,14 @@ def fill_database_from_github(url_img_dict):
 
 # pprint.pprint(retrieve_all_information())
 
-# empty_database()    # Try to use these
-# fill_database()     # two functions together :^)
+empty_database()    # Try to use these
+fill_database()     # two functions together :^)
 # fill_database_from_github(create_image_chunks(upload_screenshots(get_SD_sites())))
 print("Done filling database!")
 
-cursor = db.posts.find({})
-for document in cursor: 
-    pprint.pprint(document)
+# cursor = db.posts.find({})
+# for document in cursor: 
+#     pprint.pprint(document)
 
 
 if __name__ == '__main__':
