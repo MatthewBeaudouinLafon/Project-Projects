@@ -144,7 +144,6 @@ div .search-bar {
   overflow-x: hidden;
 
   border: 1px solid silver;
-  padding: 2%;
   border-radius: 5px;
 
   cursor: pointer;
@@ -220,10 +219,10 @@ div .search-bar {
 .prev, .next {
   cursor: pointer;
   position: absolute;
-  top: 150%;
+  // top: 150%;
   width: auto;
-  padding: 16px;
-  margin-top: -22px;
+  // padding: 16px;
+  // margin-top: -22px;
   color: white;
   font-weight: bold;
   font-size: 2em;
@@ -234,8 +233,8 @@ div .search-bar {
 
 /* Position the "next button" to the right */
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+  // right: 0;
+  // border-radius: 3px 0 0 3px;
 }
 
 /* The dots/bullets/indicators */
@@ -274,7 +273,7 @@ nav {
 .fixed-nav-bar {
   text-align: right;
   position: fixed;
-  top: 0;
+  top: 10;
   left: 0;
   z-index: 9999;
   width: 100%;
@@ -424,4 +423,28 @@ textarea.text-chunk-input {
 .youtube-video {
   display:block;
   flex-basis: auto;
+}
+
+.flex-slideshow-container {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.flex-slideshow {
+  width: 50%;
+}
+
+.flex-slideshow-arrow {
+  width: 10%;
+  height: 100%;
+  padding: 2%;
+  // text-align: center;
 }
