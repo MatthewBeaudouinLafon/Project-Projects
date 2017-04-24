@@ -30,7 +30,7 @@ export default class App extends React.Component {
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
 
-        fetch('/api/.*')
+        fetch('/api/all_projects')
         .then(function(response) {
             response.json().then(function(json) {
                 updateFromDB(json)
@@ -305,10 +305,13 @@ class NewProject extends React.Component {
 
 class ProjectItem extends React.Component {
     render() {
-        var project_id = this.props.project._id;
-        var name = this.props.project.title;
-        var authorList = this.props.project.members;
-        var description = this.props.project.description;
+        const project_id = this.props.project._id;
+        if (project_id.includes("project")){
+            console.log(this.props);
+        }
+        const name = this.props.project.title;
+        const authorList = this.props.project.members;
+        const description = this.props.project.description;
         return (
             <div className="project-item">
                     <Link to={"/main/" + project_id}><ProjectName className="project-name" name={name} /></Link>
