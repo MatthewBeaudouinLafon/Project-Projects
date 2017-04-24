@@ -202,13 +202,24 @@ def save_project(project_id):
 
 @app.route('/api/project/<project_id>', methods=["GET"]) 
 def send_project(project_id):
-    print("All good?")
     if request.method == "GET":
         print("Getting project #{}".format(project_id))
         return retrieve_JSON_Object(project_id)
-    return "whatever"
     # Could be dangerous to use Mongo ID here??????
 
+@app.route('/api/new_project/', methods=["GET"])
+def new_project():
+    if request.method == "GET":
+        project = {}
+        project["title"] = ""
+        project["class"] = ""
+        project["semester"] = ""
+        project["members"] = []
+        project["description"] = ""
+        project["chunk_list"] = []
+        result = db.posts.insert_one(project).inserted_id
+        print("Creating new project with id: {}".format(str(result)))
+        return JSONEncoder().encode(str(result))
 
 # @param: Github URL
 def get_site_from_github(url):

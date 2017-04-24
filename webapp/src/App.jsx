@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
 import {toOlinEpoch, fromOlinEpoch} from './helper.js' 
 import { Link } from 'react-router-dom'
-import { Router, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
+import { Redirect, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 export default class App extends React.Component {
     constructor(props) {
@@ -251,13 +251,48 @@ class SearchBar extends React.Component {
 
 class ProjectGrid extends React.Component {
     render() {
-        var projects = [];
+        var projects = [<NewProject className="project-item" key={0}/>];
         this.props.projectList.forEach(function(project) {
             projects.push(<ProjectItem className="project-item" project={project} key={project._id}/>)
         });
         return (
             <div className="project-grid">
                 {projects}
+            </div>
+        );
+    }
+}
+
+class NewProject extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            redirect: false,
+            projectId: null
+        }
+    }
+
+    render() {
+        if (this.state.redirect) {
+            return <Redirect to={"/main/" + this.state.projectId}/>
+        }
+
+        return (
+            <div className="project-item new-project" onClick={() => {
+                let projectId;
+                //TODO: suck less
+                let that = this;
+                fetch('/api/new_project')
+                .then(function(response) {
+                    response.json()
+                    .then((json) => {
+                        that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
+                    })
+                })
+            }}>
+                <div className="new-project-title">
+                    New Project
+                </div>
             </div>
         );
     }
@@ -277,7 +312,6 @@ class ProjectItem extends React.Component {
                     <Description className="project-description" description={description} />
                 </Link>
             </div>
-
         );
     }
 }

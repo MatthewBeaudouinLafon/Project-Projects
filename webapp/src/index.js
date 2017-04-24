@@ -12,7 +12,6 @@ import {  Route,
           hashHistory,
           browserHistory } from 'react-router';
 
-
 ReactDOM.render((
   <Router>
     <div>
@@ -22,9 +21,3 @@ ReactDOM.render((
     </div>
   </Router>
 ), document.getElementById('root'));
-
-// ReactDOM.render(
-//   <Homepage  />,
-//   document.getElementById('root')
-// );
-
