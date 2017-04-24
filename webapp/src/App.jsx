@@ -81,8 +81,10 @@ export default class App extends React.Component {
                             const regex = new RegExp("(.*(" + parsedQuery["with"].replace(/, /, "|") + ").*)+");
                             let lMembers = [];
                             project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
+                            console.log(regex.test(lMembers.join("|")))
                             return regex.test(lMembers.join("|"));
                         });
+                    break;
                     case "during":
                         filteredProjects = filteredProjects.filter((project) => {
                             return (project.semester === toOlinEpoch(parsedQuery["during"]));
