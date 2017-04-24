@@ -252,6 +252,19 @@ def new_project_name(project_title):
         print("Creating new project with id: {}".format(str(result)))
         return JSONEncoder().encode(str(result))
 
+#TODO: Cut me some slack demo is in 30 minutes
+@app.route('/api/new_project/github/<github_url>')
+def github_upload(github_url):
+    pieces = github_url.split("/")
+    title = pieces[4] + ".png"
+    site_url = get_site_from_github(github_url)
+    url_img_dict = {}
+    if site_url != "":
+        get_screenshot(site_url, title)
+        url_img_dict = {github_url: title}
+    fill_database_from_github(create_image_chunks(url_img_dict))
+    return
+
 # @param: Github URL
 def get_site_from_github(url):
     start = '<span itemprop="url"><a href="'
@@ -341,17 +354,6 @@ def fill_database_from_github(url_img_dict):
         count += 1
     for key in final:
         result = db.posts.insert_one(final[key]).inserted_id
-
-@app.route('/api/new_project/<github_url>')
-def github_upload(github_url):
-    pieces = github_url.split("/")
-    title = pieces[4] + ".png"
-    site_url = get_site_from_github(github_url)
-    url_img_dict = {}
-    if site_url != "":
-        get_screenshot(site_url, title)
-        url_img_dict = {github_url: title}
-    fill_database_from_github(create_image_chunks(url_img_dict))
 
 
 

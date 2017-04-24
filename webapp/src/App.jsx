@@ -304,7 +304,19 @@ class NewProject extends React.Component {
                             this.setState(Object.assign({}, this.state, {newProjectInput: event.target.value}))
                         }}
                         /><br/><br/>
-                    + <input 
+                    <div 
+                        style={{display: "inline-block", paddingRight: "0.4em"}} onClick={() => {
+                            let projectId;
+                            //TODO: suck less
+                            let that = this;
+                            fetch('/api/new_project/github/' + this.state.githubInput)
+                            .then(function(response) {
+                                response.json()
+                                .then((json) => {
+                                    that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
+                                })
+                            })
+                        }}>+</div><input 
                         type="text"    
                         placeholder="GitHub URL (optional)" 
                         value={this.state.githubInput}
