@@ -1,0 +1,427 @@
+body {
+  background-color: black;
+  // background: url("bg.png") center center fixed;
+  // background-size: cover;
+}
+
+
+// Controls how ALL React inputs look - proceed with caution
+div { 
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+h1 {
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+h2 {
+  color: white;
+  font-family: 'Source Code Pro', monospace;
+}
+
+ul {
+  list-style-type: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  transition-duration: 0.4s;
+  z-index: 1;
+}
+
+a:hover {
+  color: silver;
+  // text-decoration: underline;
+}
+
+.text-chunk-input {
+  overflow: hidden;
+  animation-name: resize;
+  animation-duration: .5s;
+}
+
+@keyframes resize {
+  from { max-height: 0; }
+  to { max-height: 5em; }
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+
+input {
+  color: white;
+  background: lighten(black, 5);
+  border: none;
+  font-family: 'Source Code Pro', monospace; 
+  transition-duration: 0.4s;
+  z-index: 1;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  color: gray;
+}
+
+input[type="text"], input[type="password"] {
+  border: 1px solid silver;
+  font-size: 15px;
+  padding: 0.5em;
+}
+
+input[type="text"]:hover, input[type="password"]:hover {
+  background-color: #333333;
+}
+
+input[type="text"].search-bar {
+  display:block;
+  width: 90%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+div .search-bar {
+  border: 1px solid silver;
+  font-size: 15px;
+  padding: 0.5em;
+  display:block;
+  width: 90%;
+  margin: auto;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+
+/*input[type="text"]:hover.search-bar {
+  padding-right: 10%;
+}*/
+
+.project-grid {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-end;
+  flex-flow: row wrap;
+
+  border: 1px solid silver;
+  padding: 2%;
+  border-radius: 5px;
+}
+
+.project-empty-grid {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-end;
+  flex-flow: row wrap;
+
+  border: 1px solid silver;
+  padding: 2%;
+  border-radius: 5px;
+
+  justify-content: center;
+  
+}
+
+.project-item {
+  display: flex;
+  flex-direction: column;
+  width: 16em;
+  height: 12em;
+  padding: 1em;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 3px;
+  margin: .4em;
+  overflow: auto;
+  overflow-x: hidden;
+
+  border: 1px solid silver;
+  padding: 2%;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+
+.project-item.new-project {
+  text-align: center;
+}
+
+.new-project-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.project-name {
+  text-align: left;
+  width: 100%;
+  font-weight: bold;
+}
+
+.project-authors {
+  padding-left: 2em;
+  font-size: 0.8em;
+  color: darkgrey;
+  font-style: italic;
+}
+
+
+.project-description {
+  padding-top: 0.5em
+}
+
+* {box-sizing:border-box}
+
+/* Slideshow container */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+.mySlides {
+    display: none;
+}
+
+.active {
+  background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes pulse {
+  0% {
+    background-color: black;
+  }
+  100% {
+    background-color: lighten(black, 20)
+  }
+}
+
+/* Next & previous buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 150%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 2em;
+  // transition: 0.6s ease;
+  // border-radius: 0 3px 3px 0;
+  // text-align: center;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* The dots/bullets/indicators */
+.dot {
+  cursor:pointer;
+  height: 13px;
+  width: 13px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  // transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+nav {
+  background-color: black;
+  font-family: 'Source Code Pro', monospace;
+  font-size: 20px;
+  display: block;
+  border-bottom: 1px solid white;
+  text-decoration: none;
+  color: white;
+  // padding-top: 15px;
+  margin: 1% auto;
+  height: 2.5em;
+}
+
+#nav {
+  text-align: center;
+}
+
+.fixed-nav-bar {
+  text-align: right;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 100%;
+}
+
+button {
+  transition-duration: 0.1s;
+  z-index: 1;
+  color: white;
+  background-color: black;
+  border: none;
+  padding-bottom: 1.5em;
+  padding-right: 1.5em;
+  font-size: 20px;
+  font-family: 'Source Code Pro', monospace;
+}
+
+button:hover {
+  cursor: pointer;
+  color: white;
+  background-color: lighten(black, 10);
+}
+
+button .pulse {
+  animation: pulse 5s infinite;
+  /*animation-timing-function: ease;*/
+  /*animation-direction: alternate;*/
+}
+
+/* Project Form */
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  text-align:center;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-top: 2em;
+  padding: 1em;
+  border: 1px solid silver;
+  border-bottom: 0px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+}
+
+.form-project-name {
+  font-size: 1.4em;
+  display: inline-block;
+}
+
+.chunk-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+  overflow-x: hidden;
+  height: 9em;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 1em;
+  border: 1px solid silver;
+  border-bottom: 0px;
+  animation-name: fadein;
+  animation-duration: 1s;
+  // animation-delay: 3s;
+}
+
+.image-chunk {
+  display: flex;
+  flex-direction: column;
+}
+
+.image-chunk .image {
+  display:block;
+  max-height: 315px;
+  max-width: 420px;
+  flex-basis: auto;
+}
+
+.description {
+  display:block;
+  font-style: italic;
+  color: grey;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.small-input {
+  width:100%;
+  font-style: italic;
+  color: grey;
+  font-size: 0.8em;
+  text-align: center;
+  padding: 0.2em;
+  border: 1px solid silver;
+  border-radius: 4px;
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+}
+
+.text-chunk-input {
+  flex: 1;
+  min-height: 1em;
+  white-space: pre-wrap;
+}
+
+textarea.text-chunk-input {
+  // min-height: 5em;
+  color: white;
+  background: lighten(black, 5);
+  border: none;
+}
+
+.chunk-button-container {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 2em;
+  display: flex;
+  justify-content: space-around;
+  padding: 2%;
+  border: 1px solid silver;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.new-chunk-button {
+  border: 1px solid silver;
+  border-radius: 4px;
+  padding: 0.4em;
+}
+
+.chunk-end {
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 2em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid silver;
+  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.video-chunk {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+}
+
+.youtube-video {
+  display:block;
+  flex-basis: auto;
+}
