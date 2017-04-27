@@ -1,4 +1,5 @@
 # Project-Projects
+[Travis CI Status](https://travis-ci.org/MatthewBeaudouinLafon/Project-Projects.svg?branch=master)
 
 ### About
 
