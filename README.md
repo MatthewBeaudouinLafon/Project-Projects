@@ -27,7 +27,7 @@ npm install
 npm start
 ```
 
-The app should now be running on [localhost:9090]. Navigate to `localhost:9090` in your web browser.
+The app should now be running on [localhost:9090]. Navigate to `localhost:9090` in your web browser. If there are any issues with installing and starting the app, please refer to the app's [libraries and dependencies](#dependencies).
 
 ## About Project: Projects
 
@@ -44,6 +44,7 @@ How to run database / clean database / refill database
 
 ### Status of Things
 
+<a name="dependencies"></a>
 ## Libraries & Dependencies
 * [react](https://facebook.github.io/react/)
 * [react-youtube](https://github.com/troybetz/react-youtube)
