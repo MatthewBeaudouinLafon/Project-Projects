@@ -1,4 +1,4 @@
-# Project-Projects
+# Project: Projects
 > An Olin project database that makes life a little easier.
 
 Olin students can record their projects in **Project: Projects** to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
@@ -13,7 +13,7 @@ On OS and Linux:
 On Windows:
 // tbe
 
-## About
+## About Project: Projects
 
 After surveying 45 students at Olin (a whole 12.8% of the student body), it was discovered that recording projects is something of an ordeal for most Oliners. Some respondents created their own websites and portfolios, while about a third said that they had not created any kind of professional project archive yet. In addition, about half of the respondents reported that they update their websites, portfolios, or PDFs only when job season is imminent. This all seemed to be a strong sign that the experience of recording projects at Olin has room for improvement.
 
@@ -29,7 +29,13 @@ How to run database / clean database / refill database
 ### Status of Things
 
 ## Libraries & Dependencies
-https://github.com/troybetz/react-youtube
+[react](https://facebook.github.io/react/)
+[react-youtube](https://github.com/troybetz/react-youtube)
+[mongodb](https://www.mongodb.com/)
+[pymongo](https://api.mongodb.com/python/current/)
+[flask](http://flask.pocoo.org/)
+[selenium](http://www.seleniumhq.org/)
+[imgurpython](https://github.com/Imgur/imgurpython)
 
 ## Known Issues & Future Work
 
