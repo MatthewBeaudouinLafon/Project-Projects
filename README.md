@@ -76,6 +76,8 @@ There are many potential features to add that would make this app way more usabl
 
 ## Credits
 
+<sub>Thank you to Oliver Steele, Jeff Goldenson, and Emily Ferrier for their help in the development of this project!</sub>
+
 <sub>Copyright 2017 Matthew Beaudouin-Lafon & Emily Yeh</sub>
 
 <sub>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</sub>
