@@ -11,11 +11,23 @@ Olin students can record their projects in **Project: Projects** to keep track o
 
 ## Installation
 
-On OS and Linux:
-// tbe
+On OS and Linux, enter the following:
 
-On Windows:
-// tbe
+```
+git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
+cd <path/to/file>
+python3 backend.py
+```
+
+Open another terminal, and enter the following:
+
+```
+cd <path/to/file/webapp/src>
+npm install
+npm start
+```
+
+The app should now be running on [localhost:9090]. Navigate to `localhost:9090` in your web browser.
 
 ## About Project: Projects
 
