@@ -1,7 +1,7 @@
 # Project-Projects
 > An Olin project database that makes life a little easier.
 
-Olin students can record their projects in *Project: Projects* to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
+Olin students can record their projects in **Project: Projects** to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
 
 ![](http://i.imgur.com/AZn0MYk.png)
 
@@ -15,12 +15,13 @@ On Windows:
 
 ## About
 
+After surveying 45 students at Olin (a whole 12.8% of the student body), it was discovered that recording projects is something of an ordeal for most Oliners. Some respondents created their own websites and portfolios, while about a third said that they had not created any kind of professional project archive yet. In addition, about half of the respondents reported that they update their websites, portfolios, or PDFs only when job season is imminent. This all seemed to be a strong sign that the experience of recording projects at Olin has room for improvement.
 
-Survey results
-Talking to people results
-Showcase features - page workflow, search, project creation, import from GitHub (gifs)
+Faculty were also asked for their thoughts on recording projects at Olin. The reasons that professors have for archiving projects range from personal reasons (learning from past mistakes, refreshing themselves on course policies, etc.) to institutional reasons (training new faculty members, giving prospective student tours something to look at, etc.) to students' reasons (past students contact their professors years down the road to ask if they still have records of their projects, because they have a job interview coming up and it would look really good if they could show it).
 
-### Project Vision
+All of this feedback was gathered to form the basis for the creation of this project. **Project: Projects** is going to make the lives of students easier by facilitating the creation of portfolios and lowering the activation energy for recording projects, and it's also going to make the lives of faculty easier by placing all student projects in one convenient location.
+
+// to do: Showcase features - page workflow, search, project creation, import from GitHub (gifs)
 
 ### Technical Documentation
 How to run database / clean database / refill database
