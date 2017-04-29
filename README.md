@@ -1,6 +1,10 @@
 # Project: Projects
 > An Olin project database that makes life a little easier.
 
+![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
+[![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
 Olin students can record their projects in **Project: Projects** to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
 
 ![](http://i.imgur.com/AZn0MYk.png)
@@ -29,13 +33,13 @@ How to run database / clean database / refill database
 ### Status of Things
 
 ## Libraries & Dependencies
-[react](https://facebook.github.io/react/)
-[react-youtube](https://github.com/troybetz/react-youtube)
-[mongodb](https://www.mongodb.com/)
-[pymongo](https://api.mongodb.com/python/current/)
-[flask](http://flask.pocoo.org/)
-[selenium](http://www.seleniumhq.org/)
-[imgurpython](https://github.com/Imgur/imgurpython)
+* [react](https://facebook.github.io/react/)
+* [react-youtube](https://github.com/troybetz/react-youtube)
+* [mongodb](https://www.mongodb.com/)
+* [pymongo](https://api.mongodb.com/python/current/)
+* [flask](http://flask.pocoo.org/)
+* [selenium](http://www.seleniumhq.org/)
+* [imgurpython](https://github.com/Imgur/imgurpython)
 
 ## Known Issues & Future Work
 
