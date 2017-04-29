@@ -3,7 +3,6 @@ tests.py
 *.csv
 node_modules/
 *.png
-private_database_functions.py
 
 # Created by https://www.gitignore.io/api/python
 
