@@ -1,5 +1,7 @@
 # Project-Projects
-![](https://travis-ci.org/MatthewBeaudouinLafon/Project-Projects.svg?branch=master "Travis CI Status")
+> An Olin project database that makes life a little easier.
+
+Olin students can record their projects in *Project: Projects* to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences.
 
 ### About
 
