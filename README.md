@@ -11,7 +11,7 @@ Olin students can record their projects in **Project: Projects** to keep track o
 
 ## Installation
 
-On OS and Linux, enter the following:
+On OS and Linux, enter the following into a terminal, one line at a time (replacing <path/to/file> with the path to the downloaded file):
 
 ```
 git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
@@ -19,7 +19,7 @@ cd <path/to/file>
 python3 backend.py
 ```
 
-Open another terminal, and enter the following:
+Then, open another terminal and enter the following, one line at a time (once again replacing <path/to/file> with the path to the downloaded file):
 
 ```
 cd <path/to/file/webapp/src>
