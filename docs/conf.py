@@ -345,3 +345,5 @@ source_parsers = {
 }
 
 source_suffix = ['.rst', '.md']
+
+import docutils_react_docgen

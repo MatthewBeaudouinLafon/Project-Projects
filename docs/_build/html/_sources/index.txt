@@ -1,6 +1,9 @@
 Welcome to Project-Projects's documentation!
 ============================================
 
+.. reactdocgen::  ../webapp/src
+   :src: ../webapp/src/HOMEPAGE.json
+
 Contents:
 
 .. toctree::
@@ -13,7 +16,6 @@ Contents:
 Indices and tables
 ==================
 
-* :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
 

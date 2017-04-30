@@ -1,6 +1,9 @@
 Welcome to Project-Projects's documentation!
 ============================================
 
+.. reactdocgen::  ../webapp/src/HOMEPAGE.json
+
+
 Contents:
 
 .. toctree::
