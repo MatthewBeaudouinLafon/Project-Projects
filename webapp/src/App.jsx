@@ -72,7 +72,6 @@ export default class App extends React.Component {
                         filteredProjects = filteredProjects.filter((project) => {
                             const regex = new RegExp("(.*(" + usefulQuery.replace(" ", ".+") + ").*)+");
                             return regex.test(project.title.toLowerCase());
-                            // return project.title.toLowerCase().includes(usefulQuery);
                         });
                     break;
                     case "with":

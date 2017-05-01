@@ -1,51 +1,25 @@
 import React from 'react';
 import YouTube from 'react-youtube'
 
-var CHUNKS = [
-    {
-        type: "Text",
-        content: {
-            text:"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."        
-        }
-    },
-    {
-        type: "Text",
-        content: {
-            text:"My god, another one? I can't believe it."        
-        }
-    },
-    {
-        type:"Image",
-        content: {
-            link:"https://i.ytimg.com/vi/tntOCGkgt98/maxresdefault.jpg",
-            alt:"This is a cat in burriot form",
-            description:"The famed \"Burrito Cat\""
-        }
-    },
-    {
-        type:"Text",
-        content:{
-            text:"Yo did you see that cat?"
-        }
-    },
-    {
-        type:"Video",
-        content: {
-            link:"https://youtu.be/_O-WEiOlxr4",
-            description:"Scientific investigation in \"Wow Wow\" technologies"
-        }
-    }
-
-]
-
 //TODO: Smooth transition between editing and saving
 export default class ProjectForm extends React.Component {
+    /*
+    Root component for the project form page.
+
+    state
+        editing (bool):             Whether the project is being edited
+        editHistory (Chunk list):   List of chunks from previous edits (to be implemented)
+        chunkList (json list):      List of json objects describing each chunk
+        projectName :               Name of the project 
+        projectDesc :               Description of the project as seen in the project browser
+        projectSemester :           Semester the project took place in Olin Epoch
+
+    */
     constructor(props) {
         super(props);
 
         this.state = {
             editing: false,
-            isSaved: false,
             editHistory: [],
             chunkList: [],
             projectName: "",
@@ -62,6 +36,7 @@ export default class ProjectForm extends React.Component {
         this.componentDidMount = this.componentDidMount.bind(this)
     }
 
+    // Update state based on json response
     updateFromDB(json) {
         this.setState(Object.assign({}, this.state, {
             projectName: json.title,
@@ -72,6 +47,7 @@ export default class ProjectForm extends React.Component {
         }));
     }
 
+    // On mount, make a request for project
     componentDidMount() {
         const updateFromDB = this.updateFromDB; 
         const projectId = /(\w+)$/.exec(this.props.location.pathname)[0] // Matches and retrieves project id from the end of the url
@@ -83,6 +59,7 @@ export default class ProjectForm extends React.Component {
         })
     }
 
+    // Add a new chunk, style depending on the button pressed
     addChunk(context) {
         let chunk = null;
         const type = context.buttonName
@@ -123,16 +100,17 @@ export default class ProjectForm extends React.Component {
         }));
     }
 
+    // Update appropriate chunk
     handleChunkChange(newContent, key) {
         let newChunkList = this.state.chunkList;
         newChunkList[key].content = newContent;
 
         this.setState(Object.assign({}, this.state, {
-            chunkList:newChunkList
+            chunkList: newChunkList
         }));
     }
 
-    // TODO: Refactor to have Chunk component, and Text/Image/Video subcomponents
+    // Convert json representation of a chunk into React Component
     convertChunk(chunk, key) {
         return <Chunk 
                     chunkType={chunk.type}
@@ -150,11 +128,11 @@ export default class ProjectForm extends React.Component {
                     key={key}/>
     }
 
+    // Toggle Edit state, save when going from editing to not.
     changeEditState() {
         if (this.state.editing) {
             console.log("Saving...")
 
-            // TODO: Also deal with changing project name, description and author list.
             const projectId = /(\w+)$/.exec(this.props.location.pathname)[0] // TODO: Probably put id in state
             const data = JSON.stringify({
                 description: this.state.projectDesc,
@@ -164,14 +142,11 @@ export default class ProjectForm extends React.Component {
                 chunk_list: this.state.chunkList
             });
 
-            // console.log(data)
             fetch('/api/project/' + projectId, {
                 method: "POST",
                 contentType: 'application/json',
                 body: data
             })
-            // .then(function(res){ return res.json(); })
-            // .then(function(data){ alert(JSON.stringify(data))})
 
             this.setState(Object.assign({}, this.state, {
                 editing: false,
@@ -188,6 +163,8 @@ export default class ProjectForm extends React.Component {
         // TODO: Consider optimizing edits to only re-render some stuff?
         let displayChunks = []
         let key = 0  // Corresponds to position in the list
+
+        // Generate list of chunks for render
         this.state.chunkList.forEach((chunk) => {
             displayChunks.push(this.convertChunk(chunk, key));
             key++; 
@@ -219,11 +196,23 @@ export default class ProjectForm extends React.Component {
 }
 
 class FormHeader extends React.Component {
+    /*
+    Top of the form. Contains project name, authors and description.
+
+    props
+        authors (string list):          list of authors
+        editing (bool):                 editing state
+        name (string):                  Project name
+        handleTitleChange (function):   Update list of authors in projectForm state
+        handleAuthorChange (function):  Update list of authors in projectForm state
+    */
     render() {
         const authorList = this.props.authors.join(", ");
 
         let projectName;
         let authors;
+
+        // Depending on editing status, render fields as editable or as divs.
         if (this.props.editing) {
             projectName = <MediumInput 
                 value={this.props.name}
@@ -246,8 +235,7 @@ class FormHeader extends React.Component {
                         </div>
         }
 
-        //TODO: Make author list editable
-        //TODO: Reconsider using a Text Chunk for the description (makes sense to the user?)
+        //TODO: Reconsider using a Text Chunk for the description (confusing to the user? Should it look different?)
         return (
             <div>
                 <div className="form-header">
@@ -271,6 +259,17 @@ class FormHeader extends React.Component {
 }
 
 class Chunk extends React.Component {
+    /*
+    Renders chunk (text, image or video). Depending on the type, displays text, image or video with caption.
+    Enables editing when appropriate.
+
+    props
+        chunkType (string):             Type of Chunk (Text, Image or Video)
+        content (json object):          Chunk content. Can containt text, image or youtube link with caption.
+        editing (bool):                 Editing state
+        handleChunkChange (function):   Takes new content, and name of the field to update
+
+    */
     constructor(props) {
         super(props);
 
@@ -281,6 +280,7 @@ class Chunk extends React.Component {
         this.getVideoChunk = this.getVideoChunk.bind(this);
     }
 
+    // Formats input for this.props.handleChunkChange
     handleFieldChange(changedContentField, fieldName) {
         const newContent = Object.assign(
                 {}, 
@@ -290,6 +290,7 @@ class Chunk extends React.Component {
         this.props.handleChunkChange(newContent);
     }
 
+    // Construct Text Chunk, depending on edit status
     getTextChunk() {
         if (this.props.editing) {
             return <textarea className="text-chunk-input" 
@@ -301,6 +302,7 @@ class Chunk extends React.Component {
         }
     }
 
+    // Construct Image Chunk, depending on edit status
     getImageChunk() {
         let image;
         // TODO: Manage links in a more secure way
@@ -336,7 +338,10 @@ class Chunk extends React.Component {
         }
     }
 
+    // Construct Video Chunk, depending on edit status
     getVideoChunk() {
+
+        // TODO: Make this dynamically sized
         const opts = {
             height: "315",
             width: "420"
@@ -401,6 +406,9 @@ class Chunk extends React.Component {
 }
 
 class EmptyChunk extends React.Component {
+    /*
+    Used when chunk type is not recognized. This should really never get called.
+    */
     render() {
         return (
             <div>
@@ -411,6 +419,14 @@ class EmptyChunk extends React.Component {
 }
 
 class NewChunk extends React.Component {
+    /*
+    Form footer. When editing, it displays the new chunk buttons
+
+    props
+        editing (bool):         Editing state
+        addChunk (function):    Adds appropriately typed chunk to the form
+
+    */
     render() {
         let finalBlock = <div />;
         if (this.props.editing) {
@@ -437,6 +453,13 @@ class NewChunk extends React.Component {
 }
 
 class Button extends React.Component {
+    /*
+    Generic button. Used for edit/save and new chunk buttons.
+
+    props
+        name (string):   Button label
+        func (function): Function to call on click
+    */
     constructor(props) {
         super(props)
 
@@ -451,13 +474,24 @@ class Button extends React.Component {
 
     render() {
         return (
-            <button className="new-chunk-button pulse" onClick={this.handleClick}>{this.props.name}</button>
+            <button className="new-chunk-button pulse" 
+                    onClick={this.handleClick}>
+                {this.props.name}
+            </button>
         );
     }
 }
 
 class SmallInput extends React.Component {
+    /*
+    Generic small input. Used for editing captions.
+    
+    props
+        value (string):                 Value to render
+        handleFieldChange (function):   Takes new value. Function to call on value change.
+    */
     render() {
+        //TODO: Refactor to use Draft.js
         return (
             <input  
                 className="small-input"
@@ -469,7 +503,15 @@ class SmallInput extends React.Component {
 }
 
 class MediumInput extends React.Component {
+    /*
+    Generic Medium input. Used for editing text boxes.
+    
+    props
+        value (string):                 Value to render
+        handleFieldChange (function):   Takes new value. Function to call on value change.
+    */
     render() {
+        // TODO: Refactor to use Draft.js
         return (
             <input  
                 className="medium-input"
