@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.jsx';
+import ProjectBrowser from './App.jsx';
 import './style.scss';
 import './Draft.scss';
 import Homepage from './Homepage';
@@ -16,7 +16,7 @@ ReactDOM.render((
   <Router>
     <div>
       <Route exact path="/" component={Homepage} />
-      <Route exact path="/main" component={App} />
+      <Route exact path="/main" component={ProjectBrowser} />
       <Route path="/main/*" component={ProjectForm} />
     </div>
   </Router>
