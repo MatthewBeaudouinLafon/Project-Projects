@@ -6,14 +6,13 @@ import csv
 import urllib.request
 import pprint
 import re
-import json
 from bson import ObjectId
 from selenium import webdriver
 from depot.manager import DepotManager
 from imgurpython import ImgurClient
 import os
 
-from private_database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id
+from private_database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id, JSONEncoder
 # from database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, get_screenshot, fill_database_from_github, retrieve_github_object_id
 
 print("Connecting to Database...")
@@ -21,31 +20,6 @@ client = MongoClient('localhost', 27017)
 db = client.test
 posts = db.posts
 print("Done")
-
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
-
-def toOlinEpoch(human_readable):
-    """
-    OlinEpoch is the number of years since Fall 2002 (ie.: the first Olin semester)
-    Semesters split the year equally. The beginning of the semester counts date wise (looking at you winter)
-    Examples:
-        SP2017 -> 14.5
-        FALL2012 -> 10
-        Winter 2014 -> 12.25
-    """
-    if "fa" in human_readable[:-4].lower():
-        semesterAdjustment = 0
-    if "w" in human_readable[:-4].lower():
-        semesterAdjustment = 0.25
-    if "sp" in human_readable[:-4].lower():
-        semesterAdjustment = -0.5
-    if "su" in human_readable[:-4].lower():
-        semesterAdjustment = -0.25
-    return int(human_readable[-4:]) - 2002 + semesterAdjustment
 
 app = Flask(__name__)
 
@@ -133,9 +107,9 @@ def github_upload(github_url):
     fill_database_from_github(create_image_chunks(url_img_dict))
     return retrieve_github_object_id(github_url)
 
-github_upload("https://github.com/audreywl/baclaudio")
+# github_upload("https://github.com/audreywl/baclaudio")
 
-retrieve_github_object_id("https://github.com/audreywl/baclaudio")
+# retrieve_github_object_id("https://github.com/audreywl/baclaudio")
 
 # When someone uploads a project via Github, how much do we know about that project?
 # Will start in edit mode
