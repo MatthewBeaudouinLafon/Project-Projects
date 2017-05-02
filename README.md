@@ -47,7 +47,7 @@ cd <path/to/file>
 python3 backend.py
 ```
 
-The file automatically empties and refills its MongoDB database upon being run. However, the main functions dealing with populating and emptying the MongoDB database are located in the private_database_functions.py file (for now). Much of the data being used right now is student data, which is why the .csv files required to run private_database_functions.py are not located on this repository; however, if you would like to contribute to this project, please email Matthew or Emily to gain access to those .csvs (after we screen you rigorously for ill intentions).
+The file automatically empties and refills its MongoDB database upon being run. However, the main functions dealing with populating and emptying the MongoDB database are located in ```private_database_functions.py``` (for now). Much of the data being used right now is student data, which is why the .csv files required to run ```private_database_functions.py``` are not located on this repository; however, if you would like to contribute to this project, please email Matthew or Emily to gain access to those .csvs (after we screen you rigorously for ill intentions).
 
 ### Status of Things
 
