@@ -1,8 +1,11 @@
-webapp/node_modules/
+*/node_modules/*
 tests.py
 *.csv
 node_modules/
 *.png
+
+*.log
+[options]
 
 # Created by https://www.gitignore.io/api/python
 
