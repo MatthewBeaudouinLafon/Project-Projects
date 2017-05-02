@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>React Components &#8212; Project-Projects 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Project-Projects 1.0 documentation" href="index.html" />
+    <link rel="next" title="Python Backend and Database" href="python.html" />
+    <link rel="prev" title="Project: Projects’s Documentation" href="index.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="react-components">
+<h1>React Components<a class="headerlink" href="#react-components" title="Permalink to this headline">¶</a></h1>
+<p id="intro">Here, you will find documentation of all React componenets, painstakenly hand-typed by Matthew and extracted by Emily. For the record, auto-generating React documentation is a real pain in the butt.</p>
+<p>All React files and components are found under <code class="code docutils literal"><span class="pre">/webapp/src</span></code>.</p>
+<p>Not seeing what you need? <a class="reference external" href="index.html">Return to the homepage</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="homepage-jsx">
+<h2><code class="code docutils literal"><span class="pre">Homepage.jsx</span></code><a class="headerlink" href="#homepage-jsx" title="Permalink to this headline">¶</a></h2>
+<p><em>Homepage.jsx creates the website&#8217;s home page. It contains a slideshow and a fixed navigation bar, which contains authentication fields.</em></p>
+<div class="section" id="updatefromdb-json">
+<h3><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code><a class="headerlink" href="#updatefromdb-json" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that, if the database is populated, populates the component&#8217;s state with the projects in the database.</p>
+</div>
+<div class="section" id="projectdisplay">
+<h3><code class="code docutils literal"><span class="pre">ProjectDisplay</span></code><a class="headerlink" href="#projectdisplay" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains the main components of the Homepage class (slideshow and slide counter), wrapped in a div tag.</p>
+</div>
+<div class="section" id="slideshow">
+<h3><code class="code docutils literal"><span class="pre">Slideshow</span></code><a class="headerlink" href="#slideshow" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a slideshow of ProjectItems.</p>
+</div>
+<div class="section" id="projectitem">
+<h3><code class="code docutils literal"><span class="pre">ProjectItem</span></code><a class="headerlink" href="#projectitem" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains all of a given project&#8217;s information: name, authorList, and description.</p>
+</div>
+<div class="section" id="projectname">
+<h3><code class="code docutils literal"><span class="pre">ProjectName</span></code><a class="headerlink" href="#projectname" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a given project&#8217;s name.</p>
+</div>
+<div class="section" id="description">
+<h3><code class="code docutils literal"><span class="pre">Description</span></code><a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a given project&#8217;s description component.</p>
+</div>
+<div class="section" id="authorlist">
+<h3><code class="code docutils literal"><span class="pre">AuthorList</span></code><a class="headerlink" href="#authorlist" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a list of a given project&#8217;s authors&#8217; names component, in which names are joined by commas.</p>
+</div>
+<div class="section" id="chunk">
+<h3><code class="code docutils literal"><span class="pre">Chunk</span></code><a class="headerlink" href="#chunk" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that displays chunks that are visible.</p>
+</div>
+<div class="section" id="navbar">
+<h3><code class="code docutils literal"><span class="pre">NavBar</span></code><a class="headerlink" href="#navbar" title="Permalink to this headline">¶</a></h3>
+<p>A navigation bar <strong>component</strong>, which contains authentication fields (for usernames and passwords).</p>
+</div>
+<div class="section" id="prevbutton">
+<h3><code class="code docutils literal"><span class="pre">PrevButton</span></code><a class="headerlink" href="#prevbutton" title="Permalink to this headline">¶</a></h3>
+<p>A backwards-facing arrow button <strong>component</strong>, which controls the slide that is displayed.</p>
+<div class="section" id="handleclick-event">
+<h4><code class="code docutils literal"><span class="pre">handleClick(event)</span></code><a class="headerlink" href="#handleclick-event" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that handles the event in which a button is clicked, and results in the current slide index being <em>increased</em> by 1.</p>
+</div>
+</div>
+<div class="section" id="nextbutton">
+<h3><code class="code docutils literal"><span class="pre">NextButton</span></code><a class="headerlink" href="#nextbutton" title="Permalink to this headline">¶</a></h3>
+<p>A forwards-facing arrow button <strong>component</strong>, which controls the slide that is displayed.</p>
+<div class="section" id="id1">
+<h4><code class="code docutils literal"><span class="pre">handleClick(event)</span></code><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that handles the event in which a button is clicked, and results in the current slide index being <em>decreased</em> by 1.</p>
+</div>
+</div>
+</div>
+<div class="section" id="app-jsx">
+<h2><code class="code docutils literal"><span class="pre">App.jsx</span></code><a class="headerlink" href="#app-jsx" title="Permalink to this headline">¶</a></h2>
+<p>You can <a class="reference external" href="index.html">return to the homepage</a> or click here to return to the <a class="reference internal" href="#intro">intro</a> or keep scrolling to learn more.</p>
+<p><em>App.jsx is the root component for the project browser.</em></p>
+<div class="section" id="id3">
+<h3><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that, if the database is populated, populates the component&#8217;s state with the projects in the database.</p>
+</div>
+<div class="section" id="searchbar">
+<h3><code class="code docutils literal"><span class="pre">SearchBar</span></code><a class="headerlink" href="#searchbar" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that handles query searching to be independent of specific keywords. (Uses Draftjs for highlighting features).</p>
+<div class="section" id="handlesearch-editorstate">
+<h4><code class="code docutils literal"><span class="pre">handleSearch(editorState)</span></code><a class="headerlink" href="#handlesearch-editorstate" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that handles search. While this function is called every time the field changes, the search only gets run 1s after the last input.</p>
+</div>
+<div class="section" id="parsestr-str">
+<h4><code class="code docutils literal"><span class="pre">parseStr(str)</span></code><a class="headerlink" href="#parsestr-str" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that returns the object of parsed string.</p>
+</div>
+</div>
+<div class="section" id="projectgrid">
+<h3><code class="code docutils literal"><span class="pre">ProjectGrid</span></code><a class="headerlink" href="#projectgrid" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that renders the project grid. It takes in projectList as a prop, which is a JSON list.</p>
+</div>
+<div class="section" id="newproject">
+<h3><code class="code docutils literal"><span class="pre">NewProject</span></code><a class="headerlink" href="#newproject" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains the first &#8220;project&#8221; in the grid. Allows for creation of new projects.</p>
+</div>
+<div class="section" id="id4">
+<h3><code class="code docutils literal"><span class="pre">ProjectItem</span></code><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that represents one of the projects in the grid.</p>
+</div>
+<div class="section" id="id5">
+<h3><code class="code docutils literal"><span class="pre">ProjectName</span></code><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a given project&#8217;s name.</p>
+</div>
+<div class="section" id="id6">
+<h3><code class="code docutils literal"><span class="pre">Description</span></code><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a given project&#8217;s description component.</p>
+</div>
+<div class="section" id="id7">
+<h3><code class="code docutils literal"><span class="pre">AuthorList</span></code><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a list of a given project&#8217;s authors&#8217; names component, in which names are joined by commas.</p>
+</div>
+</div>
+<div class="section" id="projectform-jsx">
+<h2><code class="code docutils literal"><span class="pre">ProjectForm.jsx</span></code><a class="headerlink" href="#projectform-jsx" title="Permalink to this headline">¶</a></h2>
+<p>You can <a class="reference external" href="index.html">return to the homepage</a> or click here to return to the <a class="reference internal" href="#intro">intro</a> or keep scrolling to learn more.</p>
+<p><em>ProjectForm.jsx is the root component for the project form page.</em></p>
+<div class="section" id="id9">
+<h3><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that, if the database is populated, populates the component&#8217;s state with the projects in the database.</p>
+</div>
+<div class="section" id="addchunk-context">
+<h3><code class="code docutils literal"><span class="pre">addChunk(context)</span></code><a class="headerlink" href="#addchunk-context" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that adds a new chunk; style depends on the button pressed.</p>
+</div>
+<div class="section" id="handlechunkchange-newcontent-key">
+<h3><code class="code docutils literal"><span class="pre">handleChunkChange(newContent,</span> <span class="pre">key)</span></code><a class="headerlink" href="#handlechunkchange-newcontent-key" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that updates appropriate the chunk with new content.</p>
+</div>
+<div class="section" id="convertchunk-chunk-key">
+<h3><code class="code docutils literal"><span class="pre">convertChunk(chunk,</span> <span class="pre">key)</span></code><a class="headerlink" href="#convertchunk-chunk-key" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that converts a JSON representation of a chunk into a React Component.</p>
+</div>
+<div class="section" id="changeeditstate">
+<h3><code class="code docutils literal"><span class="pre">changeEditState()</span></code><a class="headerlink" href="#changeeditstate" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>function</strong> that toggles the Edit state, saving when going from editing to not.</p>
+</div>
+<div class="section" id="formheader">
+<h3><code class="code docutils literal"><span class="pre">FormHeader</span></code><a class="headerlink" href="#formheader" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains the top of the form: project name, authors and description.</p>
+</div>
+<div class="section" id="id10">
+<h3><code class="code docutils literal"><span class="pre">Chunk</span></code><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that renders a chunk (text, image or video). Depending on the type, it displays text, image or video with caption. Also enables editing when appropriate.</p>
+<div class="section" id="handlefieldchange-changedcontentfield-fieldname">
+<h4><code class="code docutils literal"><span class="pre">handleFieldChange(changedContentField,</span> <span class="pre">fieldName)</span></code><a class="headerlink" href="#handlefieldchange-changedcontentfield-fieldname" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that formats input for this.props.handleChunkChange.</p>
+</div>
+<div class="section" id="gettextchunk">
+<h4><code class="code docutils literal"><span class="pre">getTextChunk()</span></code><a class="headerlink" href="#gettextchunk" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that constructs a Text Chunk, depending on edit status.</p>
+</div>
+<div class="section" id="getimagechunk">
+<h4><code class="code docutils literal"><span class="pre">getImageChunk()</span></code><a class="headerlink" href="#getimagechunk" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that constructs an Image Chunk, depending on edit status.</p>
+</div>
+<div class="section" id="getvideochunk">
+<h4><code class="code docutils literal"><span class="pre">getVideoChunk()</span></code><a class="headerlink" href="#getvideochunk" title="Permalink to this headline">¶</a></h4>
+<p>A <strong>function</strong> that constructs a Video Chunk, depending on edit status.</p>
+</div>
+</div>
+<div class="section" id="emptychunk">
+<h3><code class="code docutils literal"><span class="pre">EmptyChunk</span></code><a class="headerlink" href="#emptychunk" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that is used when the chunk type is not recognized. This should really never get called.</p>
+</div>
+<div class="section" id="newchunk">
+<h3><code class="code docutils literal"><span class="pre">NewChunk</span></code><a class="headerlink" href="#newchunk" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains the form footer. When editing, it displays the new chunk buttons.</p>
+</div>
+<div class="section" id="button">
+<h3><code class="code docutils literal"><span class="pre">Button</span></code><a class="headerlink" href="#button" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that contains a generic button. Used for edit/save and new chunk buttons.</p>
+</div>
+<div class="section" id="smallinput">
+<h3><code class="code docutils literal"><span class="pre">SmallInput</span></code><a class="headerlink" href="#smallinput" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that is a generic small input. Used for editing captions.</p>
+</div>
+<div class="section" id="mediuminput">
+<h3><code class="code docutils literal"><span class="pre">MediumInput</span></code><a class="headerlink" href="#mediuminput" title="Permalink to this headline">¶</a></h3>
+<p>A <strong>component</strong> that is a generic medium input. Used for editing text boxes.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">React Components</a><ul>
+<li><a class="reference internal" href="#homepage-jsx"><code class="code docutils literal"><span class="pre">Homepage.jsx</span></code></a><ul>
+<li><a class="reference internal" href="#updatefromdb-json"><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code></a></li>
+<li><a class="reference internal" href="#projectdisplay"><code class="code docutils literal"><span class="pre">ProjectDisplay</span></code></a></li>
+<li><a class="reference internal" href="#slideshow"><code class="code docutils literal"><span class="pre">Slideshow</span></code></a></li>
+<li><a class="reference internal" href="#projectitem"><code class="code docutils literal"><span class="pre">ProjectItem</span></code></a></li>
+<li><a class="reference internal" href="#projectname"><code class="code docutils literal"><span class="pre">ProjectName</span></code></a></li>
+<li><a class="reference internal" href="#description"><code class="code docutils literal"><span class="pre">Description</span></code></a></li>
+<li><a class="reference internal" href="#authorlist"><code class="code docutils literal"><span class="pre">AuthorList</span></code></a></li>
+<li><a class="reference internal" href="#chunk"><code class="code docutils literal"><span class="pre">Chunk</span></code></a></li>
+<li><a class="reference internal" href="#navbar"><code class="code docutils literal"><span class="pre">NavBar</span></code></a></li>
+<li><a class="reference internal" href="#prevbutton"><code class="code docutils literal"><span class="pre">PrevButton</span></code></a><ul>
+<li><a class="reference internal" href="#handleclick-event"><code class="code docutils literal"><span class="pre">handleClick(event)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nextbutton"><code class="code docutils literal"><span class="pre">NextButton</span></code></a><ul>
+<li><a class="reference internal" href="#id1"><code class="code docutils literal"><span class="pre">handleClick(event)</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#app-jsx"><code class="code docutils literal"><span class="pre">App.jsx</span></code></a><ul>
+<li><a class="reference internal" href="#id3"><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code></a></li>
+<li><a class="reference internal" href="#searchbar"><code class="code docutils literal"><span class="pre">SearchBar</span></code></a><ul>
+<li><a class="reference internal" href="#handlesearch-editorstate"><code class="code docutils literal"><span class="pre">handleSearch(editorState)</span></code></a></li>
+<li><a class="reference internal" href="#parsestr-str"><code class="code docutils literal"><span class="pre">parseStr(str)</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#projectgrid"><code class="code docutils literal"><span class="pre">ProjectGrid</span></code></a></li>
+<li><a class="reference internal" href="#newproject"><code class="code docutils literal"><span class="pre">NewProject</span></code></a></li>
+<li><a class="reference internal" href="#id4"><code class="code docutils literal"><span class="pre">ProjectItem</span></code></a></li>
+<li><a class="reference internal" href="#id5"><code class="code docutils literal"><span class="pre">ProjectName</span></code></a></li>
+<li><a class="reference internal" href="#id6"><code class="code docutils literal"><span class="pre">Description</span></code></a></li>
+<li><a class="reference internal" href="#id7"><code class="code docutils literal"><span class="pre">AuthorList</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#projectform-jsx"><code class="code docutils literal"><span class="pre">ProjectForm.jsx</span></code></a><ul>
+<li><a class="reference internal" href="#id9"><code class="code docutils literal"><span class="pre">updateFromDB(json)</span></code></a></li>
+<li><a class="reference internal" href="#addchunk-context"><code class="code docutils literal"><span class="pre">addChunk(context)</span></code></a></li>
+<li><a class="reference internal" href="#handlechunkchange-newcontent-key"><code class="code docutils literal"><span class="pre">handleChunkChange(newContent,</span> <span class="pre">key)</span></code></a></li>
+<li><a class="reference internal" href="#convertchunk-chunk-key"><code class="code docutils literal"><span class="pre">convertChunk(chunk,</span> <span class="pre">key)</span></code></a></li>
+<li><a class="reference internal" href="#changeeditstate"><code class="code docutils literal"><span class="pre">changeEditState()</span></code></a></li>
+<li><a class="reference internal" href="#formheader"><code class="code docutils literal"><span class="pre">FormHeader</span></code></a></li>
+<li><a class="reference internal" href="#id10"><code class="code docutils literal"><span class="pre">Chunk</span></code></a><ul>
+<li><a class="reference internal" href="#handlefieldchange-changedcontentfield-fieldname"><code class="code docutils literal"><span class="pre">handleFieldChange(changedContentField,</span> <span class="pre">fieldName)</span></code></a></li>
+<li><a class="reference internal" href="#gettextchunk"><code class="code docutils literal"><span class="pre">getTextChunk()</span></code></a></li>
+<li><a class="reference internal" href="#getimagechunk"><code class="code docutils literal"><span class="pre">getImageChunk()</span></code></a></li>
+<li><a class="reference internal" href="#getvideochunk"><code class="code docutils literal"><span class="pre">getVideoChunk()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#emptychunk"><code class="code docutils literal"><span class="pre">EmptyChunk</span></code></a></li>
+<li><a class="reference internal" href="#newchunk"><code class="code docutils literal"><span class="pre">NewChunk</span></code></a></li>
+<li><a class="reference internal" href="#button"><code class="code docutils literal"><span class="pre">Button</span></code></a></li>
+<li><a class="reference internal" href="#smallinput"><code class="code docutils literal"><span class="pre">SmallInput</span></code></a></li>
+<li><a class="reference internal" href="#mediuminput"><code class="code docutils literal"><span class="pre">MediumInput</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Project: Projects&#8217;s Documentation</a></li>
+      <li>Next: <a href="python.html" title="next chapter">Python Backend and Database</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/react.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Beaudouin-Lafon, Emily Yeh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/react.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

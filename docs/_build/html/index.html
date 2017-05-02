@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Project-Projects’s documentation! &#8212; Project-Projects 1.0 documentation</title>
+    <title>Project: Projects’s Documentation &#8212; Project-Projects 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -40,18 +40,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-project-projects-s-documentation">
-<h1>Welcome to Project-Projects&#8217;s documentation!<a class="headerlink" href="#welcome-to-project-projects-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p><strong>A Table of Contents</strong></p>
+  <div class="section" id="project-projects-s-documentation">
+<h1>Project: Projects&#8217;s Documentation<a class="headerlink" href="#project-projects-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Welcome to Project-Projects&#8217;s documentation!</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Project: Projects&#8217;s Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="react.html">React Components</a></li>
-<li class="toctree-l1"><a class="reference internal" href="python.html">Python Backend Things</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python Backend and Database</a></li>
 </ul>
 </div>
 <div class="section" id="an-introduction">
 <h2>An Introduction<a class="headerlink" href="#an-introduction" title="Permalink to this headline">¶</a></h2>
+<p>Welcome to Project: Project&#8217;s docs!</p>
 <p>Olin students can now record their projects in Project: Projects to keep track of all the cool stuff they&#8217;ve done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College &#8216;19) and Emily Yeh (also Olin College &#8216;19).</p>
 </div>
 <div class="section" id="our-inspiration">
@@ -62,19 +63,57 @@
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>On OS and Linux, enter the following into a terminal, one line at a time (replacing &lt;path/to/file&gt; with the path to the downloaded file):</p>
+<p>On OS and Linux, enter the following into a terminal, one line at a time (replacing <code class="code docutils literal"><span class="pre">&lt;path/to/file&gt;</span></code> with the path to the downloaded file):</p>
 <div class="highlight-guess"><div class="highlight"><pre><span></span>git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
 cd &lt;path/to/file&gt;
 python3 backend.py
 </pre></div>
 </div>
-<p>Then, open another terminal and enter the following, one line at a time (once again replacing &lt;path/to/file&gt; with the path to the downloaded file):</p>
+<p>The backend of the app should now be running on your machine. You will see a confirmation in the terminal. If you run into any difficulties during this step in the process, please refer to the app&#8217;s <a class="reference internal" href="#dependencies">dependencies</a>.</p>
+<p>Then, open another terminal and enter the following, one line at a time (once again replacing <code class="code docutils literal"><span class="pre">&lt;path/to/file&gt;</span></code> with the path to the downloaded file):</p>
 <div class="highlight-guess"><div class="highlight"><pre><span></span>cd &lt;path/to/file/webapp/src&gt;
 npm install
 npm start
 </pre></div>
 </div>
-<p>The app should now be running on localhost:9090. Navigate to localhost:9090 in your web browser. If there are any issues with installing and starting the app, please refer to the app&#8217;s libraries and dependencies.</p>
+<p>The app should now be running on <code class="code docutils literal"><span class="pre">localhost:9090</span></code>. Navigate to <code class="code docutils literal"><span class="pre">localhost:9090</span></code> in your web browser. If there are any issues with installing and starting the app, please refer to the app&#8217;s <a class="reference internal" href="#dependencies">dependencies</a>.</p>
+</div>
+<div class="section" id="more-about-the-app">
+<h2>More about the App<a class="headerlink" href="#more-about-the-app" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id1">
+<h3><a class="reference external" href="react.html">React Components</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>Here, you will find documentation of all React components, including those that make up the homepage, the main projects page, and the project editing page. This is where you should look if you&#8217;re running into problems with the frontend of the app.</p>
+</div>
+<div class="section" id="id2">
+<h3><a class="reference external" href="python.html">Python Backend and Database</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Here, you will find documentation of all Python functions, including those that make up the backend of the app and those that populate and empty the database that the app runs on. This is where you should look if you&#8217;re running into problems with the backend or the database of the app.</p>
+</div>
+</div>
+<div class="section" id="libraries-and-dependencies">
+<span id="dependencies"></span><h2>Libraries and Dependencies<a class="headerlink" href="#libraries-and-dependencies" title="Permalink to this headline">¶</a></h2>
+<p>If the app does not work on your machine, please make sure you have each of these installed.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://facebook.github.io/react/">react</a></li>
+<li><a class="reference external" href="https://github.com/troybetz/react-youtube">react-youtube</a></li>
+<li><a class="reference external" href="https://www.mongodb.com/">mongodb</a></li>
+<li><a class="reference external" href="https://api.mongodb.com/python/current/">pymongo</a></li>
+<li><a class="reference external" href="http://flask.pocoo.org/">flask</a></li>
+<li><a class="reference external" href="http://www.seleniumhq.org/">selenium</a></li>
+<li><a class="reference external" href="https://github.com/Imgur/imgurpython">imgurpython</a></li>
+</ul>
+</div>
+<div class="section" id="credits-acknowledgements-and-future-work">
+<h2>Credits, Acknowledgements, and Future Work<a class="headerlink" href="#credits-acknowledgements-and-future-work" title="Permalink to this headline">¶</a></h2>
+<p>Here&#8217;s a very special thank you to Olin faculty <strong>Oliver Steele</strong>, <strong>Jeff Goldenson</strong>, and <strong>Emily Ferrier</strong> for their help in the development of this project!</p>
+<p>This project is protected under the MIT license.</p>
+<p>In terms of future work, there are many potential features to add that would make this app way more usable. Here are a few to start with.</p>
+<ul class="simple">
+<li><em>A true project slideshow</em>: Give a glimpse of the next project before transitioning.</li>
+<li><em>Importing and exporting</em>: Let projects be imported/exported in the form of a PDF, a JSON blob, etc.</li>
+<li><em>Tags</em>: Allow users to add tags to their projects, and allow the projects to be found through tags.</li>
+<li><em>Just make the app look better with CSS witchery</em></li>
+</ul>
+<p>There are many other potential features, as well as minor issues that are basically just unimplemented features, that can be added to our project. If you want to tackle some, try CTRL+F&#8217;ing &#8220;TODO&#8221; in any file.</p>
 </div>
 </div>
 
@@ -86,10 +125,17 @@ npm start
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to Project-Projects&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#">Project: Projects&#8217;s Documentation</a><ul>
 <li><a class="reference internal" href="#an-introduction">An Introduction</a></li>
 <li><a class="reference internal" href="#our-inspiration">Our Inspiration</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#more-about-the-app">More about the App</a><ul>
+<li><a class="reference internal" href="#id1">React Components</a></li>
+<li><a class="reference internal" href="#id2">Python Backend and Database</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#libraries-and-dependencies">Libraries and Dependencies</a></li>
+<li><a class="reference internal" href="#credits-acknowledgements-and-future-work">Credits, Acknowledgements, and Future Work</a></li>
 </ul>
 </li>
 </ul>
