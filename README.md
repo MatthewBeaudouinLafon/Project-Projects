@@ -7,6 +7,8 @@
 
 Olin students can record their projects in **Project: Projects** to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
 
+For full documentation of all pieces of code, look no further than [our documentation site](https://project-projects-docs.herokuapp.com/index.html).
+
 ![](http://i.imgur.com/AZn0MYk.png)
 
 ## Installation
