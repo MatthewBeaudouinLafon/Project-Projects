@@ -73,6 +73,9 @@ def retrieve_project_members(file_name, members_range):
     return project_members
 
 def retrieve_SD_descriptions():
+    """
+    Retrieves all descriptions from Githubs found in the (private) SD .csv file.
+    """
     descriptions = []
     start = '<article class="markdown-body entry-content" itemprop="text">'
     end = '</article>'
@@ -89,6 +92,9 @@ def retrieve_SD_descriptions():
     return descriptions
 
 def retrieve_POE_descriptions():
+    """
+    Retrieves all descriptions from POE websites found in the (private) POE .csv file.
+    """
     descriptions = []
     with open("POEProjects.csv", "rt") as f:
         reader = csv.reader(f)
@@ -97,6 +103,9 @@ def retrieve_POE_descriptions():
     return descriptions
 
 def retrieve_all_information():
+    """
+    Retrieves all available information about projects and returns them in a dictionary (which can be conveniently injected into the database).
+    """
     SD_names = retrieve_project_names("SDFinal.csv")
     SD_members = retrieve_project_members("SDFinal.csv", 5)
     SD_descriptions = retrieve_SD_descriptions()
@@ -143,6 +152,9 @@ def retrieve_all_information():
 
 # Initial filling-in of database, USE SPARINGLY @EMILY
 def fill_database():
+    """
+    Fills the database with all projects' information.
+    """
     print("Filling Database...")
     dictionary = retrieve_all_information()
     for key in dictionary:
@@ -152,13 +164,18 @@ def fill_database():
 
 # Deletes ALL the documents in the database. Use with caution!!!!!
 def empty_database():
+    """
+    Empties the database of all documents.
+    """
     print("Emptying database...")
     db.posts.delete_many({})
     print("Database successfully emptied! Number of objects now: " + str(db.posts.count()))
 
 
-# Updates document in database with new information
 def update_database(JSON_Object, object_id=0):
+    """
+    Updates document in database with new information.
+    """
     db.posts.update({ "_id": object_id },
         {"$set": { 
             "title": JSON_Object["title"],
@@ -172,6 +189,9 @@ def update_database(JSON_Object, object_id=0):
 
 
 def retrieve_JSON_Object(object_id):
+    """
+    Retrieves a JSON object from the database by its object ID.
+    """
     project_information = db.posts.find_one({'_id': ObjectId(object_id)})
     output = JSONEncoder().encode(project_information)
     print(project_information)
@@ -179,6 +199,9 @@ def retrieve_JSON_Object(object_id):
 
 # @param: Github URL
 def get_site_from_github(url):
+    """
+    Retrieves a Github SITE URL from the Github's OWN URL.
+    """
     start = '<span itemprop="url"><a href="'
     end = '" rel="nofollow">h'
     try:
@@ -194,15 +217,20 @@ def get_site_from_github(url):
 
 # @param: Site URL, name of screenshot (including file type)
 def get_screenshot(url, screenshot_name):
+    """
+    Makes and stores a screenshot of the Github SITE, if it exists.
+    """
     depot = DepotManager.get()
     driver = webdriver.PhantomJS('/home/emily/Downloads/phantomjs-2.1.1-linux-x86_64/bin/phantomjs')
     driver.set_window_size(1024, 768)
     driver.get(url)
     driver.save_screenshot(screenshot_name)
 
-# Generates images for all valid SoftDes projects
-# Use with caution (WE'RE LOOKING AT YOU EMILY)
+
 def get_SD_sites():
+    """
+    Generates images for all valid SoftDes projects.
+    """
     githubs = []
     with open("SDFinal.csv", 'rt') as f:
         reader = csv.reader(f)
@@ -223,8 +251,10 @@ def get_SD_sites():
     return url_img_dict
 
 
-# MUST set client_id and client_secret in environment first
 def upload_screenshots(url_img_dict):
+    """
+    Uploads screenshots of all Github SITES to the database. Note that you MUST set client_id and client_secret in environment first. (See ImgurPython for more details.)
+    """
     client_id = os.environ.get("CLIENT_ID", "")
     client_secret = os.environ.get("CLIENT_SECRET", "")
     client = ImgurClient(client_id, client_secret)
@@ -236,6 +266,10 @@ def upload_screenshots(url_img_dict):
 
 
 def create_image_chunks(url_img_dict):
+    """
+    Generates image chunks with mostly blank fields.
+    TODO: Make this not as stupid as it is...
+    """
     result = {}
     for key in url_img_dict:
         chunk_type = "Image"
@@ -252,6 +286,9 @@ def create_image_chunks(url_img_dict):
 
 # @param Dictionary of format Github URL: Imgur URL
 def fill_database_from_github(url_img_dict):
+    """
+    Fills the database with a document with an image chunk from a Github URL.
+    """
     final = {}
     count = 0
     for url in url_img_dict:
@@ -274,6 +311,12 @@ def fill_database_from_github(url_img_dict):
 
 
 def retrieve_github_object_id(github_url):
+    """
+    Retrieves a document from the site with the given Github URL, if it exists.
+    """
     project_information = list(db.posts.find({'url': github_url}))
     # print(project_information[0]['_id'])
     return project_information[0]['_id']
+
+empty_database()
+fill_database()

@@ -11,6 +11,7 @@ Welcome to Project-Projects's documentation!
    python
 
 .. automodule:: backend
+   :members:
 
 An Introduction
 ---------------
