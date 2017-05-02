@@ -40,7 +40,14 @@ All of this feedback was gathered to form the basis for the creation of this pro
 // to do: Showcase features - page workflow, search, project creation, import from GitHub (gifs)
 
 ### Technical Documentation
-How to run database / clean database / refill database
+To run the database, simply run the following commands.
+
+```
+cd <path/to/file>
+python3 backend.py
+```
+
+The file automatically empties and refills its MongoDB database upon being run. However, the main functions dealing with populating and emptying the MongoDB database are located in ```private_database_functions.py``` (for now). Much of the data being used right now is student data, which is why the .csv files required to run ```private_database_functions.py``` are not located on this repository; however, if you would like to contribute to this project, please email Matthew or Emily to gain access to those .csvs (after we screen you rigorously for ill intentions).
 
 ### Status of Things
 
@@ -63,7 +70,7 @@ There are many potential features to add that would make this app way more usabl
 * Tags: Allow users to add tags to their projects, and allow the projects to be found through tags.
 * Just make the app look better with CSS witchery
 
-// to do: delineate known issues (what issues do we have?)
+There are many other potential features, as well as minor issues that are basically just unimplemented features, that can be added to our project. If you want to tackle some, try CTRL+F'ing "TODO" in any file.
 
 ## Contributing
 
