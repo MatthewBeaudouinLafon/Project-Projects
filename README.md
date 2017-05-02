@@ -39,6 +39,17 @@ All of this feedback was gathered to form the basis for the creation of this pro
 
 // to do: Showcase features - page workflow, search, project creation, import from GitHub (gifs)
 
+Front Page and Login
+[![Front Page and Login](https://img.youtube.com/vi/vgJEzSmwaok/0.jpg)](https://www.youtube.com/watch?v=vgJEzSmwaok)
+
+Searching for Projects
+[![Project Search](https://img.youtube.com/vi/HWk7PgvRveA/0.jpg)](https://www.youtube.com/watch?v=HWk7PgvRveA)
+
+Creating a Project
+[![Project Creation](https://img.youtube.com/vi/https://youtu.be/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=https://youtu.be/jueNbPVtGRA)
+
+
+
 ### Technical Documentation
 To run the database, simply run the following commands.
 
