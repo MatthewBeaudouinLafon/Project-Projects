@@ -13,18 +13,18 @@ For full documentation of all pieces of code, look no further than [our document
 
 ## Installation
 
-On OS and Linux, enter the following into a terminal, one line at a time (replacing <path/to/file> with the path to the downloaded file):
+On OS and Linux, enter the following into a terminal, one line at a time (replacing `path/to/file with` the path to the downloaded file):
 
 ```
 git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
-cd <path/to/file>
+cd path/to/file
 python3 backend.py
 ```
 
-Then, open another terminal and enter the following, one line at a time (once again replacing <path/to/file> with the path to the downloaded file):
+Then, open another terminal and enter the following, one line at a time (once again replacing `path/to/file` with the path to the downloaded file):
 
 ```
-cd <path/to/file/webapp/src>
+cd path/to/file/webapp/src
 npm install
 npm start
 ```
