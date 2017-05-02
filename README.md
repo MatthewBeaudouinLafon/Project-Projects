@@ -70,7 +70,7 @@ There are many potential features to add that would make this app way more usabl
 * Tags: Allow users to add tags to their projects, and allow the projects to be found through tags.
 * Just make the app look better with CSS witchery
 
-// to do: delineate known issues (what issues do we have?)
+There are many other potential features, as well as minor issues that are basically just unimplemented features, that can be added to our project. If you want to tackle some, try CTRL+F'ing "TODO" in any file.
 
 ## Contributing
 
