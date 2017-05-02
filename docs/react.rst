@@ -7,14 +7,16 @@ Here, you will find documentation of all React componenets, painstakenly hand-ty
 
 All React files and components are found under /webapp/src.
 
-A table of contents: 
+Not seeing what you need? `Return to the homepage <index.html>`_.
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 5
 
-   react
 
-Homepage.jsx
+
+
+
+*Homepage.jsx*
 ------------
 
 *Homepage.jsx creates the website's home page. It contains a slideshow and a fixed navigation bar, which contains authentication fields.*
@@ -88,12 +90,17 @@ A **function** that handles the event in which a button is clicked, and results 
 
 
 
-App.jsx
+*App.jsx*
 -------
 
-Or click here to return to the intro_.
+You can `return to the homepage <index.html>`_ or click here to return to the intro_ or keep scrolling to learn more.
 
 *App.jsx is the root component for the project browser.*
+
+updateFromDB(json)
+~~~~~~~~~~~~~~~~~~
+
+A **function** that, if the database is populated, populates the component's state with the projects in the database.
 
 SearchBar
 ~~~~~~~~~
@@ -144,7 +151,89 @@ A **component** that contains a list of a given project's authors' names compone
 
 
 
-ProjectForm.jsx
+*ProjectForm.jsx*
 -------
 
-Or click here to return to the intro_.
+You can `return to the homepage <index.html>`_ or click here to return to the intro_ or keep scrolling to learn more.
+
+*ProjectForm.jsx is the root component for the project form page.*
+
+updateFromDB(json)
+~~~~~~~~~~~~~~~~~~
+
+A **function** that, if the database is populated, populates the component's state with the projects in the database.
+
+addChunk(context)
+~~~~~~~~~~~~~~~~~
+
+A **function** that adds a new chunk; style depends on the button pressed.
+
+handleChunkChange(newContent, key)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A **function** that updates appropriate the chunk with new content.
+
+convertChunk(chunk, key)
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+A **function** that converts a JSON representation of a chunk into a React Component.
+
+changeEditState()
+~~~~~~~~~~~~~~~~~
+
+A **function** that toggles the Edit state, saving when going from editing to not.
+
+FormHeader
+~~~~~~~~~~
+
+A **component** that contains the top of the form: project name, authors and description.
+
+Chunk
+~~~~~
+
+A **component** that renders a chunk (text, image or video). Depending on the type, it displays text, image or video with caption. Also enables editing when appropriate.
+
+handleFieldChange(changedContentField, fieldName)
+`````````````````````````````````````````````````
+
+A **function** that formats input for this.props.handleChunkChange.
+
+getTextChunk()
+``````````````
+
+A **function** that constructs a Text Chunk, depending on edit status.
+
+getImageChunk()
+``````````````
+
+A **function** that constructs an Image Chunk, depending on edit status.
+
+getVideoChunk()
+``````````````
+
+A **function** that constructs a Video Chunk, depending on edit status.
+
+EmptyChunk
+~~~~~~~~~~
+
+A **component** that is used when the chunk type is not recognized. This should really never get called.
+
+NewChunk
+~~~~~~~~
+
+A **component** that contains the form footer. When editing, it displays the new chunk buttons.
+
+Button
+~~~~~~
+
+A **component** that contains a generic button. Used for edit/save and new chunk buttons.
+
+SmallInput
+~~~~~~~~~~
+
+A **component** that is a generic small input. Used for editing captions.
+
+MediumInput
+~~~~~~~~~~
+
+A **component** that is a generic medium input. Used for editing text boxes.

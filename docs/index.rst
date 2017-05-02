@@ -1,6 +1,17 @@
 Welcome to Project-Projects's documentation!
 ============================================
 
+**A Table of Contents**
+
+.. toctree::
+   :maxdepth: 1
+
+   index
+   react
+   python
+
+.. automodule:: backend
+
 An Introduction
 ---------------
 
@@ -36,16 +47,11 @@ Then, open another terminal and enter the following, one line at a time (once ag
 
 The app should now be running on localhost:9090. Navigate to localhost:9090 in your web browser. If there are any issues with installing and starting the app, please refer to the app's libraries and dependencies.
 
-.. toctree::
-   :maxdepth: 2
 
-* :ref:`react-docs`
 
-.. automodule:: backend
+.. Indices and tables
+.. ==================
 
-Indices and tables
-==================
-
-* :ref:`modindex`
-* :ref:`search`
+.. * :ref:`modindex`
+.. * :ref:`search`
 
