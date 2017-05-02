@@ -15,6 +15,12 @@ client = MongoClient('localhost', 27017)
 db = client.test
 posts = db.posts
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
+
 def toOlinEpoch(human_readable):
     """
     OlinEpoch is the number of years since Fall 2002 (ie.: the first Olin semester)

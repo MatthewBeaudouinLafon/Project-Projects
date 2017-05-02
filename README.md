@@ -7,6 +7,8 @@
 
 Olin students can record their projects in **Project: Projects** to keep track of all the cool stuff they've done, easily build their portfolios, and share their experiences. This is a project started by Matthew Beaudouin-Lafon (Olin College '19) and Emily Yeh (also Olin College '19).
 
+For full documentation of all pieces of code, look no further than [our documentation site](https://project-projects-docs.herokuapp.com/index.html).
+
 ![](http://i.imgur.com/AZn0MYk.png)
 
 ## Installation
@@ -38,6 +40,17 @@ Faculty were also asked for their thoughts on recording projects at Olin. The re
 All of this feedback was gathered to form the basis for the creation of this project. **Project: Projects** is going to make the lives of students easier by facilitating the creation of portfolios and lowering the activation energy for recording projects, and it's also going to make the lives of faculty easier by placing all student projects in one convenient location.
 
 // to do: Showcase features - page workflow, search, project creation, import from GitHub (gifs)
+
+Front Page and Login
+[![Front Page and Login](https://img.youtube.com/vi/vgJEzSmwaok/0.jpg)](https://www.youtube.com/watch?v=vgJEzSmwaok)
+
+Searching for Projects
+[![Project Search](https://img.youtube.com/vi/HWk7PgvRveA/0.jpg)](https://www.youtube.com/watch?v=HWk7PgvRveA)
+
+Creating a Project
+[![Project Creation](https://img.youtube.com/vi/https://youtu.be/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=https://youtu.be/jueNbPVtGRA)
+
+
 
 ### Technical Documentation
 To run the database, simply run the following commands.

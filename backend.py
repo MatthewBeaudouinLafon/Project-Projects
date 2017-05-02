@@ -6,13 +6,12 @@ import csv
 import urllib.request
 import pprint
 import re
-import json
 from bson import ObjectId
 from selenium import webdriver
 from imgurpython import ImgurClient
 import os
 
-from private_database_functions import update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id
+from private_database_functions import update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id, JSONEncoder
 # from database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, get_screenshot, fill_database_from_github, retrieve_github_object_id
 
 print("Connecting to Database...")
@@ -20,14 +19,6 @@ client = MongoClient('localhost', 27017)
 db = client.test
 posts = db.posts
 print("Done")
-
-
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
-        
 
 app = Flask(__name__)
 
@@ -136,7 +127,6 @@ def github_upload(github_url):
         url_img_dict = {github_url: title}
     fill_database_from_github(create_image_chunks(url_img_dict))
     return retrieve_github_object_id(github_url)
-
 
 if __name__ == '__main__':
     app.run(debug=True, port=int(os.environ.get("PORT", 5000)), host=os.environ.get("HOST", '127.0.0.1'))

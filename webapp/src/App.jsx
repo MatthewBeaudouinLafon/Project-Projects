@@ -95,6 +95,7 @@ export default class ProjectBrowser extends React.Component {
                             project.members.forEach((member) => {lMembers.push(member.toLowerCase());});
                             return regex.test(lMembers.join("|"));
                         });
+                    break;
                     case "during":
                         filteredProjects = filteredProjects.filter((project) => {
                             return (project.semester === toOlinEpoch(parsedQuery["during"]));

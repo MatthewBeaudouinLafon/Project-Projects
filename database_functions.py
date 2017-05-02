@@ -3,6 +3,8 @@ import pymongo
 import csv
 import urllib.request
 import pprint
+import json
+
 
 client = MongoClient('localhost', 27017)
 db = client.test
@@ -14,6 +16,11 @@ posts = db.posts
 
 # all data gets uploaded to mongodb
 
+class JSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, ObjectId):
+            return str(o)
+        return json.JSONEncoder.default(self, o)
 
 def toOlinEpoch(human_readable):
     """
