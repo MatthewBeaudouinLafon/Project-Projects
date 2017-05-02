@@ -1,14 +1,14 @@
-Python Backend Things
-=====================
+Python Backend and Database
+===========================
 
-Here, you will find documentation of all Python functions. All Python files are found in the main folder. There are three files: backend.py, database_functions.py, and (temporarily) private_database_functions.py, which depends on the inclusion of some private .csv files. Email or message either Matthew or Emily to get access to these files.
+Here, you will find documentation of all Python functions. All Python files are found in the main folder. There are three files: :code:`backend.py`, :code:`database_functions.py`, and (temporarily) :code:`private_database_functions.py`, which depends on the inclusion of some private :code:`.csv files`. Email or message either Matthew or Emily to get access to these files.
 
 Not seeing what you need? `Return to the homepage <index.html>`_.
 
-*backend.py*
+:code:`backend.py`
 ----------
 
-*Contains all the functions necessary to run the app, but does not include the database functions. To view the database functions, see private_database_functions.py's documentation.*
+*Contains all the functions necessary to run the app, but does not include the database functions. To view the database functions, see :code:`private_database_functions.py`'s documentation.*
 
 
 .. function:: retrieve_all_project()
@@ -37,10 +37,10 @@ Not seeing what you need? `Return to the homepage <index.html>`_.
 
    :param github_url: string type
 
-*private_database_functions.py*
+:code:`private_database_functions.py`
 -----------------------------
 
-*Contains all the functions necessary to populate and empty the (MongoDB) database, but does not include the app's backend functions. To view the app's backend functions, see backend.py's documentation.*
+*Contains all the functions necessary to populate and empty the (MongoDB) database, but does not include the app's backend functions. To view the app's backend functions, see :code:`backend.py`'s documentation.*
 
 .. function:: toOlinEpoch(human_readable)
 
