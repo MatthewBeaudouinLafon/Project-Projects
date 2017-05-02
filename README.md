@@ -48,7 +48,7 @@ Searching for Projects
 [![Project Search](https://img.youtube.com/vi/HWk7PgvRveA/0.jpg)](https://www.youtube.com/watch?v=HWk7PgvRveA)
 
 Creating a Project
-[![Project Creation](https://img.youtube.com/vi/https://youtu.be/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=https://youtu.be/jueNbPVtGRA)
+[![Project Creation](https://img.youtube.com/vi/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=jueNbPVtGRA)
 
 
 
