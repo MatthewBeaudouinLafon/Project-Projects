@@ -39,15 +39,18 @@ Faculty were also asked for their thoughts on recording projects at Olin. The re
 
 All of this feedback was gathered to form the basis for the creation of this project. **Project: Projects** is going to make the lives of students easier by facilitating the creation of portfolios and lowering the activation energy for recording projects, and it's also going to make the lives of faculty easier by placing all student projects in one convenient location.
 
-// to do: Showcase features - page workflow, search, project creation, import from GitHub (gifs)
+Below are some videos of the current state of the app, and how a user might use them. (Click any representative image to view.)
 
 Front Page and Login
+
 [![Front Page and Login](https://img.youtube.com/vi/vgJEzSmwaok/0.jpg)](https://www.youtube.com/watch?v=vgJEzSmwaok)
 
 Searching for Projects
+
 [![Project Search](https://img.youtube.com/vi/HWk7PgvRveA/0.jpg)](https://www.youtube.com/watch?v=HWk7PgvRveA)
 
 Creating a Project
+
 [![Project Creation](https://img.youtube.com/vi/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=jueNbPVtGRA)
 
 
