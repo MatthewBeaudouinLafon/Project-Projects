@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Python Backend and Database &#8212; Project-Projects 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Project-Projects 1.0 documentation" href="index.html" />
+    <link rel="prev" title="React Components" href="react.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="python-backend-and-database">
+<h1>Python Backend and Database<a class="headerlink" href="#python-backend-and-database" title="Permalink to this headline">¶</a></h1>
+<p>Here, you will find documentation of all Python functions. All Python files are found in the main folder. There are three files: <code class="code docutils literal"><span class="pre">backend.py</span></code>, <code class="code docutils literal"><span class="pre">database_functions.py</span></code>, and (temporarily) <code class="code docutils literal"><span class="pre">private_database_functions.py</span></code>, which depends on the inclusion of some private <code class="code docutils literal"><span class="pre">.csv</span> <span class="pre">files</span></code>. Email or message either Matthew or Emily to get access to these files.</p>
+<p>Not seeing what you need? <a class="reference external" href="index.html">Return to the homepage</a>.</p>
+<div class="section" id="backend-py">
+<h2><code class="code docutils literal"><span class="pre">backend.py</span></code><a class="headerlink" href="#backend-py" title="Permalink to this headline">¶</a></h2>
+<p><em>Contains all the functions necessary to run the app, but does not include the database functions. To view the database functions, see :code:`private_database_functions.py`&#8217;s documentation.</em></p>
+<dl class="function">
+<dt id="retrieve_all_project">
+<code class="descname">retrieve_all_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_all_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all projects from the database and returns them as a JSON-formatted object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="send_project">
+<code class="descname">send_project</code><span class="sig-paren">(</span><em>project_id</em><span class="sig-paren">)</span><a class="headerlink" href="#send_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends over the project with the given project ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>project_id</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="new_project">
+<code class="descname">new_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#new_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new project with blank fields for the user to edit.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="new_project_name">
+<code class="descname">new_project_name</code><span class="sig-paren">(</span><em>project_title</em><span class="sig-paren">)</span><a class="headerlink" href="#new_project_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renames a given project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>project_title</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="github_upload">
+<code class="descname">github_upload</code><span class="sig-paren">(</span><em>github_url</em><span class="sig-paren">)</span><a class="headerlink" href="#github_upload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads a document from its Github URL (used for Githubs that have their own sites).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>github_url</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="private-database-functions-py">
+<h2><code class="code docutils literal"><span class="pre">private_database_functions.py</span></code><a class="headerlink" href="#private-database-functions-py" title="Permalink to this headline">¶</a></h2>
+<p><em>Contains all the functions necessary to populate and empty the (MongoDB) database, but does not include the app&#8217;s backend functions. To view the app&#8217;s backend functions, see :code:`backend.py`&#8217;s documentation.</em></p>
+<dl class="function">
+<dt id="toOlinEpoch">
+<code class="descname">toOlinEpoch</code><span class="sig-paren">(</span><em>human_readable</em><span class="sig-paren">)</span><a class="headerlink" href="#toOlinEpoch" title="Permalink to this definition">¶</a></dt>
+<dd><p>OlinEpoch is the number of years since Fall 2002 (ie.: the first Olin semester). Semesters split the year equally. The beginning of the semester counts date wise.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>human_readable</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_project_names">
+<code class="descname">retrieve_project_names</code><span class="sig-paren">(</span><em>file_name</em><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_project_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves names of projects from file_name.csv.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file_name</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_project_members">
+<code class="descname">retrieve_project_members</code><span class="sig-paren">(</span><em>file_name</em>, <em>members_range</em><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_project_members" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves names of project members from file_name.csv, depending on the number of members in the team.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file_name</strong> &#8211; string type</li>
+<li><strong>members_range</strong> &#8211; integer type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_SD_descriptions">
+<code class="descname">retrieve_SD_descriptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_SD_descriptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all descriptions from Githubs found in the (private) SD .csv file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_POE_descriptions">
+<code class="descname">retrieve_POE_descriptions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_POE_descriptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all descriptions from POE websites found in the (private) POE .csv file.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_all_information">
+<code class="descname">retrieve_all_information</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_all_information" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves all available information about projects and returns them in a dictionary (which can be conveniently injected into the database).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fill_database">
+<code class="descname">fill_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#fill_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the database with all projects&#8217; information.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="empty_database">
+<code class="descname">empty_database</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#empty_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Empties the database of all documents.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="update_database">
+<code class="descname">update_database</code><span class="sig-paren">(</span><em>JSON_Object</em>, <em>object_id=0</em><span class="sig-paren">)</span><a class="headerlink" href="#update_database" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates document in database with new information.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>JSON_Object</strong> &#8211; string type</li>
+<li><strong>object_id</strong> &#8211; string type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_JSON_Object">
+<code class="descname">retrieve_JSON_Object</code><span class="sig-paren">(</span><em>object_id</em><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_JSON_Object" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a JSON object from the database by its object ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>object_id</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="get_site_from_github">
+<code class="descname">get_site_from_github</code><span class="sig-paren">(</span><em>url</em><span class="sig-paren">)</span><a class="headerlink" href="#get_site_from_github" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a Github SITE URL from the Github&#8217;s OWN URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="get_screenshot">
+<code class="descname">get_screenshot</code><span class="sig-paren">(</span><em>url</em>, <em>screenshot_name</em><span class="sig-paren">)</span><a class="headerlink" href="#get_screenshot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes and stores a screenshot of the Github SITE, if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>url</strong> &#8211; string type</li>
+<li><strong>screenshot_name</strong> &#8211; string type</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="get_SD_sites">
+<code class="descname">get_SD_sites</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#get_SD_sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates images for all valid SoftDes projects.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="upload_screenshots">
+<code class="descname">upload_screenshots</code><span class="sig-paren">(</span><em>url_img_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#upload_screenshots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uploads screenshots of all Github SITES to the database. Note that you MUST set client_id and client_secret in environment first. (See ImgurPython for more details.)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url_img_dict</strong> &#8211; dictionary type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="create_image_chunks">
+<code class="descname">create_image_chunks</code><span class="sig-paren">(</span><em>url_img_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#create_image_chunks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates image chunks with mostly blank fields.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url_img_dict</strong> &#8211; dictionary type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="fill_database_from_github">
+<code class="descname">fill_database_from_github</code><span class="sig-paren">(</span><em>url_img_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#fill_database_from_github" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fills the database with a document with an image chunk from a Github URL.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>url_img_dict</strong> &#8211; dictionary type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="retrieve_github_object_id">
+<code class="descname">retrieve_github_object_id</code><span class="sig-paren">(</span><em>github_url</em><span class="sig-paren">)</span><a class="headerlink" href="#retrieve_github_object_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves a document from the site with the given Github URL, if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>github_url</strong> &#8211; string type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Python Backend and Database</a><ul>
+<li><a class="reference internal" href="#backend-py"><code class="code docutils literal"><span class="pre">backend.py</span></code></a></li>
+<li><a class="reference internal" href="#private-database-functions-py"><code class="code docutils literal"><span class="pre">private_database_functions.py</span></code></a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="react.html" title="previous chapter">React Components</a></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/python.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Matthew Beaudouin-Lafon, Emily Yeh.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.9</a>
+      
+      |
+      <a href="_sources/python.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
