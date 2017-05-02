@@ -3,8 +3,13 @@ import pymongo
 import csv
 import urllib.request
 import pprint
-
-# from backend import toOlinEpoch
+import re
+import json
+from bson import ObjectId
+from selenium import webdriver
+from depot.manager import DepotManager
+from imgurpython import ImgurClient
+import os
 
 client = MongoClient('localhost', 27017)
 db = client.test
@@ -132,17 +137,18 @@ def retrieve_all_information():
 
 # Initial filling-in of database, USE SPARINGLY @EMILY
 def fill_database():
-    print("Filling Database")
+    print("Filling Database...")
     dictionary = retrieve_all_information()
     for key in dictionary:
         result = db.posts.insert_one(dictionary[key]).inserted_id
-    print (db.posts.count())
+    print("Database successfully filled! Number of objects now: " + str(db.posts.count()))
 
 
 # Deletes ALL the documents in the database. Use with caution!!!!!
 def empty_database():
+    print("Emptying database...")
     db.posts.delete_many({})
-    print(db.posts.count())
+    print("Database successfully emptied! Number of objects now: " + str(db.posts.count()))
 
 
 # Updates document in database with new information
@@ -254,7 +260,7 @@ def fill_database_from_github(url_img_dict):
         image_chunk = url_img_dict[url]
         temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[count] = temp
-        pprint.pprint(final)
+        # pprint.pprint(final)
         count += 1
     for key in final:
         result = db.posts.insert_one(final[key]).inserted_id
@@ -263,5 +269,5 @@ def fill_database_from_github(url_img_dict):
 
 def retrieve_github_object_id(github_url):
     project_information = list(db.posts.find({'url': github_url}))
-    print(project_information[0]['_id'])
+    # print(project_information[0]['_id'])
     return project_information[0]['_id']
