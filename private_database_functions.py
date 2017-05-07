@@ -1,15 +1,16 @@
-from pymongo import MongoClient
-import pymongo
 import csv
-import urllib.request
+import json
+import os
 import pprint
 import re
-import json
+import urllib.request
+
+import pymongo
 from bson import ObjectId
-from selenium import webdriver
 from depot.manager import DepotManager
 from imgurpython import ImgurClient
-import os
+from pymongo import MongoClient
+from selenium import webdriver
 
 client = MongoClient('localhost', 27017)
 db = client.test
@@ -132,7 +133,7 @@ def retrieve_all_information():
         temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
         final[key] = temp
         count += 1
-    
+
     for name in POE_names:
         temp = {}
         key = str(count) # Official dictionary key
@@ -177,7 +178,7 @@ def update_database(JSON_Object, object_id=0):
     Updates document in database with new information.
     """
     db.posts.update({ "_id": object_id },
-        {"$set": { 
+        {"$set": {
             "title": JSON_Object["title"],
             "semester": JSON_Object["semester"],
             "members": JSON_Object["members"],

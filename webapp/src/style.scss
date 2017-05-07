@@ -6,7 +6,7 @@ body {
 
 
 // Controls how ALL React inputs look - proceed with caution
-div { 
+div {
   color: white;
   font-family: 'Source Code Pro', monospace;
 }
@@ -58,7 +58,7 @@ input {
   color: white;
   background: lighten(black, 5);
   border: none;
-  font-family: 'Source Code Pro', monospace; 
+  font-family: 'Source Code Pro', monospace;
   transition-duration: 0.4s;
   z-index: 1;
 }
@@ -132,7 +132,7 @@ div .search-bar {
   border-radius: 5px;
 
   justify-content: center;
-  
+
 }
 
 .project-item {
@@ -204,7 +204,7 @@ div .search-bar {
 }
 
 @keyframes fade {
-  from {opacity: .4} 
+  from {opacity: .4}
   to {opacity: 1}
 }
 

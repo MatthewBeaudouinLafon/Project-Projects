@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {CompositeDecorator, Editor, EditorState} from 'draft-js';
-import {toOlinEpoch, fromOlinEpoch} from './helper.js' 
+import {toOlinEpoch, fromOlinEpoch} from './helper.js'
 import { Link } from 'react-router-dom'
 import { Redirect, Route, IndexRoute, hashHistory, browserHistory } from 'react-router'
 
 export default class ProjectBrowser extends React.Component {
     /*
-    Root component for the project browser. 
+    Root component for the project browser.
 
     state
         allProjects (json list):        List of all projects retrieved from the database json objects
         displayProjects (json list):    Subset of allProjects, filtered based on a query
-        query (string):                 Query value (as seen in the search bar) 
+        query (string):                 Query value (as seen in the search bar)
     */
     constructor(props) {
         super(props);
@@ -39,7 +39,7 @@ export default class ProjectBrowser extends React.Component {
 
     // On mount, make a request for project
     componentDidMount() {
-        const updateFromDB = this.updateFromDB; 
+        const updateFromDB = this.updateFromDB;
 
         fetch('/api/all_projects')
         .then(function(response) {
@@ -57,7 +57,7 @@ export default class ProjectBrowser extends React.Component {
         const stopwords = ['a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and', 'any',
             'are', "aren't", 'as', 'at', 'be', 'because', 'been', 'before', 'being', 'below', 'between', 'both',
             'but', 'by', "can't", 'cannot', 'could', "couldn't", 'did', "didn't", 'do', 'does', "doesn't",
-            'doing', "don't", 'down', 'each', 'few', 'for', 'from', 'further', 'had', "hadn't", 
+            'doing', "don't", 'down', 'each', 'few', 'for', 'from', 'further', 'had', "hadn't",
             'has', "hasn't", 'have', "haven't", 'having', 'he', "he'd", "he'll", "he's", 'her', 'here', "here's",
             'hers', 'herself', 'him', 'himself', 'his', 'how', "how's", 'i', "i'd", "i'll", "i'm", "i've", 'if',
             'in', 'into', 'is', "isn't", 'it', "it's", 'its', 'itself', "let's", 'me', 'more', 'most', "mustn't",
@@ -125,7 +125,7 @@ export default class ProjectBrowser extends React.Component {
         if (this.state.displayProjects.length === 0) {
             grid = <div className="project-empty-grid">No projects here!</div>
         } else {
-            grid = <ProjectGrid projectList={this.state.displayProjects} /> 
+            grid = <ProjectGrid projectList={this.state.displayProjects} />
         }
 
         // Make sure to add new keywords here.
@@ -136,7 +136,7 @@ export default class ProjectBrowser extends React.Component {
                 <div>
                     <center><h1>Project: Projects (U/C)</h1>
                     <h2>Students and Professors Side</h2></center>
-                    <SearchBar 
+                    <SearchBar
                         query={this.state.query}
                         keys={keys}
                         performSearch={this.performSearch} />
@@ -193,7 +193,7 @@ class SearchBar extends React.Component {
                 return <span style={styles.keywords}>{props.children}</span>;
             }
         }])
-        
+
         this.state = {
             editorState: EditorState.createEmpty(compositeDecorator),
             query: "",
@@ -208,7 +208,7 @@ class SearchBar extends React.Component {
   }
 
     // Handle search. While this function is called every time the field changes,
-    // the search only gets run 1s after the last input. 
+    // the search only gets run 1s after the last input.
     handleSearch(editorState) {
         if (editorState.getCurrentContent().getPlainText() !== this.state.editorState.getCurrentContent().getPlainText()){
             const parsedQuery = this.parseStr(editorState.getCurrentContent().getPlainText());
@@ -232,8 +232,8 @@ class SearchBar extends React.Component {
                                 }
                             }))
                         },
-                        timerLength, 
-                        parsedQuery, 
+                        timerLength,
+                        parsedQuery,
                         this.props.keys
                     ),
                     isRunning: true
@@ -320,7 +320,7 @@ class NewProject extends React.Component {
         this.state = {
             redirect: false,
             projectId: null,
-            newProjectName: "", 
+            newProjectName: "",
             githubInput: "",
         }
     }
@@ -348,15 +348,15 @@ class NewProject extends React.Component {
                                     that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
                                 })
                             })
-                        }}>+</div><input 
-                        type="text" 
-                        placeholder="Enter new project" 
+                        }}>+</div><input
+                        type="text"
+                        placeholder="Enter new project"
                         value={this.state.newProjectName}
                         onChange={(event) => {
                             this.setState(Object.assign({}, this.state, {newProjectName: event.target.value}))
                         }}
                         /><br/><br/>
-                    <div 
+                    <div
                         style={{display: "inline-block", paddingRight: "0.4em"}} onClick={() => {
                             let projectId;
                             //TODO: suck less
@@ -368,9 +368,9 @@ class NewProject extends React.Component {
                                     that.setState(Object.assign({}, that.state, {redirect: true, projectId: json}))
                                 })
                             })
-                        }}>+</div><input 
-                        type="text"    
-                        placeholder="GitHub URL (optional)" 
+                        }}>+</div><input
+                        type="text"
+                        placeholder="GitHub URL (optional)"
                         value={this.state.githubInput}
                         onChange={(event) => {
                             this.setState(Object.assign({}, this.state, {githubInput: event.target.value}))
@@ -421,7 +421,7 @@ class ProjectItem extends React.Component {
                     <Link to={"/main/" + project_id}><ProjectName className="project-name" name={name} /></Link>
                     <AuthorList className="project-authors" authorList={authorList} />
                     <Description className="project-description" description={description} />
-                
+
             </div>
         );
     }
@@ -477,7 +477,7 @@ class AuthorList extends React.Component {
 // class ____ extends React.Component {
 //     render() {
 //         return (
-            
+
 //         );
 //     }
 // }

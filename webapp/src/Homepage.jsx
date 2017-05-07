@@ -44,8 +44,8 @@ export default class Homepage extends React.Component {
     }
 
     componentDidMount() {
-        const updateFromDB = this.updateFromDB; 
-        
+        const updateFromDB = this.updateFromDB;
+
         fetch('/api/all_projects')
         .then(function(response) {
             response.json().then(function(json) {
@@ -69,7 +69,7 @@ export default class Homepage extends React.Component {
             console.log(this.state.projects)
             slides = <ProjectDisplay projectList={this.state.projects} />
         } else {
-            // slides = <div>No projects here!</div> 
+            // slides = <div>No projects here!</div>
         }
 
         return (
@@ -128,7 +128,7 @@ class Slideshow extends React.Component {
  */
 class ProjectItem extends React.Component {
     convertChunk(chunk, key) {
-        return <Chunk 
+        return <Chunk
             chunkType={chunk.type}
             content={chunk.content}
             key={key}/>
@@ -149,7 +149,7 @@ class ProjectItem extends React.Component {
 
         return (
             <div className="mySlides fade">
-                <FormHeader name={name} 
+                <FormHeader name={name}
                             authors={authorList}
                             description={description}
                 />
@@ -222,8 +222,8 @@ class Chunk extends React.Component {
         if (this.props.content.link === "") {
             image = <div className="image" />
         } else {
-            image = <img className="image" 
-                         src={this.props.content.link} 
+            image = <img className="image"
+                         src={this.props.content.link}
                          alt={this.props.content.alt}/>
         }
 
@@ -249,7 +249,7 @@ class Chunk extends React.Component {
 
         let urlBox;
         let description;
-        
+
         description = <div className="description">
             {this.props.content.description}
         </div>
@@ -263,7 +263,7 @@ class Chunk extends React.Component {
                     />
                     {description}
                 </div>
-    }        
+    }
 
     render() {
         let chunkContent = null
@@ -300,14 +300,14 @@ class FormHeader extends React.Component {
                 <div className="form-header">
                     <div>
                         <div className="form-project-name">
-                            Project Name: <b>{this.props.name}</b>                    
+                            Project Name: <b>{this.props.name}</b>
                         </div>
                         <div className="project-authors">
                             {authorList}
                         </div>
                     </div>
                 </div>
-                <Chunk 
+                <Chunk
                     chunkType={"Text"}
                     content={{text:this.props.description}}
                 />

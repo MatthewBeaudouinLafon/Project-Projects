@@ -1,17 +1,20 @@
-import os
-from flask import Flask, redirect, render_template, request, url_for, Response
-from pymongo import MongoClient
-import pymongo
 import csv
-import urllib.request
+import os
 import pprint
 import re
-from bson import ObjectId
-from selenium import webdriver
-from imgurpython import ImgurClient
-import os
+import urllib.request
 
-from private_database_functions import update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id, JSONEncoder
+from flask import Flask, Response, redirect, render_template, request, url_for
+
+import pymongo
+from bson import ObjectId
+from imgurpython import ImgurClient
+from private_database_functions import (JSONEncoder, create_image_chunks, fill_database_from_github, get_screenshot,
+                                        get_site_from_github, retrieve_github_object_id, retrieve_JSON_Object,
+                                        update_database)
+from pymongo import MongoClient
+from selenium import webdriver
+
 # from database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, get_screenshot, fill_database_from_github, retrieve_github_object_id
 
 print("Connecting to Database...")
@@ -53,7 +56,7 @@ def retrieve_all_project():
     return output
 
 
-@app.route('/api/project/<project_id>', methods=["POST"]) 
+@app.route('/api/project/<project_id>', methods=["POST"])
 def save_project(project_id):
     """
     Saves a project in the database. If it didn't exist in the database before, it creates a new document and stores the projects information in the document. Otherwise, it finds the document in the database and updates its information.
@@ -66,7 +69,7 @@ def save_project(project_id):
     return "whatever"
 
 
-@app.route('/api/project/<project_id>', methods=["GET"]) 
+@app.route('/api/project/<project_id>', methods=["GET"])
 def send_project(project_id):
     """
     Sends over the project with the given project ID.

@@ -13,14 +13,17 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
+sys.path.insert(0, os.path.abspath('.'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..')))
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+# If extensions (or modules to document with autodoc) are in another directory,
+# add these directories to sys.path here. If the directory is relative to the
 import sys
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..')))
+
+from recommonmark.parser import CommonMarkParser
+
 print (sys.path)
 
 # -- General configuration ------------------------------------------------
@@ -340,7 +343,6 @@ texinfo_documents = [
 #
 # texinfo_no_detailmenu = False
 
-from recommonmark.parser import CommonMarkParser
 
 source_parsers = {
     '.md': CommonMarkParser,

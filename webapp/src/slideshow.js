@@ -6,7 +6,7 @@ showSlides(slideIndex);
 function showSlides(n) {
     var i;
     // var dots = document.getElementsByClassName("dot");
-    if (n > slides.length) {slideIndex = 1}    
+    if (n > slides.length) {slideIndex = 1}
     if (n < 1) {slideIndex = slides.length}
 
     for (i = 0; i < slides.length; i++) {
@@ -23,7 +23,7 @@ function showSlides(n) {
 
     var slideCounter = document.getElementById("slide-counter");
 
-    if (slideCounter) { 
+    if (slideCounter) {
         var t = slideIndex + " / " + slides.length;      // Create a text node
         slideCounter.innerHTML = t;           // Append <p> to <div> with id="myDIV"
     }
@@ -43,10 +43,10 @@ function updateSlides () {
     // if (n > slides.length) {slideIndex = 1}    
     // if (n < 1) {slideIndex = slides.length}
 
-    
+
     // slideIndex++;
-    // if (slideIndex > slides.length) {slideIndex = 1;}    
-    
+    // if (slideIndex > slides.length) {slideIndex = 1;}
+
     // // setTimeout(showSlides, 2000); // Change image every 2 seconds
 
 export const plusSlides = (n)=>{

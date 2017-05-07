@@ -10,7 +10,7 @@ export default class ProjectForm extends React.Component {
         editing (bool):             Whether the project is being edited
         editHistory (Chunk list):   List of chunks from previous edits (to be implemented)
         chunkList (json list):      List of json objects describing each chunk
-        projectName :               Name of the project 
+        projectName :               Name of the project
         projectDesc :               Description of the project as seen in the project browser
         projectSemester :           Semester the project took place in Olin Epoch
 
@@ -49,7 +49,7 @@ export default class ProjectForm extends React.Component {
 
     // On mount, make a request for project
     componentDidMount() {
-        const updateFromDB = this.updateFromDB; 
+        const updateFromDB = this.updateFromDB;
         const projectId = /(\w+)$/.exec(this.props.location.pathname)[0] // Matches and retrieves project id from the end of the url
         fetch('/api/project/' + projectId)
         .then(function(response) {
@@ -112,7 +112,7 @@ export default class ProjectForm extends React.Component {
 
     // Convert json representation of a chunk into React Component
     convertChunk(chunk, key) {
-        return <Chunk 
+        return <Chunk
                     chunkType={chunk.type}
                     content={chunk.content}
                     editing={this.state.editing}
@@ -167,14 +167,14 @@ export default class ProjectForm extends React.Component {
         // Generate list of chunks for render
         this.state.chunkList.forEach((chunk) => {
             displayChunks.push(this.convertChunk(chunk, key));
-            key++; 
+            key++;
         });
         return (
             <div>
-                <FormHeader name={this.state.projectName} 
+                <FormHeader name={this.state.projectName}
                             authors={this.state.authors}
                             description={this.state.projectDesc}
-                            save={this.changeEditState} 
+                            save={this.changeEditState}
                             editing={this.state.editing}
                             handleDescChange={
                                 (newDescription) => this.setState(Object.assign(
@@ -214,7 +214,7 @@ class FormHeader extends React.Component {
 
         // Depending on editing status, render fields as editable or as divs.
         if (this.props.editing) {
-            projectName = <MediumInput 
+            projectName = <MediumInput
                 value={this.props.name}
                 handleFieldChange={
                    (newValue) => this.props.handleTitleChange(newValue)
@@ -228,7 +228,7 @@ class FormHeader extends React.Component {
             />
         } else {
             projectName =   <div className="form-project-name">
-                                <b>{this.props.name}</b>                    
+                                <b>{this.props.name}</b>
                             </div>
             authors =   <div className="project-authors">
                             {authorList}
@@ -247,11 +247,11 @@ class FormHeader extends React.Component {
                         <Button name={this.props.editing ? "Save" : "Edit"} func={this.props.save} />
                     </div>
                 </div>
-                <Chunk 
+                <Chunk
                     chunkType={"Text"}
                     content={{text:this.props.description}}
-                    editing={this.props.editing} 
-                    handleChunkChange={this.props.handleDescChange} 
+                    editing={this.props.editing}
+                    handleChunkChange={this.props.handleDescChange}
                 />
             </div>
         );
@@ -283,8 +283,8 @@ class Chunk extends React.Component {
     // Formats input for this.props.handleChunkChange
     handleFieldChange(changedContentField, fieldName) {
         const newContent = Object.assign(
-                {}, 
-                this.props.content, 
+                {},
+                this.props.content,
                 {[fieldName]:changedContentField}
         );
         this.props.handleChunkChange(newContent);
@@ -293,8 +293,8 @@ class Chunk extends React.Component {
     // Construct Text Chunk, depending on edit status
     getTextChunk() {
         if (this.props.editing) {
-            return <textarea className="text-chunk-input" 
-                             value={this.props.content.text} 
+            return <textarea className="text-chunk-input"
+                             value={this.props.content.text}
                              onChange={(event) => this.handleFieldChange(event.target.value, "text")}
                     />
         } else {
@@ -309,20 +309,20 @@ class Chunk extends React.Component {
         if (this.props.content.link === "") {
             image = <div className="image" />
         } else {
-            image = <img className="image" 
-                         src={this.props.content.link} 
+            image = <img className="image"
+                         src={this.props.content.link}
                          alt={this.props.content.alt}/>
         }
 
         if (this.props.editing) {
             return <div className="image-chunk">
-                        <SmallInput value={this.props.content.link} 
+                        <SmallInput value={this.props.content.link}
                                     handleFieldChange={
                                        (newValue) => this.handleFieldChange(newValue, "link")
                                     }
                         />
                         {image}
-                        <SmallInput value={this.props.content.description} 
+                        <SmallInput value={this.props.content.description}
                                     handleFieldChange={
                                        (newValue) => this.handleFieldChange(newValue, "description")
                                     }
@@ -356,12 +356,12 @@ class Chunk extends React.Component {
         let urlBox;
         let description;
         if (this.props.editing) {
-            urlBox = <SmallInput value={this.props.content.link} 
+            urlBox = <SmallInput value={this.props.content.link}
                                  handleFieldChange={
                                     (newValue) => this.handleFieldChange(newValue, "link")
                                  }
                      />
-            description = <SmallInput value={this.props.content.description} 
+            description = <SmallInput value={this.props.content.description}
                                       handleFieldChange={
                                          (newValue) => this.handleFieldChange(newValue, "description")
                                       }
@@ -380,7 +380,7 @@ class Chunk extends React.Component {
                       opts={opts}
                     />
                     {description}
-                </div>        
+                </div>
     }
 
     render() {
@@ -474,7 +474,7 @@ class Button extends React.Component {
 
     render() {
         return (
-            <button className="new-chunk-button pulse" 
+            <button className="new-chunk-button pulse"
                     onClick={this.handleClick}>
                 {this.props.name}
             </button>
@@ -485,7 +485,7 @@ class Button extends React.Component {
 class SmallInput extends React.Component {
     /*
     Generic small input. Used for editing captions.
-    
+
     props
         value (string):                 Value to render
         handleFieldChange (function):   Takes new value. Function to call on value change.
@@ -493,7 +493,7 @@ class SmallInput extends React.Component {
     render() {
         //TODO: Refactor to use Draft.js
         return (
-            <input  
+            <input
                 className="small-input"
                 value={this.props.value}
                 onChange={(event) => {this.props.handleFieldChange(event.target.value)}}
@@ -505,7 +505,7 @@ class SmallInput extends React.Component {
 class MediumInput extends React.Component {
     /*
     Generic Medium input. Used for editing text boxes.
-    
+
     props
         value (string):                 Value to render
         handleFieldChange (function):   Takes new value. Function to call on value change.
@@ -513,7 +513,7 @@ class MediumInput extends React.Component {
     render() {
         // TODO: Refactor to use Draft.js
         return (
-            <input  
+            <input
                 className="medium-input"
                 value={this.props.value}
                 onChange={(event) => {this.props.handleFieldChange(event.target.value)}}
@@ -525,7 +525,7 @@ class MediumInput extends React.Component {
 // class ____ extends React.Component {
 //     render() {
 //         return (
-            
+
 //         );
 //     }
 // }

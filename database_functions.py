@@ -1,10 +1,10 @@
-from pymongo import MongoClient
-import pymongo
 import csv
-import urllib.request
-import pprint
 import json
+import pprint
+import urllib.request
 
+import pymongo
+from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
 db = client.test
@@ -97,7 +97,7 @@ def retrieve_all_information(file_name="", number_of_members=0):
             temp["chunk_list"] = [image_chunk, {"type": "Text", "content": {"text":"My god this is a chunk of text. I never could have figured out how chunky it gets out there in terms of text."}}]
             final[key] = temp
             count += 1
-    
+
     return final
 
 

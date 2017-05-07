@@ -53,82 +53,82 @@ Not seeing what you need? `Return to the homepage <index.html>`_.
    Retrieves names of projects from file_name.csv.
 
    :param file_name: string type
-   
+
 .. function:: retrieve_project_members(file_name, members_range)
 
    Retrieves names of project members from file_name.csv, depending on the number of members in the team.
-   
+
    :param file_name: string type
    :param members_range: integer type
-   
+
 .. function:: retrieve_SD_descriptions()
 
    Retrieves all descriptions from Githubs found in the (private) SD .csv file.
-   
+
 .. function:: retrieve_POE_descriptions()
 
    Retrieves all descriptions from POE websites found in the (private) POE .csv file.
-   
+
 .. function:: retrieve_all_information()
 
    Retrieves all available information about projects and returns them in a dictionary (which can be conveniently injected into the database).
-   
+
 .. function:: fill_database()
 
    Fills the database with all projects' information.
-   
+
 .. function:: empty_database()
 
    Empties the database of all documents.
-   
+
 .. function:: update_database(JSON_Object, object_id=0)
 
    Updates document in database with new information.
 
    :param JSON_Object: string type
    :param object_id: string type
-   
+
 .. function:: retrieve_JSON_Object(object_id)
 
    Retrieves a JSON object from the database by its object ID.
 
    :param object_id: string type
-  
+
 .. function:: get_site_from_github(url)
 
    Retrieves a Github SITE URL from the Github's OWN URL.
 
    :param url: string type
-  
+
 .. function:: get_screenshot(url, screenshot_name)
 
    Makes and stores a screenshot of the Github SITE, if it exists.
 
    :param url: string type
    :param screenshot_name: string type
-  
+
 .. function:: get_SD_sites()
 
    Generates images for all valid SoftDes projects.
-  
+
 .. function:: upload_screenshots(url_img_dict)
 
    Uploads screenshots of all Github SITES to the database. Note that you MUST set client_id and client_secret in environment first. (See ImgurPython for more details.)
 
    :param url_img_dict: dictionary type
-  
+
 .. function:: create_image_chunks(url_img_dict)
 
    Generates image chunks with mostly blank fields.
 
    :param url_img_dict: dictionary type
-  
+
 .. function:: fill_database_from_github(url_img_dict)
 
    Fills the database with a document with an image chunk from a Github URL.
 
    :param url_img_dict: dictionary type
-  
+
 .. function:: retrieve_github_object_id(github_url)
 
    Retrieves a document from the site with the given Github URL, if it exists.
