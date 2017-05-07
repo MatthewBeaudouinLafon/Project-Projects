@@ -1,4 +1,5 @@
 # Project: Projects
+
 > An Olin project database that makes life a little easier.
 
 ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)
@@ -15,7 +16,7 @@ For full documentation of all pieces of code, look no further than [our document
 
 On OS and Linux, enter the following into a terminal, one line at a time (replacing `path/to/file with` the path to the downloaded file):
 
-```
+```shell
 git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
 cd path/to/file
 python3 backend.py
@@ -23,13 +24,13 @@ python3 backend.py
 
 Then, open another terminal and enter the following, one line at a time (once again replacing `path/to/file` with the path to the downloaded file):
 
-```
+```shell
 cd path/to/file/webapp/src
 npm install
 npm start
 ```
 
-The app should now be running on [localhost:9090]. Navigate to `localhost:9090` in your web browser. If there are any issues with installing and starting the app, please refer to the app's [libraries and dependencies](#dependencies).
+The app should now be running on [localhost:9090]. Navigate to `localhost:9090` in your web browser. If there are any issues with installing and starting the app, please refer to the app's [libraries and dependencies](#libraries-and-dependencies).
 
 ## About Project: Projects
 
@@ -53,22 +54,21 @@ Creating a Project
 
 [![Project Creation](https://img.youtube.com/vi/jueNbPVtGRA/0.jpg)](https://www.youtube.com/watch?v=jueNbPVtGRA)
 
-
-
 ### Technical Documentation
+
 To run the database, simply run the following commands.
 
-```
+```shell
 cd <path/to/file>
 python3 backend.py
 ```
 
-The file automatically empties and refills its MongoDB database upon being run. However, the main functions dealing with populating and emptying the MongoDB database are located in ```private_database_functions.py``` (for now). Much of the data being used right now is student data, which is why the .csv files required to run ```private_database_functions.py``` are not located on this repository; however, if you would like to contribute to this project, please email Matthew or Emily to gain access to those .csvs (after we screen you rigorously for ill intentions).
+The file automatically empties and refills its MongoDB database upon being run. However, the main functions dealing with populating and emptying the MongoDB database are located in `private_database_functions.py` (for now). Much of the data being used right now is student data, which is why the .csv files required to run `private_database_functions.py` are not located on this repository; however, if you would like to contribute to this project, please email Matthew or Emily to gain access to those .csvs (after we screen you rigorously for ill intentions).
 
 ### Status of Things
 
-<a name="dependencies"></a>
-## Libraries & Dependencies
+## Libraries and Dependencies
+
 * [react](https://facebook.github.io/react/)
 * [react-youtube](https://github.com/troybetz/react-youtube)
 * [mongodb](https://www.mongodb.com/)
@@ -99,12 +99,12 @@ There are many other potential features, as well as minor issues that are basica
 
 ## Credits
 
-<sub>Thank you to Oliver Steele, Jeff Goldenson, and Emily Ferrier for their help in the development of this project!</sub>
+Thank you to Oliver Steele, Jeff Goldenson, and Emily Ferrier for their help in the development of this project!
 
-<sub>Copyright 2017 Matthew Beaudouin-Lafon & Emily Yeh</sub>
+Copyright 2017 Matthew Beaudouin-Lafon & Emily Yeh
 
-<sub>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</sub>
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-<sub>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</sub>
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-<sub>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</sub>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
