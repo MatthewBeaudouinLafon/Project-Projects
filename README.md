@@ -13,18 +13,21 @@ For full documentation of all pieces of code, look no further than [our document
 
 ## Installation
 
-On OS and Linux, enter the following into a terminal, one line at a time (replacing `path/to/file with` the path to the downloaded file):
+Install and run MongoDB.
+
+On OS and Linux, enter the following into a terminal, one line at a time (replacing `path/to/Project-Projects` with the path to the cloned repo):
 
 ```
 git clone https://github.com/MatthewBeaudouinLafon/Project-Projects
-cd path/to/file
+cd Project-Projects
+pip3 install -r requirements.txt
 python3 backend.py
 ```
 
 Then, open another terminal and enter the following, one line at a time (once again replacing `path/to/file` with the path to the downloaded file):
 
-```
-cd path/to/file/webapp/src
+```shell
+cd path/to/repo/webapp/src
 npm install
 npm start
 ```
@@ -58,8 +61,8 @@ Creating a Project
 ### Technical Documentation
 To run the database, simply run the following commands.
 
-```
-cd <path/to/file>
+```shell
+cd <path/to/repo>
 python3 backend.py
 ```
 

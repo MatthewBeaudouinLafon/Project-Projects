@@ -1,0 +1,10 @@
+depot
+filedepot  # provides depot.manager
+Flask
+imgurpython
+pymongo
+selenium
+
+# The following is necessary on some systems, including Dockerized Ubuntu, to provide CA_CERTS_PATH
+# to apache-libcloud. (depot requires apache-libcloud.)
+certifi
