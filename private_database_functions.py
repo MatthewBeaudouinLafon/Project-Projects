@@ -11,7 +11,10 @@ from depot.manager import DepotManager
 from imgurpython import ImgurClient
 import os
 
-client = MongoClient('localhost', 27017)
+# FIXME DRY w/ backend.py
+MONGODB_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/')
+
+client = MongoClient(MONGODB_URI)
 db = client.test
 posts = db.posts
 

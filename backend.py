@@ -14,8 +14,11 @@ import os
 from private_database_functions import update_database, retrieve_JSON_Object, get_site_from_github, create_image_chunks, get_screenshot, fill_database_from_github, retrieve_github_object_id, JSONEncoder
 # from database_functions import fill_database, empty_database, update_database, retrieve_JSON_Object, get_site_from_github, get_screenshot, fill_database_from_github, retrieve_github_object_id
 
+# FIXME DRY w/ private_database_functions
+MONGODB_URI = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/')
+
 print("Connecting to Database...")
-client = MongoClient('localhost', 27017)
+client = MongoClient(MONGODB_URI)
 db = client.test
 posts = db.posts
 print("Done")
