@@ -1,3 +1,5 @@
+Note: According to GitHub, one of this projects dependencies (webpack it seems) may have a security vulnerability. We do not plan on updating it since we're done with this project.
+
 # Project: Projects
 > An Olin project database that makes life a little easier.
 
